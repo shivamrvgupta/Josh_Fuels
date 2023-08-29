@@ -1,0 +1,141 @@
+<%- include('../../partials/main', { pageTitle: 'Customer Details' }) %>
+
+
+<div class="page-body">
+    <!-- tracking table start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="title-header title-header-block package-card">
+                            <div>
+                                <h5>Customer Id  #<%= customer._id %></h5>
+                            </div>
+                            <div class="card-order-section">
+                                <ul>
+                                    <li>
+                                        <a href="/admin/customer/all">
+                                            Customer Details
+                                        </a>
+                                    </li>
+                                    <li class="text-selected"><%= customer.first_name %></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+                <div class="bg-inner cart-section order-details-table">
+                    <div class="row g-4">
+                        <div class="col-xl-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive table-details">
+                                        <table class="table cart-table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="2">Orders</th>
+                                                    <th class="text-end" colspan="2">
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr class="table-order">
+                                                    <td>
+                                                        <a href="javascript:void(0)">
+                                                            <img src="<%= route %>/images/profile/1.jpg" class="img-fluid blur-up lazyload" alt="">
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <p>Product Name</p>
+                                                        <h5>Outwear &amp; Coats</h5>
+                                                    </td>
+                                                    <td>
+                                                        <p>Quantity</p>
+                                                        <h5>1</h5>
+                                                    </td>
+                                                    <td>
+                                                        <p>Price</p>
+                                                        <h5>$63.54</h5>
+                                                    </td>
+                                                </tr> 
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <!-- Header -->
+                                <div class="card-header">
+                                    <h4 class="card-header-title">Customer</h4>
+                                </div>
+                                <!-- End Header -->
+
+                                <!-- Body -->
+                                <div class="card-body">
+                                    <div class="media align-items-center" href="javascript:">
+                                        <div class="media profile-media mr-3" style="width: 15% !important;height:40% !important">
+                                            <img class="user-profile rounded-circle" src="<%= route  %>/images/img1.jpg" style="width: 100%;" alt="Image Description">
+                                        </div>
+                                        <div class="media-body">
+                                        <span class="text-body text-hover-primary m-3"> <%= customer.first_name %> <%= customer.last_name %></span>
+
+                                        </div>
+                                        <div class="media-body text-right">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="media align-items-center" href="javascript:">
+                                        <div class="media profile-media mr-3" style="width: 15% !important;height:40% !important">
+                                            <img class="user-profile rounded-circle" src="<%= route  %>/images/img2.jpg" style="width: 100%;" alt="Image Description">
+                                        </div>
+                                        <div class="media-body">
+                                            <span class="text-body text-hover-primary m-3">1 Orders</span>
+
+                                        </div>
+                                        <div class="media-body text-right">
+                                            
+                                        </div>
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5>#Contact Info</h5>
+                                    </div>
+
+                                    <ul class="list-unstyled list-unstyled-py-2">
+                                        <li>
+                                            <span>Email : - </span>
+                                            <span><%= customer.email %></span>
+                                        </li>
+                                        <li>
+                                            <span>Phone Number : - </span>
+                                            <span><%= customer.phone %></span>
+                                        </li>
+                                    </ul>
+                                    
+                                </div>
+                                        <!-- End Body -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <!-- tracking table end -->
+
+    <div class="container-fluid">
+        <!-- footer start-->
+        <%- include('../../partials/footer')%>
+    </div>
+</div>
+
+<%- include('../../partials/end')%>
+

@@ -1,0 +1,309 @@
+<div class="sidebar-wrapper">
+    <div id="sidebarEffect"></div>
+    <div>
+        <div class="logo-wrapper logo-wrapper-center">
+            <a href="/admin/auth/dashboard" data-bs-original-title="" title="">
+                <img class="img-fluid for-white" src="<%= route %>/images/logo/full-white.png" alt="logo">
+            </a>
+            <div class="back-btn">
+                <i class="fa fa-angle-left"></i>
+            </div>
+            <div class="toggle-sidebar">
+                <i class="ri-apps-line status_toggle middle sidebar-toggle"></i>
+            </div>
+        </div>
+        <div class="logo-icon-wrapper">
+            <a href="/admin/auth/dashboard">
+                <img class="img-fluid main-logo main-white" src="<%= route %>/images/logo/logo.png" alt="logo">
+                <img class="img-fluid main-logo main-dark" src="<%= route %>/images/logo/logo-white.png"
+                    alt="logo">
+            </a>
+        </div>
+        <nav class="sidebar-main">
+            <div class="left-arrow" id="left-arrow">
+                <i data-feather="arrow-left"></i>
+            </div>
+
+            <div id="sidebar-menu">
+                <ul class="sidebar-links" id="simple-bar">
+                    <li class="back-btn"></li>
+
+                    <% if (user.usertype === 'Admin') { %>
+                        
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title link-nav" href="/admin/auth/dashboard">
+                                <i class="ri-home-line"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-list-check-2"></i>
+                                <span>Category</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/category/all">Category</a>
+                                </li>
+
+                                <li>
+                                    <a href="/admin/category/sub-category">Sub Category</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-list-settings-line"></i>
+                                <span>Attributes</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/attribute/list">Attributes</a>
+                                </li>
+
+                                <li>
+                                    <a href="/admin/attribute/add">Add Attributes</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M16 13q.425 0 .713-.288T17 12q0-.425-.288-.713T16 11h-4q-.425 0-.713.288T11 12q0 .425.288.713T12 13h4Zm0-4q.425 0 .713-.288T17 8q0-.425-.288-.713T16 7h-4q-.425 0-.713.288T11 8q0 .425.288.713T12 9h4Zm1 11h-2q-.425 0-.713-.288T14 19q0-.425.288-.713T15 18h2v-2q0-.425.288-.713T18 15q.425 0 .713.288T19 16v2h2q.425 0 .713.288T22 19q0 .425-.288.713T21 20h-2v2q0 .425-.288.713T18 23q-.425 0-.713-.288T17 22v-2Zm-9-3q.425 0 .713-.288T9 16q0-.425-.288-.713T8 15q-.425 0-.713.288T7 16q0 .425.288.713T8 17Zm0-4q.425 0 .713-.288T9 12q0-.425-.288-.713T8 11q-.425 0-.713.288T7 12q0 .425.288.713T8 13Zm0-4q.425 0 .713-.288T9 8q0-.425-.288-.713T8 7q-.425 0-.713.288T7 8q0 .425.288.713T8 9ZM5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h14q.825 0 1.413.588T21 5v8.825q-.675-.4-1.438-.6t-1.562-.2q-1.325 0-2.475.525T13.55 15H12q-.425 0-.713.288T11 16q0 .425.288.713T12 17h.35q-.175.475-.263.975T12 19q0 .5.075 1t.25 1H5Z"/></svg>
+                                <span>Addon</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/addon/lists">Add-on</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/addon/add">Add Add-on</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="white" d="M17 8h1v11H2V8h1V6c0-2.76 2.24-5 5-5c.71 0 1.39.15 2 .42A4.94 4.94 0 0 1 12 1c2.76 0 5 2.24 5 5v2zM5 6v2h2V6c0-1.13.39-2.16 1.02-3H8C6.35 3 5 4.35 5 6zm10 2V6c0-1.65-1.35-3-3-3h-.02A4.98 4.98 0 0 1 13 6v2h2zm-5-4.22C9.39 4.33 9 5.12 9 6v2h2V6c0-.88-.39-1.67-1-2.22z"/></svg>
+                                <span>Product</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/product/lists">List</a>
+                                </li>
+
+                                <li>
+                                    <a href="/admin/product/add">Add New Products</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-store-3-line"></i>
+                                <span>Branch</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/branch/all">All Branches</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/branch/add">Add new Branches</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title link-nav" href="media.html">
+                                <i class="ri-price-tag-3-line"></i>
+                                <span>Media</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-archive-line"></i>
+                                <span>Orders</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="order-list.html">Order List</a>
+                                </li>
+                                <li>
+                                    <a href="order-detail.html">Order Detail</a>
+                                </li>
+                                <li>
+                                    <a href="order-tracking.html">Order Tracking</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-user-3-line"></i>
+                                <span>Customers</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/admin/customer/all">Customer List</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/customer/add">Add Customer</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-focus-3-line"></i>
+                                <span>Localization</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="translation.html">Translation</a>
+                                </li>
+
+                                <li>
+                                    <a href="currency-rates.html">Currency Rates</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-price-tag-3-line"></i>
+                                <span>Coupons</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="coupon-list.html">Coupon List</a>
+                                </li>
+
+                                <li>
+                                    <a href="create-coupon.html">Create Coupon</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title link-nav" href="taxes.html">
+                                <i class="ri-price-tag-3-line"></i>
+                                <span>Tax</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title link-nav" href="product-review.html">
+                                <i class="ri-star-line"></i>
+                                <span>Product Review</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title link-nav" href="support-ticket.html">
+                                <i class="ri-phone-line"></i>
+                                <span>Support Ticket</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-settings-line"></i>
+                                <span>Settings</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="profile-setting.html">Profile Setting</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title link-nav" href="reports.html">
+                                <i class="ri-file-chart-line"></i>
+                                <span>Reports</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title link-nav" href="list-page.html">
+                                <i class="ri-list-check"></i>
+                                <span>List Page</span>
+                            </a>
+                        </li>
+                    
+                    <% } else { %>
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title link-nav" href="/branch/auth/dashboard">
+                                <i class="ri-home-line"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M7 2H3a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1ZM5 21a2 2 0 1 1 2-2a2 2 0 0 1-2 2Zm2-9H3V3h4Zm-1 7a1 1 0 1 1-1-1a1 1 0 0 1 1 1Zm8-17h-4a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Zm-2 19a2 2 0 1 1 2-2a2 2 0 0 1-2 2Zm2-9h-4V3h4Zm-1 7a1 1 0 1 1-1-1a1 1 0 0 1 1 1Zm8-17h-4a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Zm-2 19a2 2 0 1 1 2-2a2 2 0 0 1-2 2Zm2-9h-4V3h4Zm-1 7a1 1 0 1 1-1-1a1 1 0 0 1 1 1Z"/></svg>
+                                <span>Catalogue</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/branch/catalogue/products">Products</a>
+                                </li>
+
+                                <li>
+                                    <a href="/branch/catalogue/addons">Add-Ons</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="linear-icon-link sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-store-3-line"></i>
+                                <span>Product</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="/branch/product/lists">Products</a>
+                                </li>
+
+                                <li>
+                                    <a href="/branch/product/add">Add New Products</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="sidebar-list" id="admin-users">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <i class="ri-archive-line"></i>
+                                <span>Orders</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li>
+                                    <a href="order-list.html">Order List</a>
+                                </li>
+                                <li>
+                                    <a href="order-detail.html">Order Detail</a>
+                                </li>
+                                <li>
+                                    <a href="order-tracking.html">Order Tracking</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    <% } %>
+                </ul>
+            </div>
+
+            <div class="right-arrow" id="right-arrow">
+                <i data-feather="arrow-right"></i>
+            </div>
+        </nav>
+    </div>
+</div>
+
