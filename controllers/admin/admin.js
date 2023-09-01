@@ -41,7 +41,7 @@ const upload = multer({ storage: storage });
 
 
 const route = {
-  baseUrL : "http://18.209.171.92:3000/",
+  baseUrL : "https://43.205.203.219/",
 };
 
 
