@@ -120,7 +120,16 @@ const Address = require('./models/users/address.js')
     app.use('/branch/product', products_routes)
 
 
+    // Define a route for the root path '/'
+    app.get('/', (req, res) => {
+      res.send('Hello, this is the root path!');
+    });
 
-app.listen(process.env.PORT || 3000, function() {
-  console.log("Server started on port 3000");
+
+
+    
+
+
+app.listen(process.env.PORT || 80, function() {
+  console.log("Server started on port 80");
 });
