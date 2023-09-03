@@ -47,11 +47,33 @@ app.use('/image', express.static(path.join(__dirname, 'uploads')));
 // Models
 const Branch = require('../../models/branch/profile.js')
 const BranchProduct = require('../../models/branch/product.js')
+const Product = require('../../models/products/product.js')
 
 
-const route = {
-  baseUrL : "http://localhost:3000/",
+
+const os = require('os');
+// Routes APP
+const finalRoute = {
+  baseUrl: "http://127.0.0.1/",
 };
+
+
+const hostname = os.hostname();
+
+let route;
+
+if (hostname === process.env.localhost1 || hostname === process.env.localhost ) {
+  // If the hostname is localhost or 127.0.0.1, use a different route
+  route = `${localhost}:${PORT}/`;
+} else if (hostname === process.env.ipAddress) {
+  // If the hostname matches the specific IP address, use another route
+  route = `http://${ipAddress}:${PORT}/`;
+} else {
+  // If it's not localhost or the specific IP, use the default route
+  route = finalRoute.baseUrl;
+}
+
+
 
 
 // Importing Routes
@@ -116,7 +138,7 @@ router.get('/update/:productId', async (req, res) => {
     }
 
     // Send the category details to the client for updating
-    res.render('/branch/products/update_product', { product, user,route: route.baseUrL }); // Assuming you are using a template engine like EJS
+    res.render('branch/products/update_product', { product, user,route: route.baseUrL }); // Assuming you are using a template engine like EJS
   } catch (err) {
     console.log("There is an issue while fetching the category for updating.");
     console.log(err.message);

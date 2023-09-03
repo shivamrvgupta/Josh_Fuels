@@ -9,16 +9,17 @@ const bcrypt = require("bcrypt")
 const { v4: uuidv4 } = require('uuid');
 
 const app = express();
-app.use(session({
-  secret: 'aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789',
-  resave: false,
-  saveUninitialized: true,
-}));
+app.use(
+  session({
+    secret: 'aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789',
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+      maxAge : 120 * 24 * 60 * 60 * 1000, // Session will expire after 1 hour of inactivityreq.session.cookie.maxAge = 120 * 24 * 60 * 60 * 1000; // 120 days
 
-// Add your Google Geolocation API key here
-const GOOGLE_GEOLOCATION_API_KEY = 'AIzaSyDZpyPwSTv5XLNdOLZlZa2Tc1EUWj7PZJQ';
-const GOOGLE_MAPS_API_KEY = 'AIzaSyDZpyPwSTv5XLNdOLZlZa2Tc1EUWj7PZJQ';
-
+    },
+  })
+);
 
 
 // Function to generate a 6-digit OTP
@@ -59,7 +60,7 @@ const Product = require('../models/branch/product.js');
 router.get('/nearest-branch', async (req, res) => {
   try {
     const user = req.session.user; // Accessing user_id from the session
-
+    console.log(user)
     if(!user){
       return res.status(400).json({
         status: false,

@@ -22,8 +22,6 @@ app.use(
 );
 
 
-
-
 // Function to generate a 6-digit OTP
 function generateOTP() {
   return Math.floor(100000 + Math.random() * 900000);
@@ -33,7 +31,6 @@ function generateOTP() {
 function sendOTPToUser(phone_number, otp) {
   console.log(`OTP for ${phone_number}: ${otp}`);
 }
-
 
 
 
@@ -55,6 +52,7 @@ const storage = multer.diskStorage({
 const User = require('../models/users/user.js')
 const Device = require('../models/users/device.js')
 const Address = require('../models/users/address.js');
+const Branch = require('../models/branch/profile.js');
 
 
 // User Login Api for Customer and DeliveryMan

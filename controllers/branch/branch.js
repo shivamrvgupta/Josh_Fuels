@@ -38,9 +38,29 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-const route = {
-  baseUrL : "http://localhost:3000/",
+const os = require('os');
+// Routes APP
+const finalRoute = {
+  baseUrl: "http://127.0.0.1/",
 };
+
+
+const hostname = os.hostname();
+
+let route;
+
+if (hostname === process.env.localhost1 || hostname === process.env.localhost ) {
+  // If the hostname is localhost or 127.0.0.1, use a different route
+  route = `${localhost}:${PORT}/`;
+} else if (hostname === process.env.ipAddress) {
+  // If the hostname matches the specific IP address, use another route
+  route = `http://${ipAddress}:${PORT}/`;
+} else {
+  // If it's not localhost or the specific IP, use the default route
+  route = finalRoute.baseUrl;
+}
+
+
 
 
 // Models

@@ -10,6 +10,7 @@ const bcrypt = require("bcrypt")
 const mongoose = require("mongoose");
 
 
+
 app.set('view engine', 'ejs'); // Set EJS as the default template engine
 app.set('views', path.join(__dirname, 'views')); // Set views directory
 app.use(bodyParser.urlencoded({extended: true}));
@@ -126,10 +127,6 @@ const Address = require('./models/users/address.js')
     });
 
 
-
-    
-
-
-app.listen(process.env.PORT || 80, function() {
-  console.log("Server started on port 80");
+app.listen(process.env.port , function() {
+  console.log("Server started on port" , process.env.port);
 });

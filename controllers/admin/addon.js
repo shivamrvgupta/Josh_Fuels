@@ -7,8 +7,31 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const { v4: uuidv4 } = require('uuid');
 const mongoose = require("mongoose");
-
+const os = require('os');
 const app = express();
+
+// Routes APP
+const finalRoute = {
+  baseUrl: "http://127.0.0.1/",
+};
+
+
+const hostname = os.hostname();
+
+let route;
+
+if (hostname === process.env.localhost1 || hostname === process.env.localhost ) {
+  // If the hostname is localhost or 127.0.0.1, use a different route
+  route = `${localhost}:${PORT}/`;
+} else if (hostname === process.env.ipAddress || hostname === process.env.ipAddress2 || hostname === process.env.ipAddress3 ) {
+  // If the hostname matches the specific IP address, use another route
+  route = `http://${ipAddress}:${PORT}/`;
+} else {
+  // If it's not localhost or the specific IP, use the default route
+  route = finalRoute.baseUrl;
+}
+
+
 
 app.set('view engine', 'ejs'); // Set EJS as the default template engine
 app.set('views', path.join(__dirname, 'views')); // Set views directory
@@ -46,12 +69,6 @@ app.use('/image', express.static(path.join(__dirname, 'uploads')));
   
 // Models
 const AddOn = require('../../models/products/add_on.js')
-
-
-const route = {
-  baseUrL : "http://18.209.171.92:3000/",
-};
-
 
 // Importing Routes
 

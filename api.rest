@@ -1,0 +1,26 @@
+# Login Using phone number
+POST http://localhost:3000/customer/auth/login
+Content-Type: application/json
+
+{
+  "phone": "8850664191  ",
+}
+
+### Send OTP
+
+POST http://localhost:3000/customer/auth/send-otp
+Content-Type: application/json
+
+{
+  "phone": "8850664191",
+}
+
+### Verify OTP
+
+POST http://localhost:3000/customer/auth/verify-otp
+Content-Type: application/json
+
+{
+  "phone": "8850664191",
+  "otp": 352461,
+}
