@@ -127,6 +127,11 @@ const Address = require('./models/users/address.js')
     });
 
 
-app.listen(process.env.port , function() {
-  console.log("Server started on port" , process.env.port);
-});
+    
+    ports = [process.env.PORT, process.env.PORT1, process.env.PORT2]
+    // Loop through the ports and start the server on each port
+    ports.forEach((port) => {
+      app.listen(port, () => {
+        console.log(`Server started on port ${port}`);
+      });
+    });
