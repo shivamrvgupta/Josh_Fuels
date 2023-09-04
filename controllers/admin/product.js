@@ -93,7 +93,7 @@ router.get('/lists', async (req, res) => {
     if (!user) {
       return res.redirect('/admin/auth/login');
     }
-    res.render('admin/products/list', { user, product, productCount, route : route.baseUrL });
+    res.render('admin/products/list', { user, product, productCount, route : finalRoute.baseUrL });
   } catch (err) {
     console.log(err);
     res.status(500).send('Internal Server Error');
@@ -111,7 +111,7 @@ router.get('/add', async (req, res) => {
     if (!user) {
       return res.redirect('/admin/auth/login');
     }
-    res.render('admin/products/add', { user, branch,categories, subcategories ,route : route.baseUrL });
+    res.render('admin/products/add', { user, branch,categories, subcategories ,route : finalRoute.baseUrL });
   } catch (err) {
     console.log(err);
     res.status(500).send('Internal Server Error');
@@ -230,7 +230,7 @@ router.get('/update/:id', async (req, res) => {
 
       res.render('admin/products/update_product', {
           user,
-          route : route.baseUrL,
+          route : finalRoute.baseUrL,
           product,
           categories,
           subCategories,

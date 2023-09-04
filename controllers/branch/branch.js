@@ -70,7 +70,7 @@ const Branch = require('../../models/branch/profile.js');
 // Importing Routes
 
 router.get('/auth/login', async (req, res)=> {
-    res.render('a-login',{ title: "branch" , redirect : "admin", route : route.baseUrL, error: "Welcome to Branch Login"});
+    res.render('a-login',{ title: "branch" , redirect : "admin", route : finalRoute.baseUrL, error: "Welcome to Branch Login"});
 })
   
 // Handle the login form submission
@@ -122,7 +122,7 @@ router.get('/auth/dashboard', async (req, res) => {
   // Access the user's data from the session
   const user = req.session.user;
   error = "You are successfully logged in"
-  res.render('branch/dashboard', {user : user , error ,route : route.baseUrL})
+  res.render('branch/dashboard', {user : user , error ,route : finalRoute.baseUrL})
 });
   
   

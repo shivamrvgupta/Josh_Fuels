@@ -109,7 +109,7 @@ router.get('/all', async (req, res) => {
 //     if (!user) {
 //       return res.redirect('/admin/auth/login');
 //     }
-//     res.render('admin/customer/add', {user, route : route.baseUrL });
+//     res.render('admin/customer/add', {user, route : finalRoute.baseUrL });
 //   } catch (err) {
 //     console.log(err);
 //     res.status(500).send('Internal Server Error');

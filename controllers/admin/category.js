@@ -85,7 +85,7 @@ router.get('/all', async (req, res) => {
     if (!user) {
       return res.redirect('/admin/auth/login');
     }
-    res.render('admin/categories/category', { Title: "All Category",user, categories, categoryCount, route : route.baseUrL, error: "List of Category"});
+    res.render('admin/categories/category', { Title: "All Category",user, categories, categoryCount, route : finalRoute.baseUrL, error: "List of Category"});
   } catch (err) {
     console.log(err);
     res.status(500).send('Internal Server Error');
@@ -100,7 +100,7 @@ router.get('/add', async (req, res) => {
     if (!user) {
       return res.redirect('/admin/auth/login');
     }
-    res.render('admin/categories/add', { Title: "Add new Category",user, route : route.baseUrL, error: "Add New Category" });
+    res.render('admin/categories/add', { Title: "Add new Category",user, route : finalRoute.baseUrL, error: "Add New Category" });
   } catch (err) {
     console.log(err);
     res.status(500).send('Internal Server Error');
@@ -347,7 +347,7 @@ router.get('/sub-category/add', async (req, res) => {
     if (!user) {
       return res.redirect('/admin/auth/login');
     }
-    res.render('admin/subCategory/add', { Title: "Add new Category",user, category,route : route.baseUrL });
+    res.render('admin/subCategory/add', { Title: "Add new Category",user, category,route : finalRoute.baseUrL });
   } catch (err) {
     console.log(err);
     res.status(500).send('Internal Server Error');

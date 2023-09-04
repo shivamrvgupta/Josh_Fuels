@@ -85,7 +85,7 @@ router.get('/all', async (req, res) => {
     if (!user) {
       return res.redirect('/admin/auth/login');
     }
-    res.render('admin/branch/lists', { Title: "All Branches",user, branch, branchCount, route : route.baseUrL });
+    res.render('admin/branch/lists', { Title: "All Branches",user, branch, branchCount, route : finalRoute.baseUrL });
   } catch (err) {
     console.log(err);
     res.status(500).send('Internal Server Error');
@@ -101,7 +101,7 @@ router.get('/add', async (req, res) => {
     if (!user) {
       return res.redirect('/admin/auth/login');
     }
-    res.render('admin/branch/add', { Title: "Add new Branch", user, route : route.baseUrL });
+    res.render('admin/branch/add', { Title: "Add new Branch", user, route : finalRoute.baseUrL });
   } catch (err) {
     console.log(err);
     res.status(500).send('Internal Server Error');

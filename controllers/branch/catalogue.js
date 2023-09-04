@@ -96,7 +96,7 @@ if (hostname === process.env.localhost1 || hostname === process.env.localhost ) 
       console.log("Master Products Retrevied Successfully")
       const productCount = products.length;
 
-      res.render('branch/catalogue/product/lists', { user,products, productCount, route : route.baseUrL });
+      res.render('branch/catalogue/product/lists', { user,products, productCount, route : finalRoute.baseUrL });
           
     } catch (err) {
       console.log(err);
@@ -147,48 +147,35 @@ router.post('/update-status', async (req, res) => {
         'main': product._id,
       });
     
-      if (newStatus == true) {
-        const existingBranchProduct = await BranchProduct.findOne({
-          'branch_id': user._id,
-          'main': product._id,
+      console.log(existingBranchProduct);
+      console.log(user._id)
+      if (!existingBranchProduct) {
+        const branchProduct = new BranchProduct({
+          branch_id: user._id, // This should now be correctly saved
+          main: product._id,
+          token: uuidv4(),
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          image: product.image,
+          tax: product.tax,
+          tax_type: product.tax_type,
+          discount: product.discount,
+          discount_type: product.discount_type,
+          category: product.category.name,
+          sub_category: product.sub_category.name,
+          available_time_starts: product.available_time_starts,
+          available_time_ends: product.available_time_ends,
+          is_selling: true
         });
-      
-        console.log(existingBranchProduct);
-        console.log(user._id)
-        if (!existingBranchProduct) {
-          const branchProduct = new BranchProduct({
-            name : "name",
-            branch_id: user._id,
-            main: product._id,
-            token: uuidv4(),
-            name: product.name,
-            description: product.description,
-            price: product.price,
-            image: product.image,
-            tax: product.tax,
-            tax_type: product.tax_type,
-            discount: product.discount,
-            discount_type: product.discount_type,
-            category: product.category.name,
-            sub_category: product.sub_category.name,
-            available_time_starts: product.available_time_starts,
-            available_time_ends: product.available_time_ends,
-            is_selling: true
-          });
-      
-          await branchProduct.save();
-          console.log(branchProduct);
-          console.log('New branch product replicated and status set to true');
-        }
-      
-        // Update the product status in the master_product collection
-        product.status = newStatus;
-        await product.save();
-      
-        console.log("Product status updated:", newStatus);
-      }
-      
     
+        await branchProduct.save();
+        console.log(branchProduct);
+        console.log('New branch product replicated and status set to true');
+      }
+    
+      // Update the product status in the master_product collection
+      product.status = newStatus;
       await product.save();
     
       console.log("Product status updated:", newStatus);

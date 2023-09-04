@@ -76,7 +76,7 @@ const Product = require('../../models/products/product.js')
 // Importing Routes
 
 router.get('/auth/login', async (req, res)=> {
-  res.render('a-login',{title: "admin" , redirect : "branch" ,route : route.baseUrL, error: "Welcome to Login"})
+  res.render('a-login',{title: "admin" , redirect : "branch" ,route : finalRoute.baseUrL, error: "Welcome to Login"})
 })
   
 // Handle the login form submission
@@ -147,7 +147,7 @@ router.get('/auth/dashboard', async (req, res) => {
     }
     // Access the user's data from the session
     error = "You are successfully logged in"
-    res.render('admin/dashboard', {user, product, productCount ,error ,route : route.baseUrL})  
+    res.render('admin/dashboard', {user, product, productCount ,error ,route : finalRoute.baseUrL})  
   } catch (error) {
     
   }

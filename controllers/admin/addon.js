@@ -108,7 +108,7 @@ router.get('/add', async (req, res) => {
       return res.redirect('/admin/auth/login?error = "User Not Found Please Login"');
     }
     const error = "Add New Add-On"
-    res.render('admin/add_on/add', { Title: "Add new AddOn",user, addon, route : route.baseUrL , error });
+    res.render('admin/add_on/add', { Title: "Add new AddOn",user, addon, route : finalRoute.baseUrL , error });
   } catch (err) {
     console.log(err);
     res.status(500).send('Internal Server Error');
