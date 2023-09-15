@@ -1,0 +1,181 @@
+<%- include('../../partials/main', { pageTitle: 'product detail' }) %>
+
+<div class="page-body">
+  <!-- tracking table start -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="card">
+          <div class="card-body">
+      
+            <div class="title-header title-header-block package-card">
+              <div>
+                <h5>Product #<%= product.name %></h5>
+              </div>
+              <div class="card-order-section">
+                <ul>
+                  <li>Created Time: <%= product.updated_at %></li>
+                  <li>Cost: <%= product.price %></li>
+                </ul>
+              </div>
+            </div>
+      
+            <div class="row align-items-md-center gx-md-5">
+              <div class="col-md-4 mb-3 mb-md-0">
+                <div class="d-flex align-items-center">
+                  <% if (product.image) { %>
+                    <img style="height: 200px; width:200px"
+                      class="mr-4"
+                      src="/image/<%= product.image %>"
+                      alt="Image Description"  />
+                  <% } %>
+                </div>
+              </div>
+              <div class="col-8 pt-2">
+                <h3 class="border-bottom mb-4"><%= product.name %></h3>
+      
+                <div>
+                  <h4>Description</h4>
+                  <p>
+                    <%= product.description %>
+                  </p>
+                </div>
+                <p></p>
+                <span class="mb-4">
+                  <span><h4>Price:</h4></span>
+                  <span><h5><%= product.price %></h5></span> </span
+                ><br />
+                <span>
+                  <span><h5>Tax:</h5></span>
+                  <span><h6><%= product.tax %></h6></span> </span
+                ><br />
+                <span>
+                  <span><h5>Discount:</h5></span>
+                  <span><h6><%= product.discount %></h6></span> </span
+                ><br />
+                <span>
+                  <span><h5>Available Time Start:</h5></span>
+                  <span><h6><%= product.available_time_starts %></h6></span> </span
+                ><br />
+                <span>
+                  <span><h5>Available Time Ends:</h5></span>
+                  <span><h6><%= product.available_time_ends %></h6></span> </span
+                ><br />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-sm-4">
+       <div class="card flex-wrap">
+        <div class="card-header border-0 pb-1">
+          <div class="card-header-title">
+              <h4>Add On</h4>
+          </div>
+      </div>
+        <div class=" card-body" id="items">
+            <div class="mt-2 mb-2 d-flex">
+
+                <div class="item-box m-2">
+                  <div
+                    class="product-card card"
+                    onclick="quickView('6')"
+                    style="cursor: pointer"
+                  >
+                    <div
+                      class="card-header inline_product clickable p-0"
+                      style="height: 100%; width: 100%; overflow: hidden"
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-center"
+                      >
+                        <img
+                          src="<%= route %>/images/img2.jpg"
+                          style="width: 100%; border-radius: 5%"
+                        />
+                      </div>
+                    </div>
+
+                    <div
+                      class="card-body inline_product text-center p-1 clickable"
+                      style="height: 1.5rem; max-height: 2.5rem"
+                    >
+                      <div
+                        style="position: relative"
+                        class="product-title1 text-dark font-weight-bold"
+                      ><div>Add On1
+                        <!-- <%= addon.name %> -->
+                      </div>
+                      <div class="justify-content-between text-center">
+                        <div class="product-price text-center">
+                          <!-- <%= addon.price %> -->86.24
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               </div>
+
+                <div class="item-box  m-2">
+                  <div
+                    class="product-card card"
+                    onclick="quickView('4')"
+                    style="cursor: pointer"
+                  >
+                    <div
+                      class="card-header inline_product clickable p-0"
+                      style="height: 100%; width: 100%; overflow: hidden"
+                    >
+                      <div
+                        class="d-flex align-items-center justify-content-center"
+                      >
+                        <img
+                          src="<% route %>/images/img2.jpg"
+                          style="width: 100%; border-radius: 5%"
+                        />
+                      </div>
+                    </div>
+
+                    <div
+                      class="card-body inline_product text-center p-1 clickable"
+                      style="height: 1.5rem; max-height: 3.5rem"
+                    >
+                      <div
+                        style="position: relative"
+                        class="product-title1 text-dark font-weight-bold"
+                      >
+                        AddOn2
+                      </div>
+                      <div class="justify-content-between text-center">
+                        <div class="product-price text-center">
+                          ₹106.22
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+        </div>
+
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-12" style="overflow-x: scroll"></div>
+              </div>
+            </div>
+    </div>
+  </div>
+</div>
+</div>
+  </div>
+  <!-- tracking table end -->
+
+  <!-- Container-fluid End -->
+
+  <!-- footer start-->
+  <%- include('../../partials/footer')%>
+  <!-- footer End-->
+
+  <%- include('../../partials/end')%>
+
