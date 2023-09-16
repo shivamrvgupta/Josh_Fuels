@@ -10,10 +10,10 @@
                             <div class="card card-table">
                                 <div class="card-body">
                                     <div class="title-header option-title">
-                                        <h5>All Users ( <%= customerCount%> )</h5>
+                                        <h5>All Orders ( <%= ordersCount  %> )</h5>
                                         <form class="d-inline-flex">
-                                            <a href="/admin/customer/orders/add" class="align-items-center btn btn-theme d-flex">
-                                                <i data-feather="plus"></i>Add New
+                                            <a href="/admin/order/add" class="align-items-center btn btn-theme d-flex">
+                                                <i data-feather="plus"></i>Add New Order
                                             </a>
                                         </form>
                                     </div>
@@ -23,34 +23,38 @@
                                             <thead>
                                                 <tr>
                                                     <th>Sr No</th>
-                                                    <th>Name</th>
-                                                    <th>Phone</th>
-                                                    <th>Email</th>
-                                                    <th>Company</th>
-                                                    <th>Total Order</th>
-                                                    <th>Option</th>
+                                                    <th>Order</th>
+                                                    <th>Date</th>
+                                                    <th>Customer</th>
+                                                    <th>Branch</th>
+                                                    <th>Payment Status</th>
+                                                    <th>Total</th>
+                                                    <th>Order Status</th>
+                                                    <th>Actions</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
-                                                <% if (customers != '') { %>        
-                                                    <% customers.forEach((row, index) => { %> 
+                                                <% if (orders != '') { %>        
+                                                    <% orders.forEach((row, index) => { %> 
                                                 <tr>
                                                     <td class="text-center">
                                                         <%= index+1 %>
                                                     </td>
 
-                                                    <td>
+                                                    <td>    
                                                         <div class="user-name">
-                                                            <span><%= row.first_name %> <%= row.last_name %></span>
+                                                            <span><%= row.order_id %></span>
                                                         </div>
                                                     </td>
 
-                                                    <td><%= row.phone %></td>
-                                                    <td><%= row.email %></td>
+                                                    <td><%= row.created_date %></td>
+                                                    <td><%= row.user_id %></td>
 
-                                                    <td><%= row.company %></td>
-                                                    <td>Not Created</td>
+                                                    <td><%= row.branch_id %></td>
+                                                    <td><%= row.paymentStatus %></td>
+                                                    <td><%= row.grand_total %></td>
+                                                    <td><%= row.status %></td>
 
                                                     <td>
                                                         <ul>
@@ -81,9 +85,14 @@
                                                             <td>
                                                                 <tr>
                                                                     <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
                                                                     <td style="width: 100%;text-align:right;padding-right:10%">
                                                                         Nothing To Show
                                                                     </td>
+                                                                    <td></td>
+                                                                    <td></td>
                                                                     <td></td>
                                                                     <td></td>
                                                                 </tr>

@@ -1,62 +1,124 @@
 const mongoose = require('mongoose');
 
+
 const orderSchema = new mongoose.Schema({
-  token: {
-    type: String,
-    required:true
+  order_id:{
+      type : String,
+      required : true
   },
-  order_Id: {
-    type: String,
-    required:true
+  user_id:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
   },
-  date:{
-    type: String,
-    required:true
+  product_id:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'BranchProduct',
   },
-  branch: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Branch',
-    required:true
+  address_id:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Address',
   },
-  customer: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Customer',
-    required: true,
+  branch_id:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Branch',
   },
-    payment_Status:{
-    type: Number,
-    required: true,
-    default: 0.00,
+  quantity : {
+      type: Number,
+      required: true,
+      default: 0.00,
+      set: function(value) {
+        return parseFloat(value).toFixed(2);
+      }
   },
-  total: {
-    type: String,
-    required: true,
-    default: 'percent',
+  coupon_discount:{
+      type: Number,
+      required: true,
+      default: 0.00,
+      set: function(value) {
+        return parseFloat(value).toFixed(2);
+      }
   },
-  status: {
-    type: Boolean,
-    default: true,
+  delivery_fee:{
+      type: Number,
+      required: true,
+      default: 300.00,
+      set: function(value) {
+        return parseFloat(value).toFixed(2);
+      }
   },
-  available_time_starts: {
-    type: String,
-    required:true
+  total_price:{
+      type: Number,
+      required: true,
+      default: 0.00,
+      set: function(value) {
+        return parseFloat(value).toFixed(2);
+      }
   },
-  available_time_ends: {
-    type: String,
-    required:true
+  delivery_date: {
+      type: String,
+      required: true,
   },
-  created_at: {
+  delivery_time: {
+      type: String,
+      required: true,
+  },
+  is_scheduled_for_later: {
+      type : Boolean,
+      required: true,
+      default: false,
+  },
+  payment_method: {
+      type: String,
+      required: true,
+  },
+  note : {
+      type: String,
+      required: true,
+  },
+  grand_total : {
+      type: Number,
+      required: true,
+      default: 0.00,
+      set: function(value) {
+        return parseFloat(value).toFixed(2);
+      }
+  },
+  delivery_man :{
+      type: String,
+      required: true,
+      default : "Not Assigned Yet",
+  },
+  esitmated_delivery_time : {
+      type: String,
+      required: true,
+      default : "6:00 PM",
+  },
+  is_delivery_man_assigned :{
+      type: Boolean,
+      default: false,
+  },
+  is_delivered :{
+      type: Boolean,
+      default: false,
+  },
+  is_cancelled :{
+      type: Boolean,
+      default: false,
+  },
+  status :{ 
+      type: String,
+      default: "Pending",
+  },
+  payment_status :{ 
+      type: Boolean,
+      default: "Unpaid",
+  },
+  created_date: {
       type: Date,
-      default: Date.now
-  },
-  updated_at: {
-    type: Date,
-    default: Date.now
+      default: Date.now,
   }
 });
 
-
-
-const Order = mongoose.model('Admin/Product', orderSchema);
+const Order = mongoose.model('Order', orderSchema);
 
 module.exports = Order;

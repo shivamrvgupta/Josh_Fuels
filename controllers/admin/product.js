@@ -72,6 +72,7 @@ const Product = require('../../models/products/product.js')
 router.get('/lists',authenticateToken, async (req, res) => {
   try {
     const product = await Product.find({});
+    console.log(product)
     const productCount = product.length;
     const user = req.user;
 

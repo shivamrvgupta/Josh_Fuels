@@ -73,6 +73,7 @@ const customer_route = require('./api/customer.js')
 const update_profile = require('./api/update_profile.js')
 const address = require('./api/address.js')
 const customer = require('./controllers/admin/customer.js')
+const order = require('./controllers/branch/order.js')
 
 //customer api route
 app.use('/customer/auth',customer_route)
@@ -112,6 +113,9 @@ app.use('/user/address', address)
 
 // Customer route
 app.use('/admin/customer', customer)
+
+//Orders Route
+app.use('/admin/orders', order)
 
 
 app.listen(process.env.PORT || 3000, function() {

@@ -225,6 +225,9 @@ router.post('/update/:customerId',authenticateToken, upload.fields([
 
     // Check if 'image' field is found in the request
     if (req.files && req.files['customer_image']) {
+      if(customer.profile){
+      deleteImageFile(customer.profile);
+      }
       customer.profile = req.files['customer_image'][0].filename;
     }
 
