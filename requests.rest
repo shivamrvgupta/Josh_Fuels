@@ -1,0 +1,207 @@
+###
+    # Customer Login
+###
+POST http://localhost:3000/api/auth/customer/login
+Content-Type: application/json
+
+{
+    "phone" : "8850664191"
+}
+
+###
+    # Verify OTP
+###
+POST http://localhost:3000/api/auth/customer/verify-otp
+Content-Type: application/json
+
+{
+    "phone" : "8850664191",
+    "otp" : "6361"
+}
+
+
+### Registration
+POST http://127.0.0.1:3000/api/auth/customer/register
+Content-Type: application/json
+
+{
+    "first_name": "Tes",
+    "last_name": "TEst",
+    "email": "test@joshfuels.com",
+    "company": "TYS",
+    "phone": "9210129012",
+    "accept_term": "true"
+}
+
+
+### Add Address
+POST http://localhost:3000/api/auth/customer/add-address
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+
+{
+    "address_type" : "Office", 
+    "address_1" : "S-58, Haware Fantasia, Behind Inorbit Mall", 
+    "area" : "Vashi", 
+    "city" : "Navi Mumbai", 
+    "pincode" : "123455", 
+    "state" : "Maharashtra", 
+    "country" : "India"
+}
+
+### Get Address
+GET http://localhost:3000/api/auth/customer/get-address
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+
+### Update Address
+POST http://localhost:3000/api/auth/customer/update-address
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+
+{
+    "address_id" : "650191993bd8b22339022421",
+    "address_type" : "Office", 
+    "address_1" : "S-58, Haware Fantasia, Behind Inorbit Mall", 
+    "area" : "Vashi", 
+    "city" : "Navi Mumbai", 
+    "pincode" : "000000", 
+    "state" : "Maharashtra", 
+    "country" : "India"
+}
+
+### Deleted Address 
+DELETE http://localhost:3000/api/auth/customer/delete-address
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+
+{
+    "address_id" : "650191993bd8b22339022421"
+}
+
+### Add Device
+POST http://localhost:3000/api/auth/customer/add-device
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+
+{
+    "name" : "shivam's iPhone",
+    "type" : "iOS",
+    "version" : "17.0.1"
+}
+
+### Fetch data 
+Get http://localhost:3000/api/auth/customer/userdata
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+
+### LogOut
+POST http://localhost:3000/api/auth/customer/logout
+Content-Type: application/json
+Authorization: Bearer 
+
+### Send OTP to email 
+POST http://localhost:3000/api/auth/customer/send-otp
+Content-Type: application/json
+
+{
+    "email" : "shivamrvgupta@gmail.com"
+}
+
+########## Branch API ##########
+
+### 
+    # Branch Details
+###
+GET  http://localhost:3000/api/auth/branch/nearest-branch
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+
+### 
+    # Nearest Branch Product
+###
+GET  http://localhost:3000/api/auth/branch/branchProducts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
+
+
+########## Cart API ##########
+
+### 
+    # Show Cart
+###
+GET  http://localhost:3000/api/auth/cart/get
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
+
+### 
+    # Add To Cart
+###
+POST http://localhost:3000/api/auth/cart/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY 
+
+{
+    "branch" : "64f6da85ed30c8f3d5765043",
+    "product" : "64f6da5aed30c8f3d5765007",
+    "quantity" : "1000",
+    "total_price" : 123400
+}
+
+### 
+    # Update Cart Data
+###
+POST http://localhost:3000/api/auth/cart/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY 
+
+{
+    "branch" : "64db79ee99f0cf7fe1ab89f6",
+    "product" : "64f6da5aed30c8f3d5765007",
+    "quantity" : 100,
+    "total_price" : 103400
+}
+
+### 
+    # Delete Cart Data
+###
+DELETE http://localhost:3000/api/auth/cart/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
+
+{
+    "product" : "64f6da5aed30c8f3d5765007"
+}
+
+
+###         # Order API  #       ###
+## CREATE ORDER 
+POST http://localhost:3000/api/auth/order/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+
+{
+    "address_id": "65003ac3957a312ef073de8e",
+    "cart_id": "650054aaee246d7f04c6a1b3",
+    "delivery_date": "15/07/2023",
+    "delivery_time": "4:00 - 9:00",
+    "payment_method": "Cash on Delivery",
+    "note": "Keep the petrol extra on;y",
+    "grand_total": "1,334"
+}
+
+
+### GeT ORDER 
+GET http://localhost:3000/api/auth/order/get
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+
+
+### Cancel order
+POST http://localhost:3000/api/auth/order/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+
+{
+    "order_id" : "100001"
+}

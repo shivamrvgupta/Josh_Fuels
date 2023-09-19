@@ -1,0 +1,37 @@
+const notification_options = {
+    priority: "high",
+    timeToLive: 60 * 60 * 24
+};
+
+function initializeFirebaseAdmin() {
+  console.log(`(firebaseapp)initializeFirebaseAdmin`, firebaseAdmin);
+  firebaseAdmin.initializeApp({
+    credential: firebaseAdmin.credential.cert(serviceAccount),
+  });
+}
+async function sendMessage({ device_token, message }) {
+  try {
+    console.log(`(firebaseapp)sendMessage. device_token[${device_token}], message[${message}]`);
+    const payload = {
+        notification: {
+         title: 'hello world title',
+         body: message,
+         sound: 'default',
+         badge: '1',
+        },
+       };
+    firebaseAdmin
+      .messaging()
+      .sendToDevice(device_token, payload, notification_options)
+      .then((response) => {
+        console.error(`(firebaseapp)sendMessage success`, response);
+        return response;
+      })
+      .catch((error) => {
+        console.error(`(firebaseapp)Error in sendMessage`, error);
+        throw error;
+      });
+  } catch (error) {
+    throw error;
+  }
+}
