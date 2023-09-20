@@ -13,25 +13,25 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
-    products : [{ 
+    product_items : [{ 
         product_id:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'BranchProduct',
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'BranchProduct',
         },
         quantity : {
             type: Number,
             required: true,
             default: 0.00,
             set: function(value) {
-                return parseFloat(value).toFixed(2);
-            }
+              return parseFloat(value).toFixed(2);
+          }
         },
         price : {
             type: Number,
             required: true,
             default: 0.00,
             set: function(value) {
-                return parseFloat(value).toFixed(2);
+              return parseFloat(value).toFixed(2);
             }
         }
     }],
@@ -42,6 +42,14 @@ const orderSchema = new mongoose.Schema({
     branch_id:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Branch',
+    },
+    quantity : {
+        type: Number,
+        required: true,
+        default: 0.00,
+        set: function(value) {
+          return parseFloat(value).toFixed(2);
+        }
     },
     coupon_discount:{
         type: Number,

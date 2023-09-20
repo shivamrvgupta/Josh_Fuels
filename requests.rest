@@ -37,7 +37,7 @@ Content-Type: application/json
 ### Add Address
 POST http://localhost:3000/api/auth/customer/add-address
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
 
 {
     "address_type" : "Office", 
@@ -52,12 +52,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5N
 ### Get Address
 GET http://localhost:3000/api/auth/customer/get-address
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
 
 ### Update Address
 POST http://localhost:3000/api/auth/customer/update-address
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
 
 {
     "address_id" : "650191993bd8b22339022421",
@@ -73,16 +73,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5N
 ### Deleted Address 
 DELETE http://localhost:3000/api/auth/customer/delete-address
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
 
 {
-    "address_id" : "650191993bd8b22339022421"
+    "address_id" : "650191c73bd8b22339022427"
 }
 
 ### Add Device
 POST http://localhost:3000/api/auth/customer/add-device
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
 
 {
     "name" : "shivam's iPhone",
@@ -93,7 +93,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5N
 ### Fetch data 
 Get http://localhost:3000/api/auth/customer/userdata
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
 
 ### LogOut
 POST http://localhost:3000/api/auth/customer/logout
@@ -115,7 +115,7 @@ Content-Type: application/json
 ###
 GET  http://localhost:3000/api/auth/branch/nearest-branch
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
 
 ### 
     # Nearest Branch Product
@@ -142,10 +142,8 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY 
 
 {
-    "branch" : "64f6da85ed30c8f3d5765043",
-    "product" : "64f6da5aed30c8f3d5765007",
-    "quantity" : "1000",
-    "total_price" : 123400
+    "product" : "64f6da85ed30c8f3d5765043",
+    "quantity" : "100"
 }
 
 ### 
@@ -156,10 +154,21 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY 
 
 {
-    "branch" : "64db79ee99f0cf7fe1ab89f6",
-    "product" : "64f6da5aed30c8f3d5765007",
-    "quantity" : 100,
-    "total_price" : 103400
+    "cart_id" : "6509f70778e25cf42012d7e8",
+    "product_id" : "64f6da85ed30c8f3d5765043",
+    "quantity" : 91
+}
+
+### 
+    # Delete Single Cart Data
+###
+POST http://localhost:3000/api/auth/cart/delete-item
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
+
+{
+    "cart_id" : "6509f70778e25cf42012d7e8",
+    "product_id" : "64f6da5aed30c8f3d5765007"
 }
 
 ### 
@@ -170,7 +179,8 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
 
 {
-    "product" : "64f6da5aed30c8f3d5765007"
+    "cart_id" : "6509f70778e25cf42012d7e8",
+    "product_id" : "64f6da85ed30c8f3d5765043"
 }
 
 
@@ -178,7 +188,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5N
 ## CREATE ORDER 
 POST http://localhost:3000/api/auth/order/add
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
 
 {
     "address_id": "65003ac3957a312ef073de8e",
@@ -194,13 +204,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5N
 ### GeT ORDER 
 GET http://localhost:3000/api/auth/order/get
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
 
 
 ### Cancel order
 POST http://localhost:3000/api/auth/order/delete
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTQ1MTM4MzQsImV4cCI6MTY5NTExODYzNH0.GgU7Ru7IllILTdjLW9s9L2tnOah8e2ESCaNZ8iQR-ak
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
 
 {
     "order_id" : "100001"

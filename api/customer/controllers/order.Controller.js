@@ -3,7 +3,7 @@ const { Validator } = require('../utils');
 const models = require('../models');
   
 module.exports = {
-    // Get Cart Data
+    // Get Order Data
         orderList: async (req, res) => {
             try {
             const session = req.user;
@@ -13,9 +13,9 @@ module.exports = {
         
             if (!user_id) {
                 return res.status(StatusCodesConstants.ACCESS_DENIED).json({
-                status: false,
-                status_code: StatusCodesConstants.ACCESS_DENIED,
-                message: MessageConstants.NOT_LOGGED_IN,
+                    status: false,
+                    status_code: StatusCodesConstants.ACCESS_DENIED,
+                    message: MessageConstants.NOT_LOGGED_IN,
                 });
             }
         
@@ -135,12 +135,15 @@ module.exports = {
                     user_id : user_id,
                     address_id : req.body.address_id,
                     cart_id : req.body.cart_id,
-                    payment_method : req.body.payment_method,
+                    coupon_discount : req.body.coupon_discount,    
+                    total_price : req.body.total_price,    
+                    delivery_fee : req.body.delivery_fee,    
                     delivery_date : req.body.delivery_date,
                     delivery_time : req.body.delivery_time,
+                    payment_method : req.body.payment_method,
                     note : req.body.note ,
                     grand_total : req.body.grand_total,
-                    is_scheduled_for_later : req.body.is_scheduled_for_later,
+                        
                 }
                 
                 const validationResult = Validator.validate(orderData, {
@@ -150,15 +153,24 @@ module.exports = {
                     cart_id : {
                       presence : {allowEmpty : false }
                     },
+                    total_price : {
+                      presence : {allowEmpty : false }
+                    },
+                    coupon_discount : {
+                      presence : {allowEmpty : false }
+                    },
+                    payment_method: {
+                        presence: { allowEmpty: false }, 
+                        length: { minimum: 3, maximum: 100 },
+                    },
+                    delivery_fee: {
+                      presence: { allowEmpty: false },
+                    },
                     delivery_date: {
                       presence: { allowEmpty: false },
                       length: { minimum: 3, maximum: 100 },
                     },
                     delivery_time: {
-                      presence: { allowEmpty: false }, 
-                      length: { minimum: 3, maximum: 100 },
-                    },
-                    payment_method: {
                       presence: { allowEmpty: false }, 
                       length: { minimum: 3, maximum: 100 },
                     },

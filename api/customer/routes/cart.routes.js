@@ -10,6 +10,7 @@ router.get('/cart-test', (req, res) => {
 router.get('/get', AuthMiddleware.authenticateToken ,CartController.cartList);
 router.post('/add', AuthMiddleware.authenticateToken ,CartController.addCartData);
 router.post('/update', AuthMiddleware.authenticateToken ,CartController.updateCartData);
-router.delete('/delete', AuthMiddleware.authenticateToken ,CartController.deleteCartItem);
+router.delete('/delete', AuthMiddleware.authenticateToken ,CartController.deleteCart);
+router.post('/delete-item', AuthMiddleware.authenticateToken ,CartController.deleteCartItem);
 
 module.exports = router;
