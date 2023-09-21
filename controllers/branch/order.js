@@ -72,12 +72,12 @@ router.get("/all", authenticateToken, async (req,res) => {
 router.get('/details/:orderId', authenticateToken, async (req, res) => {
   try {
     const orderId = req.params.orderId;
-    const order = await Order.findById(orderId).populate('product_items').populate('branch_id').populate('address_id');
+    const order = await Order.findById(orderId).populate('product_items').populate('branch_id').populate('address_id').populate('user_id');
     const user = req.user;
     if (!user) {
       return res.redirect('/admin/auth/login');
     }
-    res.render('branch/order/detail', { user,order,  route : route.baseUrL , error:"order Detail"});
+    res.render('branch/order/detail', { user,order,  route : route.baseUrL,options , error:"order Detail"});
   } catch (err) {
     console.log(err);
     res.status(500).send('Internal Server Error');
