@@ -1,9 +1,10 @@
 
 <%- include('../../partials/main', { pageTitle: "Customer's List's " }) %>
-
-            <!-- Container-fluid starts-->
+    
+<!-- Container-fluid starts-->
             <div class="page-body">
                 <!-- All User Table Start -->
+                
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-12">
@@ -48,36 +49,42 @@
                                                         </div>
                                                     </td>
 
-                                                    <td><%= row.created_date %></td>
-                                                    <td><%= row.user_id %></td>
+                                                    <td><%= row.created_date.toLocaleDateString('en-UK',options) %></td>
+                                                    <td><a href="<%= route%>admin/customer/detail/<%= row.user_id.id%>"><%= row.user_id.first_name %></a></td>
 
-                                                    <td><%= row.branch_id %></td>
-                                                    <td><%= row.paymentStatus %></td>
-                                                    <td><%= row.grand_total %></td>
-                                                    <td><%= row.status %></td>
-
+                                                    <td><%= row.branch_id.name %></td>
+                                                    <td>
+                                                            <div class="<%= row.payment_status ? 'status-close' : 'status-danger' %>">
+                                                                <span><%= row.payment_status ? 'Paid' : 'Unpaid' %></span>
+                                                            </div>
+                                                    </td>
+                                                    <td><%= row.grand_total%></td>
+                                                  <td>
+                                                    <div id="orderStatusElement" class=""><span id="orderStatus"><%= row.status%></span></div>
+</td>
                                                     <td>
                                                         <ul>
                                                             <li>
-                                                                <a href="/admin/customer/detail/<%= row.id%>">
+                                                                <a href="/admin/orders/details/<%= row.id%>">
                                                                     <i class="ri-eye-line"></i>
                                                                 </a>
                                                             </li>
 
                                                             <li>
-                                                                <a href="/admin/customer/update/<%= row.id%>">
+                                                                <a href="/admin/order/update/<%= row.id%>">
                                                                     <i class="ri-pencil-line"></i>
                                                                 </a>
                                                             </li>
 
                                                             <li>
-                                                                <a href="/admin/customer/delete/<%= row.id%>" data-bs-toggle="modal"
+                                                                <a href="/admin/order/delete/<%= row.id%>" data-bs-toggle="modal"
                                                                     data-bs-target="#exampleModalToggle">
                                                                     <i class="ri-delete-bin-line"></i>
                                                                 </a>
                                                             </li>
                                                         </ul>
                                                     </td>
+                                                    
                                                 </tr>
                                                 
                                                 <% }) %>      
@@ -172,6 +179,7 @@
                 <!-- Delete Modal Box End -->
                 
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
                 <script>
                     $(document).ready(function () {
                       // Handle click event on the "Delete" link
@@ -205,9 +213,7 @@
                       });
                     });
                   </script>
-            
-
-
+                        
 
 
 <%- include('../../partials/end')%>

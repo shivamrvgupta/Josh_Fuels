@@ -6,64 +6,47 @@
     <div class="row">
       <div class="col-sm-8">
         <div class="card">
-          <div class="card-body">
-      
-            <div class="title-header title-header-block package-card">
-              <div>
-                <h5>Product #<%= product.name %></h5>
+          <div class="card-body d-flex">
+            <div class="col-xl-6 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+              <div class="">
+                  <img src="<% route %>/image/<%= product.image %>" id="img-1" data-zoom-image="../assets/images/product/category/1.jpg" class="img-fluid image_zoom_cls-0 blur-up lazyloaded" alt="">
               </div>
-              <div class="card-order-section">
-                <ul>
-                  <li>Created Time: <%= product.updated_at %></li>
-                  <li>Cost: <%= product.price %></li>
-                </ul>
-              </div>
-            </div>
-      
-            <div class="row align-items-md-center gx-md-5">
-              <div class="col-md-4 mb-3 mb-md-0">
-                <div class="d-flex align-items-center">
-                  <% if (product.image) { %>
-                    <img style="height: 200px; width:200px"
-                      class="mr-4"
-                      src="/image/<%= product.image %>"
-                      alt="Image Description"  />
-                  <% } %>
-                </div>
-              </div>
-              <div class="col-8 pt-2">
-                <h3 class="border-bottom mb-4"><%= product.name %></h3>
-      
-                <div>
-                  <h4>Description</h4>
-                  <p>
-                    <%= product.description %>
-                  </p>
-                </div>
-                <p></p>
-                <span class="mb-4">
-                  <span><h4>Price:</h4></span>
-                  <span><h5><%= product.price %></h5></span> </span
-                ><br />
-                <span>
-                  <span><h5>Tax:</h5></span>
-                  <span><h6><%= product.tax %></h6></span> </span
-                ><br />
-                <span>
-                  <span><h5>Discount:</h5></span>
-                  <span><h6><%= product.discount %></h6></span> </span
-                ><br />
-                <span>
-                  <span><h5>Available Time Start:</h5></span>
-                  <span><h6><%= product.available_time_starts %></h6></span> </span
-                ><br />
-                <span>
-                  <span><h5>Available Time Ends:</h5></span>
-                  <span><h6><%= product.available_time_ends %></h6></span> </span
-                ><br />
-              </div>
+          </div>
+          <div class="col-xl-6 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+                      <div class="right-box-contain">
+                          <h2 class="name"><%= product.name%></h2>
+                          <br>
+                          <div class="price-rating">
+                              <h3 class="theme-color price">₹<%= product.discounted_price %>   <small><del class="text-content">₹<%= product.price%> </del></small> <span class="offer theme-color">  (<%= product.discount %>)</span></h3>
+                          </div>  
+                          <br>
+
+                          <div class="procuct-contain">
+                              <p><%= product.description %>
+                              </p>
+                          </div>
+
+
+                          <div class="pickup-box">
+                              <div class="product-title">
+                                  <h4><%product.branch%></h4>
+                              </div>
+
+                              <div class="product-info">
+                                  <ul class="product-info-list product-info-list-2">
+                                      <li>Category : <a href="javascript:void(0)"><%= product.category.name %></a></li>
+                                      <li>Sub Category : <a href="javascript:void(0)"><%= product.sub_category.name%></a></li>
+                                      <li>Tax : <a href="javascript:void(0)"><%= product.tax %></a></li>
+                                      <li>Date : <a href="javascript:void(0)"><%= product.created_at.toLocaleDateString() %></a></li>
+                                      <!-- <li>Stock : <a href="javascript:void(0)">2 Items Left</a></li> -->
+                                  </ul>
+                              </div>
+                          </div>
+
+                      </div>
             </div>
           </div>
+          
         </div>
       </div>
       
@@ -166,6 +149,79 @@
             </div>
     </div>
   </div>
+
+  <div class="col-12">
+    <div class="product-section-box">
+        <ul class="nav nav-tabs custom-nav" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">Description</button>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="false">Additional info</button>
+            </li>
+        </ul>
+
+        <div class="tab-content custom-tab" id="myTabContent">
+            <div class="tab-pane fade active show" id="description" role="tabpanel" aria-labelledby="description-tab">
+                <div class="product-description">
+                    <div class="nav-desh">
+                        <p><%= product.description%></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
+                <div class="table-responsive">
+                    <table class="table info-table">
+                        <tbody>
+                            <tr>
+                                <td>Product</td>
+                                <td><%= product.name %></td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Product Price</td>
+                                <td><%= product.price %></td>
+                            </tr>
+                            <tr>
+                                <td>Product Category</td>
+                                <td><%= product.category.name%></td>
+                            </tr>
+                            <tr>
+                                <td>Product Sub_Category</td>
+                                <td><%= product.sub_category.name%></td>
+                            </tr>
+                            <tr>
+                                <td>Discount on the Product</td>
+                                <td><%= product.discount%></td>
+                            </tr>
+                            <tr>
+                                <td>Product available time starts</td>
+                                <td><%= product.available_time_starts %></td>
+                            </tr>
+                            <tr>
+                                <td>Product available time ends</td>
+                                <td><%= product.available_time_ends%></td>
+                            </tr>
+                            <tr>
+                                <td>Created On</td>
+                                <td><%= product.created_at.toLocaleDateString()%></td>
+                            </tr>
+                            <tr>
+                                <td>Updated On</td>
+                                <td><%= product.updated_at.toLocaleDateString()%></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+              </div>
+        </div>
+    </div>
+</div>
+</div>
 </div>
 </div>
   </div>

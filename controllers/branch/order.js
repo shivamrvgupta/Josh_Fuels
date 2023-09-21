@@ -31,15 +31,17 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
+const options = { day: '2-digit', month: 'short', year: 'numeric' };
 
 const route = {
   baseUrL : "http://localhost:3000/",
 };
 
+
 // Models
 const Customer = require('../../models/users/user.js');
 const Order = require('../../models/products/order.js')
+
 
 //Routes
 router.get("/all", authenticateToken, async (req,res) => {
@@ -50,19 +52,37 @@ router.get("/all", authenticateToken, async (req,res) => {
       return res.redirect('/admin/auth/login')
     }
   const orders = await Order
-  .findById(orderId)
-  .populate('customer')
-  .populate('braanch_product')
+  .find()
+  .populate('user_id')
+  .populate('branch_id')
+  .populate('address_id')
+  .populate('address_id')
 
-  const customer = await Customer.find()
+  const customers = await Customer.find({ usertype: "Customer" });
   const ordersCount = orders.length;
-  res.render("branch/order/all", {user, ordersCount, customer, orders, route : route.baseUrL , error: "List of Orders"});
+
+  res.render("branch/order/all", {user, ordersCount, customers, orders, options, route : route.baseUrL , error: "List of Orders"});
   }catch(err){
     console.log(err);
     res.status(500).send('Internal Server Error');
   }
 
 })
+
+router.get('/details/:orderId', authenticateToken, async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    const order = await Order.findById(orderId).populate('product_items').populate('branch_id').populate('address_id');
+    const user = req.user;
+    if (!user) {
+      return res.redirect('/admin/auth/login');
+    }
+    res.render('branch/order/detail', { user,order,  route : route.baseUrL , error:"order Detail"});
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 
 

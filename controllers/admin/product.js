@@ -72,7 +72,6 @@ const Product = require('../../models/products/product.js')
 router.get('/lists',authenticateToken, async (req, res) => {
   try {
     const product = await Product.find({});
-    console.log(product)
     const productCount = product.length;
     const user = req.user;
 
@@ -197,8 +196,6 @@ router.get('/update/:id', authenticateToken, async (req, res) => {
       .findById(productId)
       .populate('category')
       .populate('sub_category')
-
-
       user = req.user;
 
       const categories = await Category.find();
@@ -274,7 +271,7 @@ router.post('/update/:productId', upload.fields([
 router.get('/detail/:productId', authenticateToken, async (req, res) => {
   try {
     const productId = req.params.productId;
-    const product = await Product.findById(productId);
+    const product = await Product.findById(productId).populate('category').populate('sub_category');
     const user = req.user;
     const addon = await AddOn.find({})
     if (!user) {

@@ -46,7 +46,7 @@ const productSchema = new mongoose.Schema({
     default: 'percent',
   },  
   discounted_price: {
-    type: Number, // Store the discounted price
+    type: Number,
   },
   category: {
     type: mongoose.Schema.Types.ObjectId,
@@ -76,7 +76,7 @@ const productSchema = new mongoose.Schema({
   },
   created_at: {
       type: Date,
-      default: Date.now
+      default: Date.now,
   },
   updated_at: {
     type: Date,
@@ -112,6 +112,6 @@ productSchema.pre('save', function (next) {
   next();
 });
 
-const Product = mongoose.model('Admin/Product', productSchema);
+const Product = mongoose.model('MasterProduct', productSchema);
 
 module.exports = Product;

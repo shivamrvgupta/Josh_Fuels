@@ -183,10 +183,10 @@
 
                             <div class="card">
                                 <div class="card-body">
-                                        <div class="mb-4 row align-items-center">
-                                            <button class="btn btn-solid" type="submit">Update Product</button>
-                                        </div>
-                                </div>
+                                    <div class="row align-items-center">
+                                        <button class="btn btn-solid" type="submit">Update Product</button>
+                                    </div>
+                            </div>
                             </div>
 
                         </form>
@@ -259,52 +259,6 @@
     </script>
 
     
-    
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-          const tagInput = document.getElementById("tagInput");
-          const tagContainer = document.getElementById("tagContainer");
-          let tags = [];
-    
-          tagInput.addEventListener("keydown", function(event) {
-            if (event.key === "Enter" || event.key === ",") {
-              event.preventDefault();
-              const productName = tagInput.value.trim();
-    
-              if (productName) {
-                addTag(productName);
-              }
-    
-              tagInput.value = ""; // Clear the input
-            }
-          });
-    
-          function addTag(productName) {
-            if (!tags.includes(productName)) {
-              tags.push(productName);
-              renderTags();
-            }
-          }
-    
-          function removeTag(tag) {
-            tags = tags.filter(t => t !== tag);
-            renderTags();
-          }
-    
-          function renderTags() {
-            tagContainer.innerHTML = "";
-            tags.forEach(tag => {
-              tagContainer.innerHTML += `
-                <span class="tag">
-                  ${tag}
-                  <span class="close" onclick="removeTag('${tag}')">&times;</span>
-                </span>`;
-            });
-          }
-        });
-      </script>
-
       <script>    
         new MultiSelectTag('countries', {
             rounded: true,    // default true
@@ -341,30 +295,6 @@
         }
       </style>
 
-        
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('productForm'); // Replace with your actual form ID
-        
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
-        
-                const addonsSelect = document.getElementById('countries');
-        
-                if (addonsSelect) {
-                    const selectedAddons = Array.from(addonsSelect.selectedOptions).map(option => option.value);
-        
-                    // Set the selected addon IDs as JSON data in the hidden input field
-                    document.getElementById('selectedAddons').value = JSON.stringify(selectedAddons);
-        
-                    form.submit(); // Submit the form
-                } else {
-                    console.error('Addons select element not found.');
-                }
-            });
-        });
-        
-    </script>
 
     
 <script>

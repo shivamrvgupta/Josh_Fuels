@@ -75,7 +75,8 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
   addons: [{
-    type: String,model
+    type: String,
+    
   }],
   available_time_starts: {
     type: String,

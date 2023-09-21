@@ -227,12 +227,10 @@ router.post('/update/:productId', upload.fields([
 ]), authenticateToken, async (req, res) => {
   try {
     const productId = req.params.productId;
-
+    console.log("Updating product with ID:", productId);
     // Collect data from the form
-    const { name, description, price, tax, tax_type, discount, discount_type, category, selectedAddons, sub_category,available_time_starts, available_time_ends } = req.body;
-
-     // Parse the selected addon IDs from the JSON data
-     const parsedSelectedAddons = JSON.parse(selectedAddons);
+    const { name, description, price, tax, tax_type, discount, discount_type, category, sub_category,available_time_starts, available_time_ends } = req.body;
+    console.log("req.body",req.body)
      // Find the product by its ID
      const productToUpdate = await Product.findById(productId);
  
@@ -273,7 +271,7 @@ router.post('/update/:productId', upload.fields([
 router.get('/detail/:productId', authenticateToken, async (req, res) => {
   try {
     const productId = req.params.productId;
-    const product = await Product.findById(productId);
+    const product = await Product.findById(productId).populate('category').populate('sub_category');
     const user = req.user;
     const addon = await AddOn.find({})
     if (!user) {
