@@ -78,6 +78,7 @@ const orderSchema = new mongoose.Schema({
     delivery_date: {
         type: String,
         required: true,
+        // default: (Date.now() + (3600 * 1000 * 24)),
     },
     delivery_time: {
         type: String,

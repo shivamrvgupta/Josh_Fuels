@@ -41,6 +41,7 @@ const route = {
 // Models
 const Customer = require('../../models/users/user.js');
 const Order = require('../../models/products/order.js')
+const Branch = require('../../models/branch/profile.js')
 
 
 //Routes
@@ -56,12 +57,12 @@ router.get("/all", authenticateToken, async (req,res) => {
   .populate('user_id')
   .populate('branch_id')
   .populate('address_id')
-  .populate('address_id')
 
   const customers = await Customer.find({ usertype: "Customer" });
+  const branch = await Branch.find();
   const ordersCount = orders.length;
 
-  res.render("branch/order/all", {user, ordersCount, customers, orders, options, route : route.baseUrL , error: "List of Orders"});
+  res.render("branch/order/all", {user, ordersCount,branch, customers, orders, options, route : route.baseUrL , error: "List of Orders"});
   }catch(err){
     console.log(err);
     res.status(500).send('Internal Server Error');

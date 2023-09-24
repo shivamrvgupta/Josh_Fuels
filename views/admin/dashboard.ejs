@@ -10,9 +10,9 @@
                                     <div class="media align-items-center static-top-widget">
                                         <div class="media-body p-0">
                                             <span class="m-0">Total Revenue</span>
-                                            <h4 class="mb-0 counter">₹0
+                                            <h4 class="mb-0 counter">₹<%= totalRevenue %>
                                                 <span class="badge badge-light-primary grow">
-                                                    <i data-feather="trending-up"></i>0%</span>
+                                                    <i data-feather="trending-up"></i><%= totalRevenue %>% </span>
                                             </h4>
                                         </div>
                                         <div class="align-self-center text-center">
@@ -29,9 +29,9 @@
                                     <div class="media static-top-widget">
                                         <div class="media-body p-0">
                                             <span class="m-0">Total Orders</span>
-                                            <h4 class="mb-0 counter">0
+                                            <h4 class="mb-0 counter"><%= allOrders %>
                                                 <span class="badge badge-light-danger grow">
-                                                    <i data-feather="trending-down"></i>0%</span>
+                                                    <i data-feather="trending-up"></i><%= allOrders %>%</span>
                                             </h4>
                                         </div>
                                         <div class="align-self-center text-center">
@@ -48,8 +48,8 @@
                                     <div class="media static-top-widget">
                                         <div class="media-body p-0">
                                             <span class="m-0">Total Products</span>
-                                            <h4 class="mb-0 counter">0
-                                                <a href="add-new-product.html" class="badge badge-light-secondary grow">
+                                            <h4 class="mb-0 counter"><%= allProducts %>
+                                                <a href="/admin/product/add" class="badge badge-light-secondary grow">
                                                     ADD NEW</a>
                                             </h4>
                                         </div>
@@ -68,9 +68,9 @@
                                     <div class="media static-top-widget">
                                         <div class="media-body p-0">
                                             <span class="m-0">Total Customers</span>
-                                            <h4 class="mb-0 counter">0
+                                            <h4 class="mb-0 counter"><%= allCustomers%>
                                                 <span class="badge badge-light-success grow">
-                                                    <i data-feather="trending-down"></i>0%</span>
+                                                    <i data-feather="trending-up"></i><%= allCustomers %>%</span>
                                             </h4>
                                         </div>
 
@@ -82,46 +82,33 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
-                            <div class="card o-hidden">
+                        <div class="col-xl-6 d-flex ">
+                            <div class="card o-hidden card-hover">
                                 <div class="card-header border-0 pb-1">
                                     <div class="card-header-title">
                                         <h4>Product</h4>
                                     </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="category-slider no-arrow">
-                                        <div>
-                                            <div class="dashboard-category">
-                                                <a href="javascript:void(0)" class="category-image">
-                                                    <img src="<%= route %>/images/img2.jpg" class="img-fluid" alt="">
-                                                </a>
-                                                <a href="javascript:void(0)" class="category-name">
-                                                    <h6>Diesel</h6>
-                                                </a>
-                                            </div>
+                                <div class="upper-card-body d-flex">
+                                <% products.forEach(function(item){ %>
+                                    <a href="/admin/product/detail/<%= item._id %>">
+                                    <div class="product-card-item">
+                                        <div class="card-body">
+                                        <img src="<% route %>/images/img2.jpg" style="width: 100px; height: 100px; border-radius: 5px;" class="p-2  " >
+                                        <br>
+                                          <h4 class="product-card-title"><%= item.name%></h4>
+                                            <p class="product-card-text">₹<%= item.price%></p>
                                         </div>
-
-                                        <div>
-                                            <div class="dashboard-category">
-                                                <a href="javascript:void(0)" class="category-image">
-                                                    <img src="<%= route %>/images/img2.jpg" class="img-fluid" alt="">
-                                                </a>
-                                                <a href="javascript:void(0)" class="category-name">
-                                                    <h6>Petrol</h6>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                
-                                    </div>
+                                      </div>
+                                    </a>
+                                <% }) %>
                                 </div>
                             </div>
+                        </div>
                         </div>
                         <!-- chart caard section End -->
 
                         <!-- Addon start-->
-                        <div class="col-xl-5">
+                        <div class="col-xl-6">
                             <div class="card o-hidden card-hover">
                                 <div class="card-header card-header-top card-header--2">
                                     <div class="card-header-title">
@@ -134,132 +121,24 @@
                                         <div class="table-responsive">
                                             <table class="best-selling-table table border-0">
                                                 <tbody>
-                                                    <tr>
+                                                    <% addOn.forEach(function(item){ %>
+                                                    <tr class="table-order">
                                                         <td>
-                                                            <div class="best-product-box">
-                                                                <div class="product-image">
-                                                                    <img src="<%= route %>/images/user/1.jpg"
-                                                                        class="img-fluid" alt="Product">
-                                                                </div>
-                                                                <div class="product-name">
-                                                                    <h5>Bike Oil</h5>
-                                                                </div>
-                                                            </div>
+                                                            <p>Product Name</p>
+                                                            <h5><%= item.name %></h5>
                                                         </td>
-
                                                         <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Price</h6>
-                                                                <h5>₹54.00</h5>
-                                                            </div>
+                                                            <p>Price</p>
+                                                            <h5>₹<%= item.price %></h5>
                                                         </td>
-
                                                         <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Orders</h6>
-                                                                <h5>0</h5>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Stock</h6>
-                                                                <h5>0</h5>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Amount</h6>
-                                                                <h5>₹1,798</h5>
-                                                            </div>
+                                                            <p>Created at</p>
+                                                            <h5><%= item.created_at.toLocaleDateString('en-UK',options) %></h5>
                                                         </td>
                                                     </tr>
-
-                                                    <tr>
-                                                        <td>
-                                                            <div class="best-product-box">
-                                                                <div class="product-image">
-                                                                    <img src="<%= route %>/images/user/1.jpg"
-                                                                        class="img-fluid" alt="Product">
-                                                                </div>
-                                                                <div class="product-name">
-                                                                    <h5>Car Oil</h5>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Price</h6>
-                                                                <h5>₹62.00</h5>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Orders</h6>
-                                                                <h5>0</h5>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Stock</h6>
-                                                                <h5>0</h5>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Amount</h6>
-                                                                <h5>₹0</h5>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>
-                                                            <div class="best-product-box">
-                                                                <div class="product-image">
-                                                                    <img src="<%= route%>/images/user/1.jpg"
-                                                                        class="img-fluid" alt="Product">
-                                                                </div>
-                                                                <div class="product-name">
-                                                                    <h5>Addon 3</h5>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Price</h6>
-                                                                <h5>₹57.00</h5>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Orders</h6>
-                                                                <h5>0</h5>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Stock</h6>
-                                                                <h5>0</h5>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Amount</h6>
-                                                                <h5>₹0</h5>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                                    <% }) %>
                                                 </tbody>
+    
                                             </table>
                                         </div>
                                     </div>
@@ -268,16 +147,16 @@
                         </div>
                         <!-- Addon end-->
 
-                        <!-- Earning chart star-->
-                        <div class="col-xl-7">
-                            <div class="card o-hidden">
+                        <!-- Revenue chart start-->
+                        <div class="col-xl-12">
+                            <div class="card o-hidden card-hover">
                                 <div class="card-header border-0 pb-1">
                                     <div class="card-header-title">
                                         <h4>Revenue Report</h4>
                                     </div>
                                 </div>
                                 <div class="card-body p-0">
-                                    <div id="report-chart"></div>
+                                    <div id="revenue-chart"></div>
                                 </div>
                             </div>
                         </div>
@@ -311,94 +190,32 @@
                                         <div class="table-responsive">
                                             <table class="best-selling-table table border-0">
                                                 <tbody>
-                                                    <tr>
+                                                    <% products.forEach(function(item){ %>
+                                                    <tr class="table-order">
                                                         <td>
-                                                            <div class="best-product-box">
-                                                                <div class="product-image">
-                                                                    <img src="<%= route %>/images/user/1.jpg"
-                                                                        class="img-fluid" alt="Product">
-                                                                </div>
-                                                                <div class="product-name">
-                                                                    <h5>Petrol</h5>
-                                                                    <h6>26-08-2022</h6>
-                                                                </div>
-                                                            </div>
+                                                            <a href="javascript:void(0)">
+                                                                <img src="<% route %>/image/<%= item.image %>" style="width: 100px; height: 100px;"
+                                                                    class="" alt="">
+                                                            </a>
                                                         </td>
-
                                                         <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Price</h6>
-                                                                <h5>₹109.00</h5>
-                                                            </div>
+                                                            <p>Product Name</p>
+                                                            <h5><%= item.name %></h5>
                                                         </td>
-
                                                         <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Orders</h6>
-                                                                <h5>0</h5>
-                                                            </div>
+                                                            <p>Quantity</p>
+                                                            <!-- <h5><%= item.quantity %></h5> -->
+                                                            <h5> <%= productQuantities[item._id] || 0 %></h5>
+                                                            
                                                         </td>
-
                                                         <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Stock</h6>
-                                                                <h5>0</h5>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Amount</h6>
-                                                                <h5>₹0</h5>
-                                                            </div>
+                                                            <p>Price</p>
+                                                            <h5>₹<%= item.price %></h5>
                                                         </td>
                                                     </tr>
-
-                                                    <tr>
-                                                        <td>
-                                                            <div class="best-product-box">
-                                                                <div class="product-image">
-                                                                    <img src="<%= route%>/images/user/1.jpg"
-                                                                        class="img-fluid" alt="Product">
-                                                                </div>
-                                                                <div class="product-name">
-                                                                    <h5>Diesel</h5>
-                                                                    <h6>26-08-2022</h6>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Price</h6>
-                                                                <h5>₹114.00</h5>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Orders</h6>
-                                                                <h5>0</h5>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Stock</h6>
-                                                                <h5>0</h5>
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="product-detail-box">
-                                                                <h6>Amount</h6>
-                                                                <h5>₹0</h5>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-
-                                                   
+                                                    <% }) %>
                                                 </tbody>
+    
                                             </table>
                                         </div>
                                     </div>
@@ -406,7 +223,6 @@
                             </div>
                         </div>
                         <!-- Best Selling Product End -->
-
 
                         <!-- Earning chart star-->
                         <div class="col-xl-6">
@@ -424,266 +240,75 @@
                         <!-- Earning chart end-->
 
 
-                        <!-- Transactions start-->
-                        <!-- <div class="col-xxl-4 col-md-6">
-                            <div class="card o-hidden card-hover">
-                                <div class="card-header border-0">
-                                    <div class="card-header-title">
-                                        <h4>Transactions</h4>
-                                    </div>
-                                </div>
-
-                                <div class="card-body pt-0">
-                                    <div>
-                                        <div class="table-responsive">
-                                            <table class="user-table transactions-table table border-0">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="transactions-icon">
-                                                                <i class="ri-shield-line"></i>
-                                                            </div>
-                                                            <div class="transactions-name">
-                                                                <h6>Wallets</h6>
-                                                                <p>Starbucks</p>
-                                                            </div>
-                                                        </td>
-
-                                                        <td class="lost">-₹74</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="td-color-1">
-                                                            <div class="transactions-icon">
-                                                                <i class="ri-check-line"></i>
-                                                            </div>
-                                                            <div class="transactions-name">
-                                                                <h6>Bank Transfer</h6>
-                                                                <p>Add Money</p>
-                                                            </div>
-                                                        </td>
-
-                                                        <td class="success">+₹125</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="td-color-2">
-                                                            <div class="transactions-icon">
-                                                                <i class="ri-exchange-dollar-line"></i>
-                                                            </div>
-                                                            <div class="transactions-name">
-                                                                <h6>Paypal</h6>
-                                                                <p>Add Money</p>
-                                                            </div>
-                                                        </td>
-
-                                                        <td class="lost">-₹50</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="td-color-3">
-                                                            <div class="transactions-icon">
-                                                                <i class="ri-bank-card-line"></i>
-                                                            </div>
-                                                            <div class="transactions-name">
-                                                                <h6>Mastercard</h6>
-                                                                <p>Ordered Food</p>
-                                                            </div>
-                                                        </td>
-
-                                                        <td class="lost">-₹40</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="td-color-4 pb-0">
-                                                            <div class="transactions-icon">
-                                                                <i class="ri-bar-chart-grouped-line"></i>
-                                                            </div>
-                                                            <div class="transactions-name">
-                                                                <h6>Transfer</h6>
-                                                                <p>Refund</p>
-                                                            </div>
-                                                        </td>
-
-                                                        <td class="success pb-0">+₹90</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!-- Transactions end-->
-
-                        <!-- visitors chart start-->
-                        <!-- <div class="col-xxl-4 col-md-6">
-                            <div class="h-100">
-                                <div class="card o-hidden card-hover">
-                                    <div class="card-header border-0">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div class="card-header-title">
-                                                <h4>Visitors</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body pt-0">
-                                        <div class="pie-chart">
-                                            <div id="pie-chart-visitors"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!-- visitors chart end-->
-
-
-                        <!-- To Do List start-->
-                        <!-- <div class="col-xxl-4 col-md-6">
-                            <div class="card o-hidden card-hover">
-                                <div class="card-header border-0">
-                                    <div class="card-header-title">
-                                        <h4>To Do List</h4>
-                                    </div>
-                                </div>
-
-                                <div class="card-body pt-0">
-                                    <ul class="to-do-list">
-                                        <li class="to-do-item">
-                                            <div class="form-check user-checkbox">
-                                                <input class="checkbox_animated check-it" type="checkbox" value=""
-                                                    id="flexCheckDefault">
-                                            </div>
-                                            <div class="to-do-list-name">
-                                                <strong>Pick up kids from school</strong>
-                                                <p>8 Hours</p>
-                                            </div>
-                                        </li>
-                                        <li class="to-do-item">
-                                            <div class="form-check user-checkbox">
-                                                <input class="checkbox_animated check-it" type="checkbox" value=""
-                                                    id="flexCheckDefault1">
-                                            </div>
-                                            <div class="to-do-list-name">
-                                                <strong>Prepare or presentation.</strong>
-                                                <p>8 Hours</p>
-                                            </div>
-                                        </li>
-                                        <li class="to-do-item">
-                                            <div class="form-check user-checkbox">
-                                                <input class="checkbox_animated check-it" type="checkbox" value=""
-                                                    id="flexCheckDefault2">
-                                            </div>
-                                            <div class="to-do-list-name">
-                                                <strong>Create invoice</strong>
-                                                <p>8 Hours</p>
-                                            </div>
-                                        </li>
-                                        <li class="to-do-item">
-                                            <div class="form-check user-checkbox">
-                                                <input class="checkbox_animated check-it" type="checkbox" value=""
-                                                    id="flexCheckDefault3">
-                                            </div>
-                                            <div class="to-do-list-name">
-                                                <strong>Meeting with Alisa</strong>
-                                                <p>8 Hours</p>
-                                            </div>
-                                        </li>
-
-                                        <li class="to-do-item">
-                                            <form class="row g-2">
-                                                <div class="col-lg-8">
-                                                    <input type="text" class="form-control h-100" id="name"
-                                                        placeholder="Enter Task Name">
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <button type="submit" class="btn btn-primary w-100 h-100">Add
-                                                        task</button>
-                                                </div>
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!-- To Do List end-->
-
-                        <!-- Browser States start-->
-                        <!-- <div class="col-xxl-4 col-md-6">
-                            <div class="card o-hidden card-hover">
-                                <div class="card-header border-0">
-                                    <div class="card-header-title">
-                                        <h4>Browser States</h4>
-                                    </div>
-                                </div>
-
-                                <div class="card-body pt-0">
-                                    <ul class="brower-states">
-                                        <li class="brower-item">
-                                            <div class="browser-image">
-                                                <img src="assets/images/brower-image/chrome.png" class="img-fluid"
-                                                    alt="">
-                                                <h5>Chrome</h5>
-                                            </div>
-
-                                            <div class="browser-progressbar">
-                                                <h6>84%</h6>
-                                            </div>
-                                        </li>
-                                        <li class="brower-item">
-                                            <div class="browser-image">
-                                                <img src="assets/images/brower-image/firefox.png" class="img-fluid"
-                                                    alt="">
-                                                <h5>Firefox</h5>
-                                            </div>
-
-                                            <div class="browser-progressbar">
-                                                <h6>48%</h6>
-                                            </div>
-                                        </li>
-                                        <li class="brower-item">
-                                            <div class="browser-image">
-                                                <img src="assets/images/brower-image/internet-explorer.png"
-                                                    class="img-fluid" alt="">
-                                                <h5>internet Explorer</h5>
-                                            </div>
-
-                                            <div class="browser-progressbar">
-                                                <h6>35%</h6>
-                                            </div>
-                                        </li>
-                                        <li class="brower-item">
-                                            <div class="browser-image">
-                                                <img src="assets/images/brower-image/opera.png" class="img-fluid"
-                                                    alt="">
-                                                <h5>Opera Mini</h5>
-                                            </div>
-
-                                            <div class="browser-progressbar">
-                                                <h6>55%</h6>
-                                            </div>
-                                        </li>
-                                        <li class="brower-item">
-                                            <div class="browser-image">
-                                                <img src="assets/images/brower-image/safari.png" class="img-fluid"
-                                                    alt="">
-                                                <h5>Safari</h5>
-                                            </div>
-
-                                            <div class="browser-progressbar">
-                                                <h6>20%</h6>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!-- Browser States end-->
                     </div>
                 </div>
                 <!-- Container-fluid Ends-->
-
+            
                 <!-- footer start-->
                 <%- include('../partials/footer')%>
                 <!-- footer End-->
             </div>
             <!-- index body end -->
 
+            <script>
+                // Create an empty array to store revenue data
+                let revenueData = [];
+                
+                // Function to generate random revenue data (replace this with your data source)
+                function generateRandomData() {
+                const currentDate = new Date();
+                const dateString = currentDate.toISOString().split('T')[0]; // Get the current date in "YYYY-MM-DD" format
+                const amount = Math.floor(Math.random() * 1000); // Generate a random amount
+                return { date: dateString, amount: amount };
+                }
+                
+                // Function to update the chart with new data
+                function updateChart() {
+                const newDataPoint = generateRandomData();
+                revenueData.push(newDataPoint);
+                
+                if (revenueData.length > 10) {
+                revenueData.shift(); // Remove the oldest data point to keep a fixed number of data points
+                }
+                
+                // Extract dates and amounts from the updated data
+                const dates = revenueData.map(item => item.date);
+                const amounts = revenueData.map(item => item.amount);
+                
+                // Create or update the chart
+                if (chart) {
+                chart.updateSeries([{ data: amounts }]);
+                chart.updateOptions({ xaxis: { categories: dates } });
+                } else {
+                const options = {
+                chart: {
+                type: 'area',
+                color: '#0da487',
+                height: 350,
+                },
+                xaxis: {
+                categories: dates,
+                },
+                series: [
+                {
+                name: 'Revenue',
+                data: amounts,
+                },
+                ],
+                };
+                
+                chart = new ApexCharts(document.querySelector('#revenue-chart'), options);
+                console.log("I was here")
+                chart.render();
+                }
+                }
+                
+                // Initial chart variable
+                let chart = null;
+                
+                // Update the chart at regular intervals (e.g., every second)
+                setInterval(updateChart, 1000);
+                
+                </script>
 
 <%- include('../partials/end')%>

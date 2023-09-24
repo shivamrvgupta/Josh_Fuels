@@ -18,6 +18,17 @@
                                             </a>
                                         </form>
                                     </div>
+                                    <div class="title-header option-title">
+                                        <form class="">
+                                            <select class="form-control" id="table_search" name="branch" placeholder="Search">
+                                                <option value="">Select Branch</option>
+                                                <% branch.forEach((row, index) => { %> 
+                                                    <option value="<%= row.id %>"><%= row.name %></option>
+                                                <% }) %> 
+                                            </select>
+                                        </form>
+                                    </div>
+                                    
 
                                     <div class="table-responsive table-customer">
                                         <table class="table all-package theme-table" id="table_id">
@@ -38,73 +49,64 @@
                                             <tbody>
                                                 <% if (orders != '') { %>        
                                                     <% orders.forEach((row, index) => { %> 
-                                                <tr>
-                                                    <td class="text-center">
-                                                        <%= index+1 %>
-                                                    </td>
+                                                        <tr class="order-row" data-branch="<%= row.branch_id.id %>">
+                                                            <td class="text-center">
+                                                                <%= index+1 %>
+                                                            </td>
 
-                                                    <td>    
-                                                        <div class="user-name">
-                                                            <span><%= row.order_id %></span>
-                                                        </div>
-                                                    </td>
+                                                            <td>    
+                                                                <div class="user-name">
+                                                                    <span><%= row.order_id %></span>
+                                                                </div>
+                                                            </td>
 
-                                                    <td><%= row.created_date.toLocaleDateString('en-UK',options) %></td>
-                                                    <td><a href="<%= route%>admin/customer/detail/<%= row.user_id.id%>"><%= row.user_id.first_name %></a></td>
+                                                            <td><%= row.created_date.toLocaleDateString('en-UK',options) %></td>
+                                                            <td><a href="<%= route%>admin/customer/detail/<%= row.user_id.id%>"><%= row.user_id.first_name %></a></td>
 
-                                                    <td><%= row.branch_id.name %></td>
-                                                    <td>
-                                                            <div class="<%= row.payment_status ? 'status-close' : 'status-danger' %>">
-                                                                <span><%= row.payment_status ? 'Paid' : 'Unpaid' %></span>
+                                                            <td><%= row.branch_id.name %></td>
+                                                            <td>
+                                                                    <div class="<%= row.payment_status ? 'status-close' : 'status-danger' %>">
+                                                                        <span><%= row.payment_status ? 'Paid' : 'Unpaid' %></span>
+                                                                    </div>
+                                                            </td>
+                                                            <td><%= row.grand_total%></td>
+                                                        <td>
+                                                            <div id="orderStatusElement" class=""><span id="orderStatus"><%= row.status%></span>
                                                             </div>
-                                                    </td>
-                                                    <td><%= row.grand_total%></td>
-                                                  <td>
-                                                    <div id="orderStatusElement" class=""><span id="orderStatus"><%= row.status%></span></div>
-</td>
-                                                    <td>
-                                                        <ul>
-                                                            <li>
-                                                                <a href="/admin/orders/details/<%= row.id%>">
-                                                                    <i class="ri-eye-line"></i>
-                                                                </a>
-                                                            </li>
+                                                            </td>
+                                                            <td>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="/admin/orders/details/<%= row.id%>">
+                                                                            <i class="ri-eye-line"></i>
+                                                                        </a>
+                                                                    </li>
 
-                                                            <li>
-                                                                <a href="/admin/order/update/<%= row.id%>">
-                                                                    <i class="ri-pencil-line"></i>
-                                                                </a>
-                                                            </li>
+                                                                    <li>
+                                                                        <a href="/admin/order/update/<%= row.id%>">
+                                                                            <i class="ri-pencil-line"></i>
+                                                                        </a>
+                                                                    </li>
 
-                                                            <li>
-                                                                <a href="/admin/order/delete/<%= row.id%>" data-bs-toggle="modal"
-                                                                    data-bs-target="#exampleModalToggle">
-                                                                    <i class="ri-delete-bin-line"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                    
+                                                                    <li>
+                                                                        <a href="/admin/order/delete/<%= row.id%>" data-bs-toggle="modal"
+                                                                            data-bs-target="#exampleModalToggle">
+                                                                            <i class="ri-delete-bin-line"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                            
                                                 </tr>
                                                 
                                                 <% }) %>      
-                                                    <% } else { %>
-                                                            <td>
-                                                                <tr>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td style="width: 100%;text-align:right;padding-right:10%">
-                                                                        Nothing To Show
-                                                                    </td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                </tr>
-                                                            </td>
-                                                    <% } %>
+                                                <% } else { %>
+                                                    <tr>
+                                                        <td colspan="9" style="width: 100%; text-align: right; padding-right: 10%">
+                                                            Nothing To Show
+                                                        </td>
+                                                    </tr>
+                                                <% } %>
                                             </tbody>
                                         </table>
                                     </div>
@@ -179,6 +181,28 @@
                 <!-- Delete Modal Box End -->
                 
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+                <script>
+                    $(document).ready(function () {
+                        // Add change event listener to the branch dropdown
+                        $('#table_search').change(function () {
+                            var selectedBranch = $(this).val();
+                            
+                            // Show all rows initially
+                            $('.order-row').show();
+                            
+                            // If a branch is selected, hide rows that don't match the selected branch
+                            if (selectedBranch !== '') {
+                                $('.order-row').each(function () {
+                                    var rowBranch = $(this).data('branch');
+                                    if (rowBranch !== selectedBranch) {
+                                        $(this).hide();
+                                    }
+                                });
+                            }
+                        });
+                    });
+                </script>
 
                 <script>
                     $(document).ready(function () {

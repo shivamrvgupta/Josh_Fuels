@@ -176,7 +176,54 @@
                             </a>
                             <ul class="sidebar-submenu">
                                 <li>
-                                    <a href="/admin/orders/all">Order List</a>
+                                    <a href="/admin/orders/all" class="status-close">ALL Orders 
+                                        <span ><%= user.all%></span>
+                                     </a>
+                                </li>
+                                <li>
+                                    <a href="" class="" >Pending
+                                        <span class="bg-success"><%= user.pending %></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href=""  class="">Confirmed
+                                        <span class="bg-info" ><%= user.confirmed %></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">Processing
+                                        <span class="bg-dark" ><%= user.processing %></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">Out for Delivery
+                                        <span class="bg-secondary"><%= user.out %></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href=""  >Delivered
+                                        <span class="bg-success"><%= user.delivered %></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="status-danger" >Returned
+                                        <span class="bg-warning"><%= user.returned %></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="status-danger" >Failed
+                                        <span class="bg-danger"><%= user.failed %></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="status-danger" >Canceled
+                                        <span ><%= user.cancelled %></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="status-danger" >Scheduled
+                                        <span ><%= user.scheduled %></span>
+                                    </a>
                                 </li>
                             </ul>
                         </li>

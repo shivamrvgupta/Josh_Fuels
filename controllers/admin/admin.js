@@ -30,7 +30,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
+const options = { day: '2-digit', month: 'short', year: 'numeric' };
 
 const route = {
   baseUrL : "http://localhost:3000/",
@@ -39,6 +39,9 @@ const route = {
 
 // Models
 const User = require('../../models/users/user.js');
+const Order = require('../../models/products/order.js');
+const Product = require('../../models/branch/product.js');
+const AddOn = require('../../models/products/add_on.js');
 
 
 // Importing Routes
@@ -53,6 +56,37 @@ router.post('/auth/login', async (req, res) => {
 
       // Find the user by email
       const user = await User.findOne({ email });
+
+      const orderInfo = await Order.find();
+      const all = orderInfo.length;
+
+      const pending =  orderInfo.filter(order => order.status ==="Pending");
+      const pendingOrder = pending.length;
+
+      const confirmed = orderInfo.filter(order => order.status ==="Confirmed");
+      const confirmedOrder = confirmed.length;
+
+      const processing =  orderInfo.filter(order => order.status ==="Processing");
+      const processingOrder = processing.length;
+
+      const out =  orderInfo.filter(order => order.status ==="Out for delivery");
+      const outOrder = out.length;
+
+      const delivered =  orderInfo.filter(order => order.status ==="Delivered");
+      const deliveredOrder = delivered.length;
+
+      const returned =  orderInfo.filter(order => order.status ==="Returned");
+      const returnedOrder = returned.length;
+
+      const failed =  orderInfo.filter(order => order.status ==="Failed");
+      const failedOrder = failed.length;
+
+      const cancelled =  orderInfo.filter(order => order.status ==="Cancelled");
+      const cancelledOrder = cancelled.length;
+
+      const scheduled =  orderInfo.filter(order => order.status ==="Scheduled");
+      const scheduledOrder = scheduled.length;
+
 
       if (!user) {
         return res.redirect(`/admin/auth/login?error=User Not Found ${encodeURIComponent(email)}`);
@@ -76,7 +110,16 @@ router.post('/auth/login', async (req, res) => {
       last_name: user.last_name,
       email: user.email,
       usertype: user.usertype,
-
+      all:all,
+      pending:pendingOrder,
+      confirmed:confirmedOrder,
+      processing:processingOrder,
+      out:outOrder,
+      delivered:deliveredOrder,
+      returned:returnedOrder,
+      failed:failedOrder,
+      cancelled:cancelledOrder,
+      scheduled:scheduledOrder,
 
     };
     const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '6h' });
@@ -98,10 +141,68 @@ router.post('/auth/login', async (req, res) => {
 
 router.get('/auth/dashboard', authenticateToken , async (req, res) => {
   const user = req.user;
+  const orderInfo = await Order.find();
+  const allOrders = orderInfo.length;
+
+  const products = await Product.find();
+  const allProducts = products.length;
+
+  const users = await User.find({usertype: "Customer"});
+  const allCustomers = users.length;
+
+  const addOn = await AddOn.find();
+
+  const orderDetail = await Order.aggregate([
+    {
+      $match: {
+        status: "Delivered",
+        payment_status: true
+      }
+    },
+    {
+      $unwind: "$product_items" // Unwind the product_items array
+    },
+    {
+      $group: {
+        _id: "$product_items.product_id",
+        totalRevenue: { $sum: "$grand_total" },
+        totalQuantity: { $sum: "$product_items.quantity" }
+      }
+    }
+  ]);
   
+        // Now you can access product quantities dynamically
+        const totalRevenue = orderDetail.length > 0 ? orderDetail[0].totalRevenue : 0;
+        const totalQuantity = orderDetail.length > 0 ? orderDetail[0].totalQuantity : 0;
+  
+      const productQuantities = {};
+
+
+      // Populate the productQuantities object
+      orderDetail.forEach((productDetail) => {
+        const productId = productDetail._id;
+        const totalQuantitySold = productDetail.totalQuantity;
+        
+        // Assign variables dynamically based on product IDs
+        productQuantities[productId] = totalQuantitySold;
+      });
+
+      // Access product quantities dynamically
+      for (const productId in productQuantities) {
+        console.log(`Total Quantity Sold for Product ${productId}: ${productQuantities[productId]}`);
+      }
+      
+
+      console.log("Total Revenue for Delivered Orders with Payment Status True: " + totalRevenue);
+
+        // Transform the data into arrays for charting
+    const productIds = orderDetail.map(item => item.totalRevenue);
+    const quantities = orderDetail.map(item => item.totalQuantity);
+
+
   error = "You are successfully logged in"
-  res.render('admin/dashboard', {user: user , error ,route : route.baseUrL})
-}); 
+  res.render('admin/dashboard', { options ,allOrders, allProducts, totalRevenue, totalQuantity, allCustomers , products, addOn ,user: user, error ,route : route.baseUrL,productQuantities , productQuantities: JSON.stringify({ productIds, quantities })})
+});  
 
   
 function authenticateToken(req, res, next) {
@@ -115,7 +216,6 @@ function authenticateToken(req, res, next) {
     if (err) {
       return res.redirect('/admin/auth/login');
     }
-    console.log(token)
     req.user = user; 
     next(); 
   });
