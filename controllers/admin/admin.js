@@ -201,7 +201,7 @@ router.get('/auth/dashboard', authenticateToken , async (req, res) => {
 
 
   error = "You are successfully logged in"
-  res.render('admin/dashboard', { options ,allOrders, allProducts, totalRevenue, totalQuantity, allCustomers , products, addOn ,user: user, error ,route : route.baseUrL,productQuantities , productQuantities: JSON.stringify({ productIds, quantities })})
+  res.render('admin/dashboard', { options ,allOrders, allProducts, totalRevenue, totalQuantity, allCustomers , products, addOn ,user: user, error ,route : route.baseUrL,productQuantities});
 });  
 
   

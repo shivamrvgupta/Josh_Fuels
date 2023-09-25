@@ -250,57 +250,58 @@
             </div>
             <!-- index body end -->
 
+
             <script>
                 // Create an empty array to store revenue data
                 let revenueData = [];
                 
                 // Function to generate random revenue data (replace this with your data source)
                 function generateRandomData() {
-                const currentDate = new Date();
-                const dateString = currentDate.toISOString().split('T')[0]; // Get the current date in "YYYY-MM-DD" format
-                const amount = Math.floor(Math.random() * 1000); // Generate a random amount
-                return { date: dateString, amount: amount };
+                  const currentDate = new Date();
+                  const dateString = currentDate.toISOString().split('T')[0]; // Get the current date in "YYYY-MM-DD" format
+                  const amount = Math.floor(Math.random() * 1000); // Generate a random amount
+                  return { date: dateString, amount: amount };
                 }
                 
                 // Function to update the chart with new data
                 function updateChart() {
-                const newDataPoint = generateRandomData();
-                revenueData.push(newDataPoint);
+                  const newDataPoint = generateRandomData();
+                  revenueData.push(newDataPoint);
                 
-                if (revenueData.length > 10) {
-                revenueData.shift(); // Remove the oldest data point to keep a fixed number of data points
-                }
+                  if (revenueData.length > 10) {
+                    revenueData.shift(); // Remove the oldest data point to keep a fixed number of data points
+                  }
                 
-                // Extract dates and amounts from the updated data
-                const dates = revenueData.map(item => item.date);
-                const amounts = revenueData.map(item => item.amount);
+                  // Extract dates and amounts from the updated data
+                  const dates = revenueData.map(item => item.date);
+                  const amounts = revenueData.map(item => item.amount);
                 
-                // Create or update the chart
-                if (chart) {
-                chart.updateSeries([{ data: amounts }]);
-                chart.updateOptions({ xaxis: { categories: dates } });
-                } else {
-                const options = {
-                chart: {
-                type: 'area',
-                color: '#0da487',
-                height: 350,
-                },
-                xaxis: {
-                categories: dates,
-                },
-                series: [
-                {
-                name: 'Revenue',
-                data: amounts,
-                },
-                ],
-                };
+                  // Create or update the chart
+                  if (chart) {
+                    chart.updateSeries([{ name: 'Revenue', data: amounts }]);
+                    chart.updateOptions({ xaxis: { categories: dates } });
+                  } else {
+                    const options = {
+                      chart: {
+                        type: 'area', 
+                        color: '#0da487', 
+                        height: 350,
+                      },
+                      xaxis: {
+                        categories: dates,
+                      },
+                      series: [
+                        {
+                          name: 'Revenue',
+                          data: amounts,
+                        },
+                      ],
+                    };
                 
-                chart = new ApexCharts(document.querySelector('#revenue-chart'), options);
-                console.log("I was here")
-                chart.render();
-                }
+                    chart = new ApexCharts(document.querySelector('#revenue-chart'), options);
+                    console.log("I was here")
+                    chart.render();
+                  }
                 }
                 
                 // Initial chart variable
@@ -308,7 +309,7 @@
                 
                 // Update the chart at regular intervals (e.g., every second)
                 setInterval(updateChart, 1000);
-                
                 </script>
+                
 
 <%- include('../partials/end')%>
