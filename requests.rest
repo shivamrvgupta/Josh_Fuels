@@ -15,8 +15,8 @@ POST http://localhost:3000/api/auth/customer/verify-otp
 Content-Type: application/json
 
 {
-    "phone" : "8850664191",
-    "otp" : "6361"
+    "phone" : "9850578666",
+    "otp" : "2461"
 }
 
 

@@ -10,108 +10,119 @@ const {
   
   module.exports = {
     // Get Cart Data
-      cartList : async (req, res) => {
-        try {
-          const session = req.user;
-          user_id = session.userId;
-
-          console.log(`User ${session.first_name} Fetching Cart Data`)
-
-          if(!user_id){
-            return res.status(StatusCodesConstants.ACCESS_DENIED).json({
-              status: false,
-              status_code: StatusCodesConstants.ACCESS_DENIED,
-              message: MessageConstants.NOT_LOGGED_IN,
-            })
-          }
+    cartList: async (req, res) => {
+      try {
+        const session = req.user;
+        user_id = session.userId;
     
-          // Fetch user's city based on the sessions user_id
-          const cart = await models.BranchModel.Cart.find({ user_id : session.userId });
-          const cartCount = cart.length;
-          console.log(cart)
-          
-          if(!cart || cart.length === 0){
-            console.log(`User ${session.first_name , MessageConstants.CART_FETCHED_SUCCESSFULLY, MessageConstants.CART_EMPTY}`)
-              return res.status(StatusCodesConstants.SUCCESS).json({
-                  status: true,
-                  status_code: StatusCodesConstants.SUCCESS,
-                  message: MessageConstants.CART_EMPTY,
-                  data: {
-                      cartCount: cartCount,
-                      cartData: [],
-                  },
-              });
-          }else{
-              const products = cart[0].product_items;
-              console.log("Products CART DATA",products)
-            if(products && products.length !== 0){
-              const populatedCart = [];
-              
-              // Iterate through each cart item
-              for (const cartItem of cart) {
-                // Manually populate the product and branch details from the referenced models
-                const productData = products.map(async (product) => {
-                  const productInfo = await models.BranchModel.BranchProduct.find({ _id: product.product_id });
-                  if (productInfo) {
-                    return {
-                      "product_id": product.product_id,
-                      "product_name": productInfo[0].name,
-                      "product_img": productInfo[0].image,
-                      "quantity": product.quantity,
-                      "price": product.price,
-                      "_id": product._id
-                    };
-                  }
-              
-                  return null;
+        console.log(`User ${session.first_name} Fetching Cart Data`);
+    
+        if (!user_id) {
+          return res.status(StatusCodesConstants.ACCESS_DENIED).json({
+            status: false,
+            status_code: StatusCodesConstants.ACCESS_DENIED,
+            message: MessageConstants.NOT_LOGGED_IN,
+          });
+        }
+    
+        // Fetch user's city based on the sessions user_id
+        const cart = await models.BranchModel.Cart.find({ user_id: session.userId });
+        const cartCount = cart.length;
+        console.log(cart);
+    
+        if (!cart || cart.length === 0) {
+          console.log(
+            `User ${session.first_name} ${MessageConstants.CART_FETCHED_SUCCESSFULLY} ${MessageConstants.CART_EMPTY}`
+          );
+          return res.status(StatusCodesConstants.SUCCESS).json({
+            status: true,
+            status_code: StatusCodesConstants.SUCCESS,
+            message: MessageConstants.CART_EMPTY,
+            data: {
+              cartCount: cartCount,
+              cartData: {},
+            },
+          });
+        } else {
+          const products = cart[0].product_items;
+          console.log("Products CART DATA", products);
+          if (products && products.length !== 0) {
+            let populatedCartObject = {};
+    
+            // Iterate through each cart item
+            for (const cartItem of cart) {
+              // Manually populate the product and branch details from the referenced models
+              const productData = products.map(async (product) => {
+                const productInfo = await models.BranchModel.BranchProduct.find({
+                  _id: product.product_id,
                 });
-            
-                const branchInfo = await models.BranchModel.Branch.find({ _id: cartItem.branch_id });
-              
-                if (productData && branchInfo) {
-                  const cartItemData = {
-                    user_id : session.userId,
-                    cart_id: cartItem._id,
-                    products: await Promise.all(productData), // Await the resolution of all productData promises
-                    branch: {
-                      branch_id: cartItem.branch_id,
-                      branch_name: branchInfo[0].name,
-                    },
+                if (productInfo) {
+                  return {
+                    product_id: product.product_id,
+                    product_name: productInfo[0].name,
+                    product_img: productInfo[0].image,
+                    quantity: product.quantity,
+                    price: product.price,
+                    _id: product._id,
                   };
-                  
-                  populatedCart.push(cartItemData);
                 }
-              }
-              
-              console.log(populatedCart);
-              
-
-              console.log(`User ${session.first_name} ${MessageConstants.CART_FETCHED_SUCCESSFULLY}`)
-              return res.status(StatusCodesConstants.SUCCESS).json({
-                  status: true,
-                  status_code: StatusCodesConstants.SUCCESS,
-                  message: MessageConstants.CART_FETCHED_SUCCESSFULLY,
-                  data: {
-                    cartCount: cartCount,
-                    cartData: populatedCart,
-                  },
+    
+                return null;
               });
-            }else{
+    
+              const branchInfo = await models.BranchModel.Branch.find({
+                _id: cartItem.branch_id,
+              });
+    
+              if (productData && branchInfo) {
+                const cartItemData = {
+                  user_id: session.userId,
+                  cart_id: cartItem._id,
+                  products: await Promise.all(productData), // Await the resolution of all productData promises
+                  branch: {
+                    branch_id: cartItem.branch_id,
+                    branch_name: branchInfo[0].name,
+                  },
+                };
+    
+                populatedCartObject = cartItemData; // Directly assign cart data
+              }
+            }
+    
+            console.log(populatedCartObject);
+    
+            console.log(
+              `User ${session.first_name} ${MessageConstants.CART_FETCHED_SUCCESSFULLY}`
+            );
+            return res.status(StatusCodesConstants.SUCCESS).json({
+              status: true,
+              status_code: StatusCodesConstants.SUCCESS,
+              message: MessageConstants.CART_FETCHED_SUCCESSFULLY,
+              data: {
+                cartCount: cartCount,
+                cartData: populatedCartObject,
+              },
+            });
+          } else {
             return res.status(StatusCodesConstants.SUCCESS).json({
               status: true,
               status_code: StatusCodesConstants.SUCCESS,
               message: MessageConstants.CART_EMPTY,
               data: {
-                  cartData: [],
+                cartData: {},
               },
             });
-            }
           }
-        } catch (error) {
-          console.error('Error fetching data:', error);
-          return res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({ error: MessageConstants.INTERNAL_SERVER_ERROR });
         }
-      }, 
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        return res
+          .status(StatusCodesConstants.INTERNAL_SERVER_ERROR)
+          .json({ error: MessageConstants.INTERNAL_SERVER_ERROR });
+      }
+    },
+    
+    
   
     // Add Cart Data 
       addCartData: async (req, res) => {

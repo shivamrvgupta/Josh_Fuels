@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const axios = require('axios'); // Import the axios library
 const { v4: uuidv4 } = require('uuid');
 const emailService = require('../../../mailer')
 const {
@@ -57,6 +58,15 @@ module.exports = {
         OtpHelper.sendOTPToUser(loginData.phone_number, otp);
         const otpData = new models.UserModel.Otp({ phone : loginData.phone_number, otp : otp})
         const result = await otpData.save();
+        const apiUrl = `https://module.logonutility.com/smsapi/index?key=2605B0EA308974&campaign=0&routeid=1&type=text&contacts=${loginData.phone_number}&senderid=TYSTST&msg=Welcome%20to%20Run%20for%20Heart%21%20Enter%20the%20OTP%20code%20${otp}%20to%20verify%20your%20account%20and%20get%20started.%20Regards%20The%20Yellow%20Strawberry`;
+        console.log()
+        const response = await axios.post(apiUrl);
+
+        if (response.status === 200) {
+          console.log('OTP sent successfully');
+        } else {
+            console.error('Failed to send OTP:', response.statusText);
+        }
         return res.status(StatusCodesConstants.SUCCESS).json({
           status: true,
           status_code: StatusCodesConstants.SUCCESS,
@@ -70,6 +80,14 @@ module.exports = {
       OtpHelper.sendOTPToUser(loginData.phone_number, otp);
       const otpData = new models.UserModel.Otp({ phone : loginData.phone_number, otp : otp})
       const result = await otpData.save();
+      const apiUrl = `https://module.logonutility.com/smsapi/index?key=2605B0EA308974&campaign=0&routeid=1&type=text&contacts=${loginData.phone_number}&senderid=TYSTST&msg=Welcome%20to%20Run%20for%20Heart%21%20Enter%20the%20OTP%20code%20${otp}%20to%20verify%20your%20account%20and%20get%20started.%20Regards%20The%20Yellow%20Strawberry`;
+      const response = await axios.post(apiUrl);
+
+      if (response.status === 200) {
+        console.log('OTP sent successfully');
+      } else {
+          console.error('Failed to send OTP:', response.statusText);
+      }
       return res.status(StatusCodesConstants.SUCCESS).json({
         status: true,
         status_code: StatusCodesConstants.SUCCESS,
