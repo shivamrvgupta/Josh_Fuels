@@ -72,3 +72,15 @@ cart = {
   },
   "__v": { "$numberInt": "1" }
 }
+
+
+
+// Return the order data as a response
+                        return res.status(StatusCodesConstants.SUCCESS).json({
+                            status: true,
+                            status_code: StatusCodesConstants.SUCCESS,
+                            message: MessageConstants.ORDER_FETCH_SUCCESS,
+                            data: {
+                                orders: orderData,
+                            },
+                        });

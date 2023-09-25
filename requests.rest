@@ -142,8 +142,8 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY 
 
 {
-    "product" : "64f6da85ed30c8f3d5765043",
-    "quantity" : "100"
+    "product" : "64f6da5aed30c8f3d5765007",
+    "quantity" : "125"
 }
 
 ### 
@@ -155,7 +155,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5N
 
 {
     "cart_id" : "6509f70778e25cf42012d7e8",
-    "product_id" : "64f6da85ed30c8f3d5765043",
+    "product_id" : "64f6da5aed30c8f3d5765007",
     "quantity" : 91
 }
 
@@ -192,12 +192,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5N
 
 {
     "address_id": "65003ac3957a312ef073de8e",
-    "cart_id": "650054aaee246d7f04c6a1b3",
-    "delivery_date": "15/07/2023",
+    "cart_id": "650c4f6da27a76cd0b82b1ae",
+    "delivery_date": "20/09/2023",
     "delivery_time": "4:00 - 9:00",
     "payment_method": "Cash on Delivery",
-    "note": "Keep the petrol extra on;y",
-    "grand_total": "1,334"
+    "note": "Keep the Diesels extra on;y",
+    "total_price" : 12340,
+    "coupon_discount" : 100,
+    "delivery_fee" : 300,
+    "grand_total": 1334
+
 }
 
 
@@ -213,5 +217,18 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
 
 {
-    "order_id" : "100001"
+    "order_id" : "100002"
 }
+
+### Update order
+POST http://localhost:3000/api/auth/order/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTUxMjM1ODUsImV4cCI6MTY5NTcyODM4NX0.Y8mSaXp9WKfQ8L84rGabP3QAHMKbbKwMxL-H6_NiHaY
+
+{
+    "order_id" : "100002",
+    "product_id" : "64f6da85ed30c8f3d5765043",
+    "quantity" : 100,
+    "total_price" : 12385,
+    "grand_total" : 16446.88
+}   

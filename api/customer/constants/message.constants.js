@@ -167,11 +167,13 @@ module.exports = Object.freeze({
 
     ORDER_NOT_PRESENT: 'Order does not Exist',
     ORDER_FETCHED_SUCCESSFULLY: 'Order fetched successfully',
-    ORDER_ALREADY_REGISTERED: 'Order is already registered',
-    ORDER_ADD_SUCCESSFULLY: 'Order added successfully',
+    ORDER_ALREADY_REGISTERED: 'Order is already placed',
+    ORDER_ALREADY_Cancelled: 'Order is already Cancelled',
+    ORDER_ADD_SUCCESSFULLY: 'Order Placed successfully',
     ORDER_UPDATE_SUCCESSFULLY: 'Order updated successfully',
     ORDER_DELETED: 'Order Cancelled successfully',
     ORDER_NOT_FOUND: 'No orders placed',
+    ORDER_NOT_DELETE: 'Orders Cannot Be Deleted Now ',
 
     PRODUCT_FETCHED_SUCCESSFULLY: 'Product fetched successfully',
     PRODUCT_NOT_PRESENT: 'Product does not Exist',

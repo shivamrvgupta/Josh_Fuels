@@ -3,6 +3,7 @@ const Address = require('./address')
 const Device = require('./device')
 const Otp = require('./otpmodels')
 const RevokedTokens = require('./revokedTokens')
+const DeliveryMan = require('./deliveryman')
 
 
 module.exports = {
@@ -10,5 +11,6 @@ module.exports = {
     Address,
     Device,
     Otp,
-    RevokedTokens
+    RevokedTokens,
+    DeliveryMan
 }

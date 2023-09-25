@@ -86,8 +86,6 @@ const {
               console.log(populatedCart);
               
 
-              console.log(populatedCart);
-
               console.log(`User ${session.first_name} ${MessageConstants.CART_FETCHED_SUCCESSFULLY}`)
               return res.status(StatusCodesConstants.SUCCESS).json({
                   status: true,

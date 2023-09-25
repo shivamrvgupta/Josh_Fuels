@@ -43,14 +43,6 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Branch',
     },
-    quantity : {
-        type: Number,
-        required: true,
-        default: 0.00,
-        set: function(value) {
-          return parseFloat(value).toFixed(2);
-        }
-    },
     coupon_discount:{
         type: Number,
         required: true,
@@ -108,10 +100,13 @@ const orderSchema = new mongoose.Schema({
           return parseFloat(value).toFixed(2);
         }
     },
-    delivery_man :{
+    delivery_id :{ 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
+    delivery_man :{ 
         type: String,
-        required: true,
-        default : "Not Assigned Yet",
+        default: "Not Assigned",
     },
     esitmated_delivery_time : {
         type: String,
