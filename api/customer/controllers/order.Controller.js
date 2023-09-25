@@ -259,7 +259,7 @@ module.exports = {
                                 ],
                             };
                 
-                            populatedCart.push(cartItemData);
+                            populatedCart.push(productData);
                         }
                     }
 
