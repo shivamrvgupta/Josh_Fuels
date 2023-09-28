@@ -154,10 +154,9 @@ module.exports = {
         const user = req.user;
 
         res.clearCookie('jwt'); // Clear the JWT cookie
-
-        if(!user){
-          res.redirect('admin/auth/login')
-        }
+        
+        res.redirect('admin/auth/login')
+        
 
       } catch (error) {
         console.error('Logout error:', error);

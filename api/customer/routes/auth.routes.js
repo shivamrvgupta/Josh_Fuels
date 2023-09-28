@@ -13,6 +13,6 @@ router.post('/register',AuthController.register);
 // router.post('/add-address',AuthMiddleware.authenticateToken ,AuthController.addAddress);
 router.post('/add-device',AuthMiddleware.authenticateToken ,AuthController.addDevice);
 router.get('/userdata',AuthMiddleware.authenticateToken ,AuthController.getUser);
-router.post('/logout',AuthMiddleware.authenticateToken ,AuthController.logout);
+router.post('/logout', AuthMiddleware.authenticateToken ,AuthController.logout);
 
 module.exports = router;

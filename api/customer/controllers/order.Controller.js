@@ -132,7 +132,7 @@ module.exports = {
                 // Extract user session information
                 const session = req.user;
                 const user_id = session.userId;
-                const order_id = req.params;
+                const order_id = req.body.order_id;
         
                 // Check if the user is logged in
                 if (!user_id) {
@@ -185,13 +185,6 @@ module.exports = {
                             state: addressInfo.state,
                         };
         
-                        const userData = {
-                            first_name: session.first_name,
-                            last_name: session.last_name,
-                            phone: session.phone,
-                            email: session.email,
-                        };
-        
                         const branchData = {
                             branch_id: branchInfo._id,
                             branch_name: branchInfo.name,
@@ -221,12 +214,11 @@ module.exports = {
         
                         // Construct the order item data
                         const orderItemData = {
-                            user: userData,
-                            address: addressData,
-                            branch: branchData,
-                            products: productData,
-                            orders: orderData,
-                            deliveryMan: deliveryManData,
+                            ordered_address: addressData,
+                            ordered_branch: branchData,
+                            ordered_products: productData,
+                            order_detail: orderData,
+                            assigned_deliveryMan: deliveryManData,
                         };
         
                         populatedOrder.push(orderItemData);

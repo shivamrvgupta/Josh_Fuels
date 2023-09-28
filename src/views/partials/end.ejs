@@ -29,7 +29,7 @@ aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             <div class="button-box">
                 <button type="button" class="btn btn--no" data-bs-dismiss="modal">No</button>
-                <button type="button" id="confirmLogoutBtn" class="btn  btn--yes btn-primary">Yes</button>
+                <button type="button" id="confirmLogoutBtn" class="btn  btn--yes btn-primary" onclick="(logoutAndClearToken())">Yes</button>
             </div>
         </div>
     </div>
@@ -38,22 +38,31 @@ aria-labelledby="staticBackdropLabel" aria-hidden="true">
 <!-- Modal End -->
 
 <script>
-    $(document).ready(function () {
-      // Handle click event on the "Delete" link
-      $('a[data-bs-toggle="modal"]').on('click', function () {
-        $('#logoutBtn').on('click', function () {
-            // Make an AJAX request to the server to logout
-            $.get('/admin/auth/logout', function (data) {
-              // If logout is successful, you can handle the response or redirect the user
-              console.log(data); // Optional: Log the server response
-              window.location.href = '/admin/auth/login'; // Redirect the user to the login page
-            }).fail(function (error) {
-              // Handle errors if any
-              console.error('Logout error:', error);
-            });
+    function logoutAndClearToken() {
+        // Make an API request to clear the JWT token on the server
+        fetch('/admin/auth/logout', {
+          method: 'POST', // or 'GET' depending on your server's route configuration
+          credentials: 'same-origin', // Send cookies with the request if your JWT is stored in cookies
+        })
+          .then((response) => {
+            if (response.status === 200) {
+              // Successfully logged out, now clear the JWT token from local storage
+              localStorage.removeItem('jwt');
+      
+              // Redirect to the login page or perform other post-logout actions as needed
+              window.location.reload();
+              window.location.href = '/admin/auth/login'; // Replace with your login page URL
+            } else {
+              // Handle the response in case of an error
+              console.error('Logout failed:', response.statusText);
+              // You can show an error message to the user or handle the error in another way
+            }
+          })
+          .catch((error) => {
+            console.error('Logout error:', error);
           });
-      });
-    });
+      }
+      
   </script>
   
 

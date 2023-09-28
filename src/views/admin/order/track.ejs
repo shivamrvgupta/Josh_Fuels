@@ -1,0 +1,114 @@
+<%- include('../../partials/main', { pageTitle: 'Order detail' }) %>
+<script src="https://kit.fontawesome.com/78155a1a48.js" crossorigin="anonymous"></script>
+
+            <!-- Order Tracking Seation starts-->
+            <div class="page-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="title-header option-title">
+                                                <h5>Order Tracking</h5>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 overflow-hidden">
+                                                    <div class="order-left-image">
+                                                        <div class="tracking-product-image">
+                                                            <img src="/images/<%= order.branch_id.image %>"
+                                                                class="img-fluid w-100 blur-up lazyload" alt="">
+                                                        </div>
+
+                                                        <div class="order-image-contain">
+                                                            <div class="tracker-number">
+                                                                <p>Order Number : <span><%= order.order_id %></span></p>
+                                                                <p>Branch : <span><%= order.branch_id.name %></span></p>
+                                                                <p>Order Placed : <span><%= order.created_date.toLocaleDateString('en-UK', options)%></span></p>
+                                                            </div>
+
+                                                            <% if(order.status == "Pending") { %>
+                                                                <h5>Your items is on the way. Tracking information will be
+                                                                    available within 24 hours.</h5>
+                                                            <% } else { %>
+                                                                <h5>Your items is on the way</h5>
+                                                            <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <ol class="progtrckr">
+                                                    <li class="progtrckr-done">
+                                                        <h5>Order Processing</h5>
+                                                        <h6>05:43 AM</h6>
+                                                    </li>
+                                                    <li class="progtrckr-done">
+                                                        <h5>Pre-Production</h5>
+                                                        <h6>01:21 PM</h6>
+                                                    </li>
+                                                    <li class="progtrckr-done">
+                                                        <h5>In Production</h5>
+                                                        <h6>Processing</h6>
+                                                    </li>
+                                                    <li class="progtrckr-todo">
+                                                        <h5>Shipped</h5>
+                                                        <h6>Pending</h6>
+                                                    </li>
+                                                    <li class="progtrckr-todo">
+                                                        <h5>Delivered</h5>
+                                                        <h6>Pending</h6>
+                                                    </li>
+                                                </ol>
+
+                                                <div class="col-12 overflow-visible">
+                                                    <div class="tracker-table">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr class="table-head">
+                                                                        <th scope="col">Date</th>
+                                                                        <th scope="col">Time</th>
+                                                                        <th scope="col">Description</th>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <h6><%= order.updated_date.toLocaleDateString('en-UK', options)%></h6>
+                                                                        </td>
+                                                                        <td>
+                                                                            <h6><%= order.updated_date.toLocaleTimeString('en-UK', options2) %>
+                                                                            </h6>
+                                                                        </td>
+                                                                        <td>
+                                                                            <p class="fw-bold"><%= order.status %></p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-end border-0 pb-0 d-flex justify-content-end">
+                                            <button class="btn btn-primary me-3">Submit</button>
+                                            <button class="btn btn-outline">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+
+
+<!-- footer start-->
+  <%- include('../../partials/footer')%>
+  <!-- footer End-->
+
+  <%- include('../../partials/end')%>
+

@@ -212,9 +212,14 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTU4ODQ3MTYsImV4cCI6MTY5NjQ4OTUxNn0.0q69aDajlsCa1fvyurHIH_Wle5eUDFoONSMu_jfRbiM
 
 ### GeT Single ORDER 
-GET http://localhost:3000/api/auth/order/get/order
+GET http://localhost:3000/api/auth/order/get-order
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTU4ODQ3MTYsImV4cCI6MTY5NjQ4OTUxNn0.0q69aDajlsCa1fvyurHIH_Wle5eUDFoONSMu_jfRbiM
+
+{
+    "order_id" : "100002"
+}
+
 
 
 ### Cancel order

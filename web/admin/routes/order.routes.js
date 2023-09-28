@@ -16,4 +16,6 @@ router.post('/updatePaymentStatus' ,AuthMiddleware.authenticateToken , OrderCont
 
 router.get('/generate-invoice/:id', AuthMiddleware.authenticateToken , OrderControllers.getInvoice);
 
+router.get('/track-order/:id', AuthMiddleware.authenticateToken , OrderControllers.trackOrder);
+
 module.exports = router;

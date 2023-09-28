@@ -206,8 +206,8 @@
                                             </div>
 
                                             <div class="delivery-sec">
-                                                <h3>expected date of delivery: <span style="font-size: 15px;"> <%= order.delivery_date%></span>
-                                                </h3>
+                                                <h3>expected date of delivery: <span style="font-size: 15px;"> <%= order.delivery_date%></span> </h3>
+                                                <a href="/admin/orders/track-order/<%= order.id %>">track order</a>
                                             </div>
                                         </div>
                                     </div>
@@ -264,7 +264,7 @@
                                 <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
                             </svg>
                         </div>
-                        <h4 class="text-content">It's Removed.</h4>
+                        <h4 class="text-content">It's Updated.</h4>
                     </div>
                 </div>
                 <div class="modal-footer">
