@@ -1,0 +1,222 @@
+<%- include('../../partials/main', { pageTitle: 'Update Branch Products' }) %>
+
+<div class="page-body">
+
+    <!-- New Product Add Start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-sm-8 m-auto">
+                        <form class="theme-form theme-form-2 mega-form" method="PATCH" action="/branch/product/update/<%= product._id %>">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Update Branch Product</h5>
+                                    </div>
+
+                                        <input type="hidden" name="token" value="<%= product.token %>">
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="form-label-title col-sm-3 mb-0">Product
+                                                Name</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"
+                                                    placeholder="Product Name" name="name" value="<%= product.name %>">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label
+                                                class="col-sm-3 col-form-label form-label-title">Category</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="category">
+                                                    <option disabled>Category</option>
+                                                    <% categories.forEach(category => { %>
+                                                        <option value="<%= category._id %>" <%= product.category.toString() === category._id.toString() ? 'selected' : '' %>><%= category.name %></option>
+                                                    <% }); %>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label
+                                                class="col-sm-3 col-form-label form-label-title">Subcategory</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="sub_category">
+                                                    <option disabled>Subcategory</option>
+                                                    <option value="Petrol">Petrol</option>
+                                                    <option value="Diesel">Diesel</option>
+                                                    <option value="White Petrol">White petrol</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 col-form-label form-label-title">Unit</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="unit">
+                                                    <option disabled>Unit Menu</option>
+                                                    <option value="Litres">Litres</option>
+                                                    <option>DecaLiters</option>
+                                                    <option>HectoLiters</option>
+                                                    <option>kiloLiters</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label
+                                                class="col-sm-3 col-form-label form-label-title">AddOn</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="addon">
+                                                    <option disabled>AddOn</option>
+                                                    <option>Oil</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label
+                                                class="col-sm-3 col-form-label form-label-title">Available time Starts</label>
+                                            <div class="col-sm-9">
+                                                <input type="time" name="available_time_starts" class="form-control" value="" placeholder="Ex : 10:30 am" required="">
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4 row align-items-center">
+                                            <label
+                                                class="col-sm-3 col-form-label form-label-title">Available time ends</label>
+                                            <div class="col-sm-9">
+                                                <input type="time" name="available_time_ends" class="form-control" value="" placeholder="Ex : 10:30 am" required="">
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Description</h5>
+                                    </div>
+
+                                    
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <label class="form-label-title col-sm-3 mb-0">Product Description</label>
+                                                    <div class="col-sm-9">
+                                                       <textarea name="description" id="" cols="30" rows="10"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Product Images</h5>
+                                    </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label
+                                                class="col-sm-3 col-form-label form-label-title">Images</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control form-choose" type="file" name="img"  id="formFile" multiple>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Product Price</h5>
+                                    </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 form-label-title">price</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="string" placeholder="0" name="price">
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 form-label-title">Tax</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="string" placeholder="0" name="tax">
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 col-form-label form-label-title">Tax type</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="tax_type">
+                                                    <option disabled>Tax Type</option>
+                                                    <option value="Amount">Amount</option>
+                                                    <option value="Percent">Percent</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                </div>
+                            </div>
+
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header-2">
+                                        <h5>Discount</h5>
+                                    </div>
+
+                                    
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 form-label-title">Discount</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="string" placeholder="0" name="discount" value="discount">
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 col-form-label form-label-title">Discount type</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="discount_type">
+                                                    <option disabled>Discount Type</option>
+                                                    <option value="Amount">Amount</option>
+                                                    <option value="Percent">Percent</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 row align-items-center">
+                                            <label class="col-sm-3 col-form-label form-label-title">Item type</label>
+                                            <div class="col-sm-9">
+                                                <select class="js-example-basic-single w-100" name="Item_type">
+                                                    <option disabled>Item Type</option>
+                                                    <option >Item 1</option>
+                                                </select>
+                                            </div>
+                                        </div>
+    
+
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                        <div class="mb-4 row align-items-center">
+                                            <button class="btn btn-solid" type="submit">Update</button>
+                                        </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Product Add End -->
+
+  <!-- Container-fluid End -->
+
+<!-- footer start-->
+<%- include('../../partials/footer')%>
+<!-- footer End--> 
+
+<%- include('../../partials/end')%>

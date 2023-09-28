@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="multikart">
+    <meta name="keywords" content="multikart">
+    <meta name="author" content="multikart">
+    <link rel="shortcut icon" href="/public/assets/images/favicon.png" type="image/x-icon">
+    <title>JoshFuels | Invoice template </title>
+
+    <!--Google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" type="text/css" href="/public/assets/css/vendors/font-awesome.css">
+
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="/public/assets/css/vendors/bootstrap.css">
+
+    <!-- Theme css -->
+    <link rel="stylesheet" type="text/css" href="/public/assets/css/style.css">
+
+    <style>
+        .button-group{
+            display: flex;
+            flex-wrap: wrap;        
+        }
+        .signature-box {
+            display: inline-block;
+        }
+        .signature-box h5{
+            padding: calc(7px + (12 - 7) * ((100vw - 320px) / (1920 - 320))) calc(7px + (12 - 7) * ((100vw - 320px) / (1920 - 320))) 0;
+            text-align: center;
+            border-top: 1px solid #E2E2E2;
+            margin-top: calc(7px + (12 - 7) * ((100vw - 320px) / (1920 - 320)));
+        }
+        .total-li {
+            float: right;
+            border : 1px solid #E2E2E2;
+            padding: 2%;
+            display: -webkit-box !important;
+            display: -ms-flexbox !important;;
+            display: flex !important;;
+            -webkit-box-align: center !important;;
+            -ms-flex-align: center !important;;
+            align-items: center !important;;
+            -webkit-box-pack: end !important;;
+            -ms-flex-pack: end !important;;
+            justify-content: flex-end !important;;
+            gap: calc(5px + (53 - 5) * ((100vw - 320px) / (1920 - 320))) !important;;
+            padding: 0 10px !important;;
+        }
+        .text-total{
+            text-align: left !important ;
+        }    
+        .rounded {
+            border-radius: 0.25rem !important;
+            background: var(--theme-color) !important;
+        }
+        .text-white {
+            --bs-text-opacity: 1;
+            color: rgba(var(--bs-white-rgb), var(--bs-text-opacity)) !important;
+        }
+    </style>
+
+</head>
+
+<body class="bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-xxl-12 mx-auto my-3">
+                <div class="button-group hide-on-print">
+                    <ul>
+                        <li class="back-button">
+                            <a href="/admin/orders/details/<%= order.id %>" class="btn text-white print-button rounded ms-2" > Back </a>
+                        </li>
+                        <li class="print-button">
+                            <button class="btn text-white print-button rounded ms-2" onclick="printInvoice()" > Print </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="theme-invoice-1" id="printableArea">
+        <div class="container">
+            <div class="row">
+                <div class="col-xxl-6 col-xl-8 mx-auto my-3 theme-invoice-1">
+                    <div class="invoice-wrapper">
+                        <div class="invoice-header">
+                            <div class="header-image">
+                                <img src="/public/assets/images/1.png" class="img-fluid" alt="logo">
+                            </div>
+                            <div class="header-content">
+                                <h3>Invoice</h3>
+                            </div>
+                        </div>
+                        <div class="invoice-body">
+                            <div class="top-sec">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="details-box">
+                                            <div class="address-box">
+                                                <ul>
+                                                    <li><%= order.address_id.address_1 %></li>
+                                                    <li><%= order.address_id.area %></li>
+                                                    <li><%= order.address_id.state %>, <%= order.address_id.pincode %></li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="address-box">
+                                                <ul>
+                                                    <li class="theme-color">Name : <span class="text-content"> <%= order.user_id.first_name %> <%= order.user_id.last_name %> </span></li>
+                                                    <li class="theme-color">Phone No : <span class="text-content"><%= order.user_id.phone %> </span></li>
+                                                    <li class="theme-color">Email : <span class="text-content"> <%= order.user_id.email %> </span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="invoice-table">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Invoice Date:</th>
+                                                <th>Invoice No:</th>
+                                                <th>Branch Name:</th>
+                                                <th>Branch City:</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><%= order.created_date.toLocaleDateString('en-UK', options)%></td>
+                                                <td><%= order.order_id %></td>
+                                                <td><%= order.branch_id.name %></td>
+                                                <td><%= order.branch_id.city %></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="invoice-table-2">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th class="text-start">Item detail</th>
+                                                <th>Qty</th>
+                                                <th>Price</th>
+                                                <th>Amout</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% order.product_items.forEach(function(item, index){ %>
+                                                <tr>
+                                                    <td class="text-content"><%= index+1 %></td>
+                                                    <td>
+                                                        <ul class="text-start item-detail">
+                                                            <li><%= item.product_id.name %></li>
+                                                        </ul>
+                                                    </td>
+                                                    <td><%= item.quantity %></td>
+                                                    <td>₹ <%= item.product_id.price %> </td>
+                                                    
+                                                    <td>₹ <%= (item.product_id.price * item.quantity).toFixed(2) %>  </td>
+                                                </tr>
+                                            <% }) %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="top-sec">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="details-box">
+                                            <div class="address-box">
+                                                <div class="signature-box">
+                                                    <img src="/public/assets/images/sign.png" class="img-fluid" alt="">
+                                                    <h5 style="color: #09a487;" >Authorised Sign</h5>
+                                                </div>
+                                            </div>
+
+                                            <div class="address-box">
+                                                <ul class="total-box">
+                                                    <li class="total-li" ><span class="text-total">Total Price : </span> <span class="theme-color amount-total">  ₹ <%= order.total_price %> </span> </li>
+                                                    <li class="total-li" ><span class="text-total">Coupon Discount : </span> <span class="theme-color amount-total">  ₹ <%= order.coupon_discount %> </span> </li>
+                                                    <li class="total-li" ><span class="text-total">Delivery Fees : </span> <span class="theme-color amount-total">  ₹ <%= order.delivery_fee %> </span> </li>
+                                                    <li class="total-li" ><span class="text-total">Grand Total : </span> <span class="theme-color amount-total">  ₹ <%= order.grand_total %> </span> </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <br>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        // Function to print only the content in the printable area
+        function printInvoice() {
+            // Hide elements that should not be printed
+            const elementsToHide = document.querySelectorAll('.hide-on-print');
+            elementsToHide.forEach((element) => {
+                element.style.display = 'none';
+            });
+    
+            // Print the content within the printable area
+            const printableArea = document.getElementById('printableArea');
+            window.print();
+    
+            // Restore the hidden elements after printing is done
+            elementsToHide.forEach((element) => {
+                element.style.display = '';
+            });
+        }
+    </script>
+    
+</body>
+
+</html>

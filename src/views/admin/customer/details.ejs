@@ -1,0 +1,187 @@
+    <%- include('../../partials/main', { pageTitle: 'Customer Details' }) %>
+
+    <style>
+        .inline{
+            display: inline-flex;
+        }
+    </style>
+
+<div class="page-body">
+    <!-- tracking table start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="title-header title-header-block package-card">
+                            <div>
+                                <h5>Customer Id  #<%= customer._id %></h5>
+                            </div>
+                            <div class="card-order-section">
+                                <ul>
+                                    <li>
+                                        <a href="/admin/customer/list">
+                                            Customer Details
+                                        </a>
+                                    </li>
+                                    <li class="text-selected"><%= customer.first_name %></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+                <div class="bg-inner cart-section order-details-table">
+                    <div class="row g-4">
+                        <div class="col-xl-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive table-details">
+                                        <table class="table cart-table table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="2">Orders</th>
+                                                    <th class="text-end" colspan="2">
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <% if (orders != '') { %>        
+                                                    <% orders.forEach((row, index) => { %> 
+                                                        <tr class="table-order">
+                                                            <td>
+                                                                <p>Sr.No</p>
+                                                                <h5><%= index+1 %></h5>
+                                                            </td>
+                                                            <td>
+                                                                <p>Order Id</p>
+                                                                <a href="/admin/orders/<%= row.order_id %>" >
+                                                                    <h5 style="color: #09a487 !important;"><%= row.order_id %></h5>
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <p>Total</p>
+                                                                <h5><%= row.grand_total %></h5>
+                                                            </td>
+                                                            <td>
+                                                                <ul>
+                                                                    <p>Options</p>
+                                                                    <li class="inline">
+                                                                        <a href="/admin/orders/details/<%= row.id%>">
+                                                                            <i class="ri-eye-line"></i>
+                                                                        </a>
+                                                                    </li>
+        
+                                                                    <li class="inline">
+                                                                        <a href="/admin/orders/generate-invoice/<%= row.id%>">
+                                                                            <i class="ri-pencil-line"></i>
+                                                                        </a>
+                                                                    </li>
+        
+                                                                    <li class="inline">
+                                                                        <a href="/admin/customer/delete/<%= row.id%>" data-bs-toggle="modal"
+                                                                            data-bs-target="#exampleModalToggle">
+                                                                            <i class="ri-delete-bin-line"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                        <tr>
+                                                    <% }) %>
+                                                <% } else { %>
+                                                    <tr class="table-order">
+                                                        <td></td>
+                                                        <td style="width: 100%;text-align:center;">
+                                                                No Order Placed Yet
+                                                        </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                <% } %>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <!-- Header -->
+                                <div class="card-header">
+                                    <h4 class="card-header-title">Customer</h4>
+                                </div>
+                                <!-- End Header -->
+
+                                <!-- Body -->
+                                <div class="card-body">
+                                    <div class="media align-items-center" href="javascript:">
+                                        <div class="media profile-media mr-3" style="width: 15% !important;height:40% !important">
+                                            <img class="user-profile rounded-circle" src="/public/images/img2.jpg" style="width: 100%;" alt="Image Description">
+                                        </div>
+                                        <div class="media-body">
+                                        <span class="text-body text-hover-primary m-3"> <%= customer.first_name %> <%= customer.last_name %></span>
+
+                                        </div>
+                                        <div class="media-body text-right">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="media align-items-center" href="javascript:">
+                                        <div class="media profile-media mr-3" style="width: 15% !important;height:40% !important">
+                                            <img class="user-profile rounded-circle" src="/public/images/img2.jpg" style="width: 100%;" alt="Image Description">
+                                        </div>
+                                        <div class="media-body">
+                                            <span class="text-body text-hover-primary m-3">1 Orders</span>
+
+                                        </div>
+                                        <div class="media-body text-right">
+                                            
+                                        </div>
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5>#Contact Info</h5>
+                                    </div>
+
+                                    <ul class="list-unstyled list-unstyled-py-2">
+                                        <li>
+                                            <span>Email : - </span>
+                                            <span><%= customer.email %></span>
+                                        </li>
+                                        <li>
+                                            <span>Phone Number : - </span>
+                                            <span><%= customer.phone %></span>
+                                        </li>
+                                        <li>
+                                            <span>Address: -</span>
+                                            <span><%= address.address_1%></span>
+                                            <span><%= address.address_2 %></span>
+                                            <span><%= address.city %></span>
+                                            <span><%= address.state %></span>
+                                            <span><%= address.pincode %></span>
+                                        </li>
+                                    </ul>
+                                    
+                                </div>
+                                        <!-- End Body -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <!-- tracking table end -->
+
+    <div class="container-fluid">
+        <!-- footer start-->
+        <%- include('../../partials/footer')%>
+    </div>
+</div>
+
+<%- include('../../partials/end')%>
+

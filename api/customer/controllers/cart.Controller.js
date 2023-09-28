@@ -3,8 +3,8 @@ const {
     StatusCodesConstants,
     
   } = require('../constants');
-  const { Validator} = require('../utils');
-  const models = require('../models');
+  const { Validator} = require('../../../managers/utils');
+  const models = require('../../../managers/models');
   
   
   

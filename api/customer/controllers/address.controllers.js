@@ -2,8 +2,8 @@ const {
   MessageConstants,
   StatusCodesConstants,
 } = require('../constants');
-const { Validator} = require('../utils');
-const models = require('../models');
+const { Validator} = require('../../../managers/utils');
+const models = require('../../../managers/models');
 
 // This would be your token blacklist storage
 const tokenBlacklist = new Set();

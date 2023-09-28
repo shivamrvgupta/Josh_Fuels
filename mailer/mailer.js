@@ -1,33 +1,40 @@
 const nodemailer = require('nodemailer');
-const nodemailerTransporter = require('./nodemailer-transport');
-const models = require('../api/customer/models');
 
+const sendMail = async (req, res) => {
+    // Create a transporter using your email provider's SMTP settings
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'shivamrvgupta@gmail.com', // Replace with your Gmail email address
+            pass: 'juopomfyzfjzbhti', // Replace with your Gmail password or an app-specific password
+        },
+    });
 
-// Function to send OTP verification email
+    // Define the email message
+    let message = {
+        from: 'shivamrvgupta@gmail.com', // Sender's email address
+        to: 'rvshivamsahu.1222@gmail.com', // Recipient's email address
+        subject: 'Welcome to My Product', // Subject of the email
+        html: `
+            <p>Hello,</p>
+            <p>Welcome to My Product! To get started, please click the button below:</p>
+            <a href="https://example.com/confirm-account">Confirm your account</a>
+            <p>Need help or have questions? Just reply to this email, and we'll be happy to assist.</p>
+        `,
+    };
+
+    // Send the email
+    transporter.sendMail(message, (error, info) => {
+        if (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Failed to send email' });
+        } else {
+            console.log('Email sent: ' + info.response);
+            return res.status(201).json({ msg: 'You should receive an email' });
+        }
+    });
+}
+
 module.exports = {
-  sendOTPVerificationEmail : async (email) => {
-    try {
-      const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-      console.log(otp)
-      const mailOptions = {
-        from: process.env.AuthEmail,
-        to: email,
-        subject: 'OTP Verification',
-        html: `<h1>OTP Verification</h1><p>Your OTP is ${otp}</p>`,
-      };
-
-      // Save OTP data to the database
-      const otpData = new models.Otp({ phone: email, otp });
-      await otpData.save();
-
-      // Send the OTP email
-      await nodemailerTransporter.sendMail(mailOptions);
-
-      console.log('OTP email sent successfully');
-    } catch (error) {
-      console.error('Error sending OTP email:', error);
-      throw error;
-    }
-  }
-
+    sendMail
 }

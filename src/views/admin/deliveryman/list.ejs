@@ -1,0 +1,276 @@
+<%- include('../../partials/main', { pageTitle: 'Add new Delivery Man' }) %>
+
+            <!-- Container-fluid starts-->
+            <div class="page-body">
+                <!-- All User Table Start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card card-table">
+                                <div class="card-body">
+                                    <div class="title-header option-title">
+                                        <h5>All Delivery Man (<%= deliverymanCount -%>) </h5>
+                                        <form class="d-inline-flex">
+                                            <a href="/admin/deliveryman/add"
+                                                class="align-items-center btn btn-theme d-flex">
+                                                <i data-feather="plus-square"></i>Add New Delivery Man
+                                            </a>
+                                        </form>
+                                    </div>
+
+                                    <div class="table-responsive deliveryman-table">
+                                        <div>
+                                            <table class="table all-package theme-table" id="table_id">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sr.No</th>
+                                                        <th>Name</th>
+                                                        <th>Image</th>
+                                                        <th>Phone</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <% if ( deliveryman != '') { %>        
+                                                        <% deliveryman.forEach((row, index) => { %> 
+                                                    <tr>
+                                                        <td><%= index + 1 -%></td>
+                                                        <td><%= row.fname -%></td>
+                                                        <td>
+                                                            <% if(row.deliveryman_image){ %>
+                                                                <img src="/images/<%= row.deliveryman_image %>" alt="" style="width: 100px; height: 100px;" class="img-fluid">
+                                                            <% } else { %>
+                                                                <img src="<% route %>/images/product/1.png" style="width: 100px; height: 100px;" class="img-fluid" alt="">
+                                                            <% }%>  
+                                                        </td>
+                                                        <td><%= row.phone -%></td>
+                                                        <td>
+                                                            <div onclick="updateStatus('<%= row._id %>')">
+                                                                <div class="legend-indicator <%= row.is_active ? 'status-close' : 'status-danger' %>">
+                                                                    <span id="statusText_<%= row._id %>"><%= row.is_active ? 'Active' : 'Disabled' %></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <ul>
+
+                                                                <li>
+                                                                    <a href="/admin/deliveryman/update/<%= row._id %>">
+                                                                        <i class="ri-pencil-line"></i>
+                                                                    </a>
+                                                                </li>
+
+                                                                <li>
+                                                                    <a href="/admin/deliveryman/delete/<%= row._id %>" data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModalToggle">
+                                                                        <i class="ri-delete-bin-line"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>      
+                                                    <% } else { %>
+                                                            <td>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td style="width: 100%;text-align:right;padding-right:30%">
+                                                                        Nothing To Show
+                                                                    </td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </td>
+                                                    <% } %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle2" aria-hidden="true" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center" id="exampleModalLabel12">Done!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="remove-box text-center">
+                                    <div class="wrapper">
+                                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                                        </svg>
+                                    </div>
+                                    <h4 class="text-content">It's Removed.</h4>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Delete Modal Box End -->
+
+                <!-- All User Table Ends-->
+                <%- include('../../partials/footer')%>
+            </div>
+            <!-- Container-fluid end -->
+
+            
+    <!-- Delete Modal Box Start -->
+    <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center">
+                    <h5 class="modal-title w-100" id="exampleModalLabel22">Are You Sure ?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="remove-box">
+                        <p>The permission for the use/group, preview is inherited from the object, object will create a
+                            new permission for this object</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-animation btn-md fw-bold" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-animation btn-md fw-bold" id="confirmDeleteBtn" data-bs-target="#exampleModalToggle2"
+                        data-bs-toggle="modal" data-bs-dismiss="modal">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade theme-modal remove-coupon" id="exampleModalToggle2" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleModalLabel12">Done!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="remove-box text-center">
+                        <div class="wrapper">
+                            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                            </svg>
+                        </div>
+                        <h4 class="text-content">It's Removed.</h4>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Modal Box End -->
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+          // Handle click event on the "Delete" link
+          $('a[data-bs-toggle="modal"]').on('click', function () {
+            // Get the deliveryman ID from the link's href attribute
+            const deliverymanId = this.href.split('/').pop();
+      
+            // Update the "Yes" button's data attribute with the deliveryman ID for reference when confirming deletion
+            $('#confirmDeleteBtn').data('deliverymanId', deliverymanId);
+          });
+      
+          // Handle click event on the "Yes" button inside the modal
+          $('#confirmDeleteBtn').on('click', function () {
+            // Get the deliveryman ID from the data attribute
+            const deliverymanId = $(this).data('deliverymanId');
+      
+            // Make an AJAX request to the server to delete the deliveryman
+            $.ajax({
+              method: 'DELETE',
+              url: `/admin/deliveryman/delete/${deliverymanId}`,
+              success: function (data) {
+                // If the deletion is successful, you can handle the response or reload the page
+                console.log(data); // Optional: Log the server response
+                window.location.reload(); // Reload the page to reflect the changes
+              },
+              error: function (error) {
+                // Handle errors if any
+                console.error(error);
+              },
+            });
+          });
+        });
+      </script>
+
+      <script>
+        function updateStatus(deliveryManId) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/deliveryman/update-status",
+                data: { deliveryManId: deliveryManId },
+                success: function (response) {
+                    // Update the status text
+                    const statusTextElement = $(`#statusText_${deliveryManId}`);
+                    statusTextElement.text(response.status ? 'Active' : 'Disabled');
+        
+                    // Update the class of the legend-indicator span for the clicked category only
+                    const clickedProductIndicator = $(`#statusText_${deliveryManId}`).siblings('.legend-indicator');
+                    clickedProductIndicator.removeClass('bg-success bg-disabled');
+                    clickedProductIndicator.addClass(response.status ? 'bg-success' : 'bg-disabled');
+                    window.location.reload();
+                    console.log("Database value updated successfully!");
+                },
+                error: function (error) {
+                    console.error("Error updating database value");
+                }
+            });
+        }
+        
+    </script>
+
+    <script>
+
+        function updateStatus() {
+            const order_id = document.getElementById('order_id').value;
+            const new_status = document.getElementById('status').value;
+
+            // Create a new XMLHttpRequest object
+            const xhr = new XMLHttpRequest();
+
+            // Configure the request
+            xhr.open("POST", "/update-status", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            // Set up the data to send
+            const data = JSON.stringify({ order_id, new_status });
+
+            // Set up the callback function
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    alert(response.message);
+                } else {
+                    alert("Error updating status.");
+                }
+            };
+
+            // Send the request
+            xhr.send(data);
+        }
+    </script>
+
+<%- include('../../partials/end')%>

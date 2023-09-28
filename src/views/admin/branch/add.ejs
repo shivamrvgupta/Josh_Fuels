@@ -1,0 +1,223 @@
+<%- include('../../partials/main', { pageTitle: 'Add new Category' }) %>
+
+            <!-- Container-fluid starts-->
+            <div class="page-body">
+                <!-- New User start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-8 m-auto">
+                                    <div class="card">
+                                        <div class="card-body title-header option-title">
+                                            <h5 style="font-size: calc(20px + (22 - 18) * ((100vw - 320px) / (1920 - 320)));">Add New Branch</h5>
+                                        </div>
+                                    </div>
+                                    
+                                    <form class="theme-form theme-form-2 mega-form" action="/admin/branch/add" method="post" enctype="multipart/form-data">
+                                        <div class="card" >
+                                            <div class="card-body">
+                                                <div class="card-header-2">
+                                                    <h5>Branch Information </h5>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Branch
+                                                            Name</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="name" placeholder="Enter Branch Name...." required>
+                                                        </div >
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Phone
+                                                            Number</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" placeholder="Enter Phone Number...." name="phone" id="numberInput" oninput="validateInput(this)" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="col-lg-3 col-md-3 col-form-label form-label-title">Email
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="email" name="email" placeholder="Enter Email...." required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="col-lg-3 col-md-3 col-form-label form-label-title">Password</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="password" name="password" placeholder="Enter Password...." required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row align-items-center">
+                                                        <label
+                                                            class="col-lg-3 col-md-3 col-form-label form-label-title">Confirm
+                                                            Password</label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="password" name="password2" placeholder="ReEnter Password...." required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="card-header-2">
+                                                    <h5>Branch Image </h5>
+                                                </div>
+                                                <div class="my-4 align-items-center">
+                                                    <label class="col-sm-3 col-form-label form-label-title">Branch Image</label>
+                                                    <div class="custom-file">
+                                                        <input type="file" name="branch_image" id="customFileEg1" class="form-control form-choose"
+                                                                accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" 
+                                                                oninvalid="document.getElementById('en-link').click()">
+                                                        <div class="custom-file">
+                                                            <div class="text-center">
+                                                                <img style="height: 290px;border: 1px solid;border-radius: 10px;width: 70%;margin-top:2rem" id="viewer" src="/public/images/img2.jpg" alt="image" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="card" >
+                                            <div class="card-body ">
+                                                <div class="card-header-2">
+                                                    <h5>Branch Address</h5>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                            Address Line 1
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="address1" placeholder="Enter Address 1...." required>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                            class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                            Address Line 2
+                                                        </label>
+                                                        <div class="col-md-9 col-lg-9">
+                                                            <input class="form-control" type="text" name="address2" placeholder="Enter Address 2...." required>
+                                                        </div>
+                                                    </div>
+                                                    
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <label
+                                                                class="col-form-label form-label-title">Area
+                                                            </label>
+                                                            <input class="form-control" type="text" name="area" placeholder="Enter Area...." required>
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <label
+                                                                class="col-form-label form-label-title">PinCode
+                                                            </label>
+                                                            <input class="form-control" type="text" placeholder="Enter Pincode...." name="pincode" id="numberInput" oninput="validateInput(this)" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label
+                                                                class="col-form-label form-label-title">City
+                                                            </label>
+                                                            <input class="form-control" type="text" name="city" placeholder="Enter City...." required>  
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label
+                                                                class="col-form-label form-label-title">State
+                                                            </label>
+                                                            <input class="form-control" type="text" name="state" placeholder="Enter State...." required>
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-4 col-md-4">
+                                                            <label
+                                                                class="col-form-label form-label-title">Country
+                                                            </label>
+                                                            <input class="form-control" type="text" name="country" placeholder="Enter Your Country...." required>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-body">
+                                                    <div class="row align-items-center">
+                                                        <button class="btn btn-solid" type="submit">Add Product</button required>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- New User End -->
+
+                <!-- footer start -->
+                    <%- include('../../partials/footer')%>
+                <!-- footer end -->
+            </div>
+            <!-- Container-fluid end -->
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                
+            <script>
+                function readURL(input, viewer_id) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+            
+                        reader.onload = function (e) {
+                            $('#'+viewer_id).attr('src', e.target.result);
+                        }
+            
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+            
+                $("#customFileEg1").change(function () {
+                    readURL(this, 'viewer');
+                });
+                $("#customFileEg2").change(function () {
+                    readURL(this, 'viewer2');
+                });
+            </script>
+            
+            <script>
+                function validateInput(inputField) {
+                    // Remove any non-numeric characters from the input
+                    inputField.value = inputField.value.replace(/[^0-9]/g, '');
+                
+                    // Display an error message if input is empty
+                    var errorMessage = document.getElementById("errorMessage");
+                    if (inputField.value === "") {
+                        errorMessage.textContent = "Please enter a number.";
+                    } else {
+                        errorMessage.textContent = "";
+                    }
+                }
+                </script>
+            
+
+<%- include('../../partials/end')%>

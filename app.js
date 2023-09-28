@@ -1,27 +1,37 @@
 //jshint esversion:6
 require("dotenv").config();
 const express = require("express");
+const jwt = require('jsonwebtoken');
 const app = express();
-const multer = require("multer");
-const session = require('express-session')
 const bodyParser = require("body-parser");
 const path = require("path"); 
-const bcrypt = require("bcrypt")
 const morgan = require("morgan")
-const mongoose = require("mongoose");
-const db = require('./managers/db')
+const db = require('./managers/models/db')
+const cookieParser = require('cookie-parser');
+const Mailer = require('./mailer/mailer.js')
+const routesWeb = require('./web');
 const routesApi = require('./api');
 
+
+app.use(cookieParser());
 app.set('view engine', 'ejs'); // Set EJS as the default template engine
-app.set('views', path.join(__dirname, 'views')); // Set views directory
-app.use(bodyParser.json({extended: true}));
-app.use(express.static("public"));
+app.set('views', path.join(__dirname, './src/views')); // Set views directory
+// Parse JSON-encoded request bodies
+app.use(bodyParser.json({ extended: true }));
+
+// Parse URL-encoded request bodies
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/public',express.static("./src/public"));
 
 app.use(morgan(':method :url :status :user-agent - [:date[clf]] :response-time ms'));
-app.use('/api/auth/images', express.static(path.join(__dirname, 'uploads')));
+app.use('/images', express.static(path.join(__dirname, './src/uploads')));
+
 
   
 app.use('/api', routesApi);
+app.use(routesWeb);
+
+app.post('/sendmail', Mailer.sendMail)
 console.log("here")
 
 ports = [process.env.PORT, process.env.PORT1, process.env.PORT2]

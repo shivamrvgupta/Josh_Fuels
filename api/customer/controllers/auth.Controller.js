@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const axios = require('axios'); // Import the axios library
 const { v4: uuidv4 } = require('uuid');
-const emailService = require('../../../mailer')
 const {
   MessageConstants,
   StatusCodesConstants,
@@ -10,16 +9,15 @@ const {
   
 } = require('../constants');
 const { AuthMiddleware } = require('../middlewares');
-const { Validator, ApiError } = require('../utils');
-const User = require('../models/user'); // Import your User model
-const { AuthHelper, OtpHelper } = require('../helpers');
+const { Validator } = require('../../../managers/utils');
+const { AuthHelper, OtpHelper } = require('../../../managers/helpers');
 const secretKey = process.env.SECRET_KEY
 const {
   JwtService,
   UserService,
-} = require('../services');
+} = require('../../../managers/services');
 const { generateAccessToken, initializeRevokedTokens } = require('../middlewares/auth.middleware');
-const models = require('../models');
+const models = require('../../../managers/models');
 
 // This would be your token blacklist storage
 const tokenBlacklist = new Set();
@@ -33,6 +31,7 @@ module.exports = {
       phone_number: req.body.phone,
     };
 
+    console.log(req.body);
     const validationResult = Validator.validate(loginData, {
       phone_number: {
           presence: { allowEmpty: false },

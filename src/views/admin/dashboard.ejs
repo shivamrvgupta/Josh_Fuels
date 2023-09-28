@@ -1,0 +1,534 @@
+<%- include('../partials/main', { pageTitle: 'JoshFuels - Dashboard' }) %>
+<link rel="stylesheet" href="/public/css/style2.css">
+
+<style>
+    .item-box {
+        width: 150px;
+        border: #0000003d 1px solid;
+    }
+    
+    .product-card-item{
+            border: #0000003d 1px solid;
+            border-radius: 12px;
+            justify-content: center;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            cursor: pointer;
+            margin: 1rem;
+    }
+    
+    .upper-card-body {  
+        justify-content: center;
+        overflow-x: auto;
+        -webkit-overflow-scrolling :touch;
+        
+    }
+    
+    .product-card-title {
+        color: #140606bd;
+        margin-bottom: 0.5rem;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 600;
+    }
+    
+    .product-card-text {
+        margin-bottom: 0.5rem;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 600;
+    }
+</style>
+            <!-- index body start -->
+            <div class="page-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- chart caard section start -->
+                        <div class="col-sm-6 col-xxl-3 col-lg-6">
+                            <div class="main-tiles border-5 border-0 card o-hidden">
+                                <div class="custome-1-bg b-r-4 card-body">
+                                    <div class="media align-items-center static-top-widget">
+                                        <div class="media-body p-0">
+                                            <span class="m-0">Total Revenue</span>
+                                            <h4 class="mb-0 counter">₹<%= totalRevenue %>
+                                            </h4>
+                                        </div>
+                                        <div class="align-self-center text-center">
+                                            <i class="ri-database-2-line"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-xxl-3 col-lg-6">
+                            <div class="main-tiles border-5 border-0 card o-hidden">
+                                <div class="custome-2-bg b-r-4 card-body">
+                                    <div class="media static-top-widget">
+                                        <div class="media-body p-0">
+                                            <span class="m-0">Total Orders</span>
+                                            <h4 class="mb-0 counter"><%= allOrders %>
+                                            </h4>
+                                        </div>
+                                        <div class="align-self-center text-center">
+                                            <i class="ri-shopping-bag-3-line"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-xxl-3 col-lg-6">
+                            <div class="main-tiles border-5 border-0  card o-hidden">
+                                <div class="custome-3-bg b-r-4 card-body">
+                                    <div class="media static-top-widget">
+                                        <div class="media-body p-0">
+                                            <span class="m-0">Total Products</span>
+                                            <h4 class="mb-0 counter"> <%= allProducts %>
+                                                <a href="/admin/product/add" class="badge badge-light-secondary grow">
+                                                    ADD NEW</a>
+                                            </h4>
+                                        </div>
+
+                                        <div class="align-self-center text-center">
+                                            <i class="ri-chat-3-line"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-xxl-3 col-lg-6">
+                            <div class="main-tiles border-5 border-0 card o-hidden">
+                                <div class="custome-4-bg b-r-4 card-body">
+                                    <div class="media static-top-widget">
+                                        <div class="media-body p-0">
+                                            <span class="m-0">Total Customers</span>
+                                            <h4 class="mb-0 counter"> <%= allCustomers%>
+                                            </h4>
+                                        </div>
+
+                                        <div class="align-self-center text-center">
+                                            <i class="ri-user-add-line"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 d-flex ">
+                            <div class="card o-hidden card-hover">
+                                <div class="card-header border-0 pb-1">
+                                    <div class="card-header-title">
+                                        <h4>Product</h4>
+                                    </div>
+                                <div class="upper-card-body d-flex">
+                                <% products.forEach(function(item){ %>
+                                    <a href="/admin/product/detail/<%= item._id %>">
+                                        <div class="product-card-item">
+                                            <div class="card-body">
+                                            <img src="/images/<%= item.image%>" style="width: 100px; height: 100px; border-radius: 5px;" class="p-2  " >
+                                            <br>
+                                            <h4 class="product-card-title"><%= item.name%></h4>
+                                                <p class="product-card-text">₹<%= item.price%></p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                <% }) %>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <!-- chart caard section End -->
+
+                        <!-- Addon start-->
+                        <div class="col-xl-6">
+                            <div class="card o-hidden card-hover">
+                                <div class="card-header card-header-top card-header--2">
+                                    <div class="card-header-title">
+                                        <h4>Addon</h4>
+                                    </div>
+                                </div>
+
+                                <div class="card-body p-0">
+                                    <div>
+                                        <div class="table-responsive">
+                                            <table class="best-selling-table table border-0">
+                                                <tbody>
+                                                    <% addOn.forEach(function(item){ %>
+                                                    <tr class="table-order">
+                                                        <td>
+                                                            <p>Product Name</p>
+                                                            <h5><%= item.name %></h5>
+                                                        </td>
+                                                        <td>
+                                                            <p>Price</p>
+                                                            <h5>₹<%= item.price %></h5>
+                                                        </td>
+                                                        <td>
+                                                            <p>Created at</p>
+                                                            <h5><%= item.created_at.toLocaleDateString('en-UK',options) %></h5>
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Addon end-->
+
+                        <!-- Earning chart star-->
+                        <div class="col-xl-7">
+                            <div class="card o-hidden">
+                                <div class="card-header border-0 pb-1">
+                                    <div class="card-header-title">
+                                        <h4>Revenue Report</h4>
+                                    </div>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div id="report-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Earning chart  end-->
+
+
+                        <!-- Best Selling Product Start -->
+                        <div class="col-xxl-6 col-md-6">
+                            <div class="card o-hidden card-hover">
+                                <div class="card-header card-header-top card-header--2">
+                                    <div class="card-header-title">
+                                        <h4>Best Selling Product</h4>
+                                    </div>
+
+                                    <div class="best-selling-box">
+                                        <span>Short By:</span>
+                                        <div class="dropdown">
+                                            <button class="btn p-0 dropdown-toggle" type="button"
+                                                data-bs-toggle="dropdown" data-bs-auto-close="true">Today</button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-body p-0">
+                                    <div>
+                                        <div class="table-responsive">
+                                            <table class="best-selling-table table border-0">
+                                                <tbody>
+                                                    <% products.forEach(function(item){ %>
+                                                    <tr class="table-order">
+                                                        <td>
+                                                            <p>Product Name</p>
+                                                            <h5><%= item.name %></h5>
+                                                        </td>
+                                                        <td>
+                                                            <p>Quantity</p>
+                                                            <h5> <%= productQuantities[item._id] || 0 %></h5>
+                                                            <h5> <% console.log(productQuantities) %></h5>
+                                                            
+                                                        </td>
+                                                        <td>
+                                                            <p>Price</p>
+                                                            <h5>₹<%= item.price %></h5>
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>
+                                                </tbody>
+    
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Best Selling Product End -->
+
+
+                        <!-- Earning chart star-->
+                        <div class="col-xl-6">
+                            <div class="card o-hidden card-hover">
+                                <div class="card-header border-0 pb-1">
+                                    <div class="card-header-title">
+                                        <h4>Earning</h4>
+                                    </div>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div id="bar-chart-earning"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Earning chart end-->
+
+
+                        <!-- Transactions start-->
+                        <!-- <div class="col-xxl-4 col-md-6">
+                            <div class="card o-hidden card-hover">
+                                <div class="card-header border-0">
+                                    <div class="card-header-title">
+                                        <h4>Transactions</h4>
+                                    </div>
+                                </div>
+
+                                <div class="card-body pt-0">
+                                    <div>
+                                        <div class="table-responsive">
+                                            <table class="user-table transactions-table table border-0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="transactions-icon">
+                                                                <i class="ri-shield-line"></i>
+                                                            </div>
+                                                            <div class="transactions-name">
+                                                                <h6>Wallets</h6>
+                                                                <p>Starbucks</p>
+                                                            </div>
+                                                        </td>
+
+                                                        <td class="lost">-₹74</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="td-color-1">
+                                                            <div class="transactions-icon">
+                                                                <i class="ri-check-line"></i>
+                                                            </div>
+                                                            <div class="transactions-name">
+                                                                <h6>Bank Transfer</h6>
+                                                                <p>Add Money</p>
+                                                            </div>
+                                                        </td>
+
+                                                        <td class="success">+₹125</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="td-color-2">
+                                                            <div class="transactions-icon">
+                                                                <i class="ri-exchange-dollar-line"></i>
+                                                            </div>
+                                                            <div class="transactions-name">
+                                                                <h6>Paypal</h6>
+                                                                <p>Add Money</p>
+                                                            </div>
+                                                        </td>
+
+                                                        <td class="lost">-₹50</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="td-color-3">
+                                                            <div class="transactions-icon">
+                                                                <i class="ri-bank-card-line"></i>
+                                                            </div>
+                                                            <div class="transactions-name">
+                                                                <h6>Mastercard</h6>
+                                                                <p>Ordered Food</p>
+                                                            </div>
+                                                        </td>
+
+                                                        <td class="lost">-₹40</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="td-color-4 pb-0">
+                                                            <div class="transactions-icon">
+                                                                <i class="ri-bar-chart-grouped-line"></i>
+                                                            </div>
+                                                            <div class="transactions-name">
+                                                                <h6>Transfer</h6>
+                                                                <p>Refund</p>
+                                                            </div>
+                                                        </td>
+
+                                                        <td class="success pb-0">+₹90</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- Transactions end-->
+
+                        <!-- visitors chart start-->
+                        <!-- <div class="col-xxl-4 col-md-6">
+                            <div class="h-100">
+                                <div class="card o-hidden card-hover">
+                                    <div class="card-header border-0">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="card-header-title">
+                                                <h4>Visitors</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="pie-chart">
+                                            <div id="pie-chart-visitors"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- visitors chart end-->
+
+
+                        <!-- To Do List start-->
+                        <!-- <div class="col-xxl-4 col-md-6">
+                            <div class="card o-hidden card-hover">
+                                <div class="card-header border-0">
+                                    <div class="card-header-title">
+                                        <h4>To Do List</h4>
+                                    </div>
+                                </div>
+
+                                <div class="card-body pt-0">
+                                    <ul class="to-do-list">
+                                        <li class="to-do-item">
+                                            <div class="form-check user-checkbox">
+                                                <input class="checkbox_animated check-it" type="checkbox" value=""
+                                                    id="flexCheckDefault">
+                                            </div>
+                                            <div class="to-do-list-name">
+                                                <strong>Pick up kids from school</strong>
+                                                <p>8 Hours</p>
+                                            </div>
+                                        </li>
+                                        <li class="to-do-item">
+                                            <div class="form-check user-checkbox">
+                                                <input class="checkbox_animated check-it" type="checkbox" value=""
+                                                    id="flexCheckDefault1">
+                                            </div>
+                                            <div class="to-do-list-name">
+                                                <strong>Prepare or presentation.</strong>
+                                                <p>8 Hours</p>
+                                            </div>
+                                        </li>
+                                        <li class="to-do-item">
+                                            <div class="form-check user-checkbox">
+                                                <input class="checkbox_animated check-it" type="checkbox" value=""
+                                                    id="flexCheckDefault2">
+                                            </div>
+                                            <div class="to-do-list-name">
+                                                <strong>Create invoice</strong>
+                                                <p>8 Hours</p>
+                                            </div>
+                                        </li>
+                                        <li class="to-do-item">
+                                            <div class="form-check user-checkbox">
+                                                <input class="checkbox_animated check-it" type="checkbox" value=""
+                                                    id="flexCheckDefault3">
+                                            </div>
+                                            <div class="to-do-list-name">
+                                                <strong>Meeting with Alisa</strong>
+                                                <p>8 Hours</p>
+                                            </div>
+                                        </li>
+
+                                        <li class="to-do-item">
+                                            <form class="row g-2">
+                                                <div class="col-lg-8">
+                                                    <input type="text" class="form-control h-100" id="name"
+                                                        placeholder="Enter Task Name">
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <button type="submit" class="btn btn-primary w-100 h-100">Add
+                                                        task</button>
+                                                </div>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- To Do List end-->
+
+                        <!-- Browser States start-->
+                        <!-- <div class="col-xxl-4 col-md-6">
+                            <div class="card o-hidden card-hover">
+                                <div class="card-header border-0">
+                                    <div class="card-header-title">
+                                        <h4>Browser States</h4>
+                                    </div>
+                                </div>
+
+                                <div class="card-body pt-0">
+                                    <ul class="brower-states">
+                                        <li class="brower-item">
+                                            <div class="browser-image">
+                                                <img src="assets/images/brower-image/chrome.png" class="img-fluid"
+                                                    alt="">
+                                                <h5>Chrome</h5>
+                                            </div>
+
+                                            <div class="browser-progressbar">
+                                                <h6>84%</h6>
+                                            </div>
+                                        </li>
+                                        <li class="brower-item">
+                                            <div class="browser-image">
+                                                <img src="assets/images/brower-image/firefox.png" class="img-fluid"
+                                                    alt="">
+                                                <h5>Firefox</h5>
+                                            </div>
+
+                                            <div class="browser-progressbar">
+                                                <h6>48%</h6>
+                                            </div>
+                                        </li>
+                                        <li class="brower-item">
+                                            <div class="browser-image">
+                                                <img src="assets/images/brower-image/internet-explorer.png"
+                                                    class="img-fluid" alt="">
+                                                <h5>internet Explorer</h5>
+                                            </div>
+
+                                            <div class="browser-progressbar">
+                                                <h6>35%</h6>
+                                            </div>
+                                        </li>
+                                        <li class="brower-item">
+                                            <div class="browser-image">
+                                                <img src="assets/images/brower-image/opera.png" class="img-fluid"
+                                                    alt="">
+                                                <h5>Opera Mini</h5>
+                                            </div>
+
+                                            <div class="browser-progressbar">
+                                                <h6>55%</h6>
+                                            </div>
+                                        </li>
+                                        <li class="brower-item">
+                                            <div class="browser-image">
+                                                <img src="assets/images/brower-image/safari.png" class="img-fluid"
+                                                    alt="">
+                                                <h5>Safari</h5>
+                                            </div>
+
+                                            <div class="browser-progressbar">
+                                                <h6>20%</h6>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- Browser States end-->
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+
+                <!-- footer start-->
+                <%- include('../partials/footer')%>
+                <!-- footer End-->
+            </div>
+            <!-- index body end -->
+
+
+<%- include('../partials/end')%>

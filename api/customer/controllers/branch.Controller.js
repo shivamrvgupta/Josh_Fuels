@@ -4,9 +4,9 @@ const {
   
 } = require('../constants');
 const { AuthMiddleware } = require('../middlewares');
-const { Validator, ApiError } = require('../utils');
+const { Validator, ApiError } = require('../../../managers/utils');
 const { generateAccessToken } = require('../middlewares/auth.middleware');
-const models = require('../models');
+const models = require('../../../managers/models');
 
 
 

@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
-const models = require('../models');
-const { async } = require('validate.js');
+const models = require('../../../managers/models');
 secretKey = process.env.SECRET_KEY
 
 // This is a set of revoked tokens. In production, this should be a database table.

@@ -1,7 +1,6 @@
 {
-  "name": "joshfuels",
-  "version": "1.0.2",
-  "description": "Josh Fuels sources fuel from authorized and selected dealers of oil companies near your location.",
+  "name": "backend",
+  "version": "1.0.1",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -16,16 +15,17 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "bootstrap": "^5.3.1",
+    "cookie-parser": "^1.4.6",
     "crypto": "^1.0.1",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-recaptcha": "^5.1.0",
     "express-session": "^1.17.3",
-    "firebase-admin": "^11.10.1",
     "jquery": "^3.7.0",
     "jQuery": "^1.7.4",
     "jsonwebtoken": "^9.0.2",
+    "mailgen": "^2.0.27",
     "method-override": "^3.0.0",
     "moment": "^2.29.4",
     "mongoose": "^7.4.1",
@@ -35,14 +35,9 @@
     "node-sass": "^9.0.0",
     "nodemailer": "^6.9.5",
     "nodemon": "^3.0.1",
-    "querystring": "^0.2.1",
     "toastr": "^2.1.4",
     "uuid": "^9.0.0",
-    "validate": "^5.2.0",
     "validate.js": "^0.13.1"
   },
-  "repository": {
-    "type": "git",
-    "url": "none"
-  }
+  "description": ""
 }

@@ -1,6 +1,6 @@
 const { MessageConstants, StatusCodesConstants } = require('../constants');
-const { Validator } = require('../utils');
-const models = require('../models');
+const { Validator } = require('../../../managers/utils');
+const models = require('../../../managers/models');
   
 module.exports = {
     // Get Order Data
@@ -22,6 +22,131 @@ module.exports = {
                 // Query the database to fetch orders for the user
                 const orders = await models.BranchModel.Order.find({
                     user_id: user_id,
+                });
+        
+                // Check if any orders were found
+                if (orders && orders.length > 0) {
+                    const populatedOrder = [];
+        
+                    for (const order of orders) {
+                        // Fetch product details for each order item
+                        const productData = await Promise.all(order.product_items.map(async (product) => {
+                            const productInfo = await models.BranchModel.BranchProduct.findOne({ _id: product.product_id });
+                            if (productInfo) {
+                                return {
+                                    "product_id": product.product_id,
+                                    "product_name": productInfo.name,
+                                    "product_img": productInfo.image,
+                                    "quantity": product.quantity,
+                                    "price": product.price,
+                                };
+                            }
+                            return null;
+                        }));
+        
+                        // Fetch branch, delivery, and address details
+                        const branchInfo = await models.BranchModel.Branch.findOne({ _id: order.branch_id });
+                        const deliveryInfo = order.is_delivery_man_assigned
+                            ? await models.UserModel.DeliveryMan.findOne({ _id: order.delivery_id })
+                            : null;
+                        const addressInfo = await models.UserModel.Address.findOne({ _id: order.address_id });
+        
+                        // Construct data objects
+                        const addressData = {
+                            address_id: addressInfo._id,
+                            address_1: addressInfo.address_1,
+                            area: addressInfo.area,
+                            city: addressInfo.city,
+                            state: addressInfo.state,
+                        };
+        
+                        const branchData = {
+                            branch_id: branchInfo._id,
+                            branch_name: branchInfo.name,
+                            branch_city: branchInfo.city,
+                        };
+        
+                        const orderData = {
+                            order_id: order.order_id,
+                            coupon_discount: order.coupon_discount,
+                            delivery_fee: order.delivery_fee,
+                            total_price: order.total_price,
+                            delivery_date: order.delivery_date,
+                            delivery_time: order.delivery_time,
+                            payment_method: order.payment_method,
+                            note: order.note,
+                            grand_total: order.grand_total,
+                        };
+        
+                        const deliveryManData = order.is_delivery_man_assigned
+                            ? {
+                                deliveryMan_id: deliveryInfo._id,
+                                deliveryMan_name: deliveryInfo.name,
+                            }
+                            : {
+                                deliveryMan_name: order.delivery_man,
+                            };
+        
+                        // Construct the order item data
+                        const orderItemData = {
+                            ordered_address: addressData,
+                            ordered_branch: branchData,
+                            ordered_products: productData,
+                            order_detail: orderData,
+                            assigned_deliveryMan: deliveryManData,
+                        };
+        
+                        populatedOrder.push(orderItemData);
+                    }
+        
+                    console.log(`User ${session.first_name} ${MessageConstants.ORDER_FETCHED_SUCCESSFULLY}`);
+                    return res.status(StatusCodesConstants.SUCCESS).json({
+                        status: true,
+                        status_code: StatusCodesConstants.SUCCESS,
+                        message: MessageConstants.ORDER_FETCHED_SUCCESSFULLY,
+                        data: {
+                            orders: populatedOrder,
+                        },
+                    });
+                } else {
+                    // No orders found for the user
+                    console.log("No orders found");
+                    return res.status(StatusCodesConstants.SUCCESS).json({
+                        status: true,
+                        status_code: StatusCodesConstants.SUCCESS,
+                        message: MessageConstants.ORDER_NOT_FOUND,
+                        data: {
+                            orders: [],
+                        },
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+                return res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({ error: MessageConstants.INTERNAL_SERVER_ERROR });
+            }
+        },
+    
+    // Get Order Data
+        perOrder: async (req, res) => {
+            try {
+                // Extract user session information
+                const session = req.user;
+                const user_id = session.userId;
+                const order_id = req.params;
+        
+                // Check if the user is logged in
+                if (!user_id) {
+                    return res.status(StatusCodesConstants.ACCESS_DENIED).json({
+                        status: false,
+                        status_code: StatusCodesConstants.ACCESS_DENIED,
+                        message: MessageConstants.NOT_LOGGED_IN,
+                    });
+                }
+        
+                // Query the database to fetch orders for the user
+                const orders = await models.BranchModel.Order.find({
+                    user_id: user_id,
+                    order_id : order_id
                 });
         
                 // Check if any orders were found
@@ -395,109 +520,107 @@ module.exports = {
         },
 
     // Update Order Data
-    updateOrder: async (req, res) => {
-        try {
-            const session = req.user;
-            const user_id = session.userId;
-    
-            console.log(`User ${session.first_name} Fetching Order Data -- Update Order`);
-    
-            if (!user_id) {
-                return res.status(StatusCodesConstants.ACCESS_DENIED).json({
-                    status: false,
-                    status_code: StatusCodesConstants.ACCESS_DENIED,
-                    message: MessageConstants.NOT_LOGGED_IN,
-                });
-            }
-    
-            const updateData = {
-                user_id: user_id,
-                order_id: req.body.order_id,
-                product_id: req.body.product_id,
-                quantity: req.body.quantity,
-                total_price: req.body.total_price,
-                grand_total: req.body.grand_total,
-            };
-    
-            const validationResult = Validator.validate(updateData, {
-                order_id: {
-                    presence: { allowEmpty: false },
-                    length: { minimum: 3 }
-                },
-                product_id: {
-                    presence: { allowEmpty: false }
-                },
-                quantity: {
-                    presence: { allowEmpty: false },
-                },
-                total_price: {
-                    presence: { allowEmpty: false },
-                },
-                grand_total: {
-                    presence: { allowEmpty: false },
-                }
-            });
-    
-            if (validationResult) {
-                return res.status(StatusCodesConstants.BAD_REQUEST).json({
-                    status: false,
-                    status_code: StatusCodesConstants.BAD_REQUEST,
-                    message: MessageConstants.VALIDATION_ERROR,
-                    data: validationResult,
-                });
-            }
-    
-            const existingOrder = await models.BranchModel.Order.findOne({
-                order_id: updateData.order_id,
-                user_id: user_id
-            });
-    
-            if (existingOrder) {
-                // Find the product index within the existing order
-                const productIndex = existingOrder.product_items.findIndex((item) => {
-                    return item.product_id.toString() === updateData.product_id.toString();
-                });
-    
-                if (productIndex !== -1) {
-                    // Update product details
-                    existingOrder.product_items[productIndex].quantity = updateData.quantity;
-                    existingOrder.total_price = updateData.total_price;
-                    existingOrder.product_items[productIndex].grand_total = updateData.grand_total;
-    
-                    await existingOrder.save();
-
-
-                    console.log(`User ${session.first_name} ${MessageConstants.CART_UPDATE_SUCCESSFULLY}`);
-                    return res.status(StatusCodesConstants.SUCCESS).json({
-                        status: true,
-                        status_code: StatusCodesConstants.SUCCESS,
-                        message: MessageConstants.PRODUCT_UPDATE_SUCCESSFULLY,
-                        data: existingOrder, // Return the updated order
+        updateOrder: async (req, res) => {
+            try {
+                const session = req.user;
+                const user_id = session.userId;
+        
+                console.log(`User ${session.first_name} Fetching Order Data -- Update Order`);
+        
+                if (!user_id) {
+                    return res.status(StatusCodesConstants.ACCESS_DENIED).json({
+                        status: false,
+                        status_code: StatusCodesConstants.ACCESS_DENIED,
+                        message: MessageConstants.NOT_LOGGED_IN,
                     });
+                }
+        
+                const updateData = {
+                    user_id: user_id,
+                    order_id: req.body.order_id,
+                    product_id: req.body.product_id,
+                    quantity: req.body.quantity,
+                    total_price: req.body.total_price,
+                    grand_total: req.body.grand_total,
+                };
+        
+                const validationResult = Validator.validate(updateData, {
+                    order_id: {
+                        presence: { allowEmpty: false },
+                        length: { minimum: 3 }
+                    },
+                    product_id: {
+                        presence: { allowEmpty: false }
+                    },
+                    quantity: {
+                        presence: { allowEmpty: false },
+                    },
+                    total_price: {
+                        presence: { allowEmpty: false },
+                    },
+                    grand_total: {
+                        presence: { allowEmpty: false },
+                    }
+                });
+        
+                if (validationResult) {
+                    return res.status(StatusCodesConstants.BAD_REQUEST).json({
+                        status: false,
+                        status_code: StatusCodesConstants.BAD_REQUEST,
+                        message: MessageConstants.VALIDATION_ERROR,
+                        data: validationResult,
+                    });
+                }
+        
+                const existingOrder = await models.BranchModel.Order.findOne({
+                    order_id: updateData.order_id,
+                    user_id: user_id
+                });
+        
+                if (existingOrder) {
+                    // Find the product index within the existing order
+                    const productIndex = existingOrder.product_items.findIndex((item) => {
+                        return item.product_id.toString() === updateData.product_id.toString();
+                    });
+        
+                    if (productIndex !== -1) {
+                        // Update product details
+                        existingOrder.product_items[productIndex].quantity = updateData.quantity;
+                        existingOrder.total_price = updateData.total_price;
+                        existingOrder.product_items[productIndex].grand_total = updateData.grand_total;
+        
+                        await existingOrder.save();
+
+
+                        console.log(`User ${session.first_name} ${MessageConstants.CART_UPDATE_SUCCESSFULLY}`);
+                        return res.status(StatusCodesConstants.SUCCESS).json({
+                            status: true,
+                            status_code: StatusCodesConstants.SUCCESS,
+                            message: MessageConstants.PRODUCT_UPDATE_SUCCESSFULLY,
+                            data: existingOrder, // Return the updated order
+                        });
+                    } else {
+                        console.log(`Product not found in the order`);
+                        return res.status(StatusCodesConstants.NOT_FOUND).json({
+                            status: false,
+                            status_code: StatusCodesConstants.NOT_FOUND,
+                            message: MessageConstants.PRODUCT_NOT_FOUND_IN_ORDER,
+                        });
+                    }
                 } else {
-                    console.log(`Product not found in the order`);
+                    console.log(`Order not found for the user`);
                     return res.status(StatusCodesConstants.NOT_FOUND).json({
                         status: false,
                         status_code: StatusCodesConstants.NOT_FOUND,
-                        message: MessageConstants.PRODUCT_NOT_FOUND_IN_ORDER,
+                        message: MessageConstants.ORDER_NOT_FOUND,
                     });
                 }
-            } else {
-                console.log(`Order not found for the user`);
-                return res.status(StatusCodesConstants.NOT_FOUND).json({
-                    status: false,
-                    status_code: StatusCodesConstants.NOT_FOUND,
-                    message: MessageConstants.ORDER_NOT_FOUND,
-                });
+            } catch (error) {
+                console.error('Error updating order:', error);
+                return res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({ error: MessageConstants.INTERNAL_SERVER_ERROR });
             }
-        } catch (error) {
-            console.error('Error updating order:', error);
-            return res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({ error: MessageConstants.INTERNAL_SERVER_ERROR });
-        }
-    },
-    
-    
-
+        },
+        
     // Delete API 
         deleteOrder : async (req, res) => {
             try {
