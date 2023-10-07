@@ -106,7 +106,7 @@ module.exports = {
   // Add Category List
     postAdd: async (req, res) => {
       try{
-        const { first_name,last_name, email, phone, company, accept_term} = req.body;
+        const { first_name,last_name, email, phone, company, accept_term, discussed_price, is_privilaged} = req.body;
         const imageFilename = req.files['customer_image'] ? req.files['customer_image'][0].filename : null;
     
         const acceptTerm = accept_term === "true";
@@ -124,7 +124,9 @@ module.exports = {
           usertype: "Customer",
           profile: imageFilename,
           is_active : true,
-          accept_term : acceptTerm
+          accept_term : acceptTerm,
+          is_privilaged : is_privilaged,
+          fixed_price : discussed_price
         })
     
     
@@ -198,8 +200,9 @@ module.exports = {
         const customerId = req.params.customerId;
         console.log("Updating customer with ID:", customerId);
     
-        const { first_name, last_name, phone, email, company, address1, address2 , area, pincode, city, state, country} = req.body;
-    
+        const { first_name, last_name, phone, email, company, address1, address2 , area, pincode, city, state, country, discussed_price, is_privilaged} = req.body;
+        
+        console.log(is_privilaged)
         // Find the customer in the database by ID
         const customer = await models.UserModel.User.findById(customerId);
         const address = await models.UserModel.Address.findOne({user_id: customerId});
@@ -225,6 +228,8 @@ module.exports = {
         customer.phone = phone;
         customer.email = email;
         customer.company = company;
+        customer.is_privilaged = is_privilaged;
+        customer.fixed_price = discussed_price;
         address.address_1 = address1;
         address.address_2 = address2;
         address.area = area;
@@ -273,7 +278,31 @@ module.exports = {
       console.log(err.message);
       res.status(400).send(err.message);
     }
-  }
+  },
+
+  updatePrivlage : async (req, res) => {
+    try {
+        const userId = req.body.userId;
+        console.log(req.body.userId)
+        // Find the branch in the database by ID
+        const user = await models.UserModel.User.findById(userId);
+    
+        if (!user) {
+            // Branch not found in the database
+            return res.status(404).send('User not found');
+        }
+    
+        // Toggle the status (true to false or false to true) and save the updated branch
+        user.is_privilaged = !user.is_privilaged;
+        await user.save();
+        
+        console.log(`Database value updated ${user.is_privilaged} successfully`);
+        res.json({ status: user.is_privilaged }); // Respond with the updated status
+    } catch (err) {
+      console.error('Error updating database value: ', err);
+        res.status(500).send('Error updating database value');
+    }
+},
 }
 
 

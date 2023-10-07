@@ -116,9 +116,9 @@ module.exports = {
             const user_id = user.userId;
         
             if (!user_id) {
-                return res.status(StatusCodesConstants.BAD_REQUEST).json({
+                return res.status(StatusCodesConstants.ACCESS_DENIED).json({
                 status: false,
-                status_code: StatusCodesConstants.BAD_REQUEST,
+                status_code: StatusCodesConstants.ACCESS_DENIED,
                 message: MessageConstants.NOT_LOGGED_IN,
                 });
             }
@@ -134,9 +134,9 @@ module.exports = {
                     data: addresses,
                 });
             }else{
-                return res.status(StatusCodesConstants.SUCCESS).json({
+                return res.status(StatusCodesConstants.NOT_FOUND).json({
                     status: false,
-                    status_code: StatusCodesConstants.SUCCESS,
+                    status_code: StatusCodesConstants.NOT_FOUND,
                     message: MessageConstants.ADDRESS_NOT_PRESENT,
                     data: [],
                 });
@@ -250,9 +250,9 @@ module.exports = {
                     data: { address : existingAddress },
                 });
             }else{
-                return res.status(StatusCodesConstants.SUCCESS).json({
+                return res.status(StatusCodesConstants.NOT_FOUND).json({
                     status: true,
-                    status_code: StatusCodesConstants.SUCCESS,
+                    status_code: StatusCodesConstants.NOT_FOUND,
                     message: MessageConstants.ADDRESS_NOT_PRESENT,
                     data: []
                 });
@@ -293,9 +293,9 @@ module.exports = {
             });
         
             if (!existingAddress) {
-                return res.status(StatusCodesConstants.SUCCESS).json({
+                return res.status(StatusCodesConstants.NOT_FOUND).json({
                 status: false,
-                status_code: StatusCodesConstants.SUCCESS,
+                status_code: StatusCodesConstants.NOT_FOUND,
                 message: MessageConstants.ADDRESS_NOT_PRESENT,
                 data: [],
                 });

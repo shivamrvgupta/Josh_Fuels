@@ -346,6 +346,27 @@ module.exports = {
       }
     },
     
+    getStatus :  async (req,res) => {
+      try {
+        const orderId = req.params.id;
+        const order = await models.BranchModel.Order.findById(orderId).populate('product_items').populate('branch_id').populate('address_id').populate('user_id').populate('product_items.product_id').populate('delivery_man');;
+        console.log(order)
+        const deliveryman = await models.UserModel.DeliveryMan.find();
+        const user = req.user;
+        if (!user) {
+          return res.redirect('/admin/auth/login');
+        }
+
+        const custom_css = order.status;
+        const error =  `Order ${order.order_id} Details`
+
+        res.render('admin/order/track', { user, order, custom_css, options, options2 , error, deliveryman});
+      } catch (err) {
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+      }
+    },
+    
 }
 
 

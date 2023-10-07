@@ -271,9 +271,9 @@ module.exports = {
             });
           }
         } else {
-          return res.status(StatusCodesConstants.SUCCESS).json({
+          return res.status(StatusCodesConstants.NOT_FOUND).json({
             status: true,
-            status_code: StatusCodesConstants.SUCCESS,
+            status_code: StatusCodesConstants.NOT_FOUND,
             message: MessageConstants.PRODUCT_NOT_PRESENT,
             data: cartData,
           });
@@ -407,9 +407,9 @@ module.exports = {
           }
         } else {
           console.log(`User ${session.first_name} ${MessageConstants.PRODUCT_NOT_PRESENT}`);
-          return res.status(StatusCodesConstants.SUCCESS).json({
+          return res.status(StatusCodesConstants.NOT_FOUND).json({
             status: true,
-            status_code: StatusCodesConstants.SUCCESS,
+            status_code: StatusCodesConstants.NOT_FOUND,
             message: MessageConstants.PRODUCT_NOT_PRESENT,
             data: [],
           });

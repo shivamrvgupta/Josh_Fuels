@@ -249,7 +249,7 @@ module.exports = {
 
       const existingUserByEmail = await models.UserModel.User.findOne({ email: userData.email });
       if (existingUserByEmail) {
-        return res.status(StatusCodesConstants.SUCCESS).json({
+        return res.status(StatusCodesConstants.RESOURCE_EXISTS).json({
           status: false,
           status_code: StatusCodesConstants.RESOURCE_EXISTS,
           message: 'Email Already Used',
@@ -415,16 +415,16 @@ module.exports = {
   },
 
   // Email Verification
-  sendotp:  async (req, res) => {
-    try {
-      const { email } = req.body;
-      await emailService.sendOTPVerificationEmail(email); // Use the function from the mailer module
+  // sendotp:  async (req, res) => {
+  //   try {
+  //     const { email } = req.body;
+  //     await emailService.sendOTPVerificationEmail(email); // Use the function from the mailer module
   
-      res.status(StatusCodesConstants.SUCCESS).json({ message: 'OTP email sent successfully' });
-    } catch (error) {
-      res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({ message: 'Something went wrong' });
-    }
-  },
+  //     res.status(StatusCodesConstants.SUCCESS).json({ message: 'OTP email sent successfully' });
+  //   } catch (error) {
+  //     res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({ message: 'Something went wrong' });
+  //   }
+  // },
 
   logout:(req, res) => {
     const session = req.user;
@@ -447,7 +447,187 @@ module.exports = {
         message: MessageConstants.ACCESS_DENIED_ERROR,
       });
     }
-  }
+  },
 
+  getProfile : async (req, res) => {
+    try {
+      const session = req.user;
+      user_id = session.userId;
+      if(!user_id){
+        return res.status(StatusCodesConstants.BAD_REQUEST).json({
+          status: false,
+          status_code: StatusCodesConstants.BAD_REQUEST,
+          message: 'Please Login First',
+        })
+      }
+
+      // Fetch the full data of user
+      const user = await models.UserModel.User.findOne({ _id : user_id });
+      if (!user) {
+        return res.status(StatusCodesConstants.BAD_REQUEST).json({
+          status: false,
+          status_code: StatusCodesConstants.BAD_REQUEST,
+          message: 'User Not Found',
+        });
+      }
+
+      const responseData = {
+        profile_img: user.profile,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        company: user.company,
+        email: user.email,
+        phone_number: user.phone,
+      };
+
+      return res.status(StatusCodesConstants.SUCCESS).json({
+        status: true,
+        status_code: StatusCodesConstants.SUCCESS,
+        message: 'User data fetched successfully',
+        data : responseData,
+      });
+    }
+    catch (error) {
+      console.error(error);
+      return res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({
+        status: false,
+        status_code: StatusCodesConstants.INTERNAL_SERVER_ERROR,
+        message: MessageConstants.INTERNAL_SERVER_ERROR,
+      });
+    }
+  },
+
+  updateProfile : async (req, res) => {
+    try {
+      const session = req.user;
+      user_id = session.userId;
+      if(!user_id){
+        return res.status(StatusCodesConstants.BAD_REQUEST).json({
+          status: false,
+          status_code: StatusCodesConstants.BAD_REQUEST,
+          message: 'Please Login First',
+        })
+      }
+
+      const userData = {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        phone_number: req.body.phone,
+        company: req.body.company,
+      };
+
+      // Fetch the full data of user
+      const user = await models.UserModel.User.findOne({ _id : user_id });
+      if (!user) {
+        return res.status(StatusCodesConstants.BAD_REQUEST).json({
+          status: false,
+          status_code: StatusCodesConstants.BAD_REQUEST,
+          message: 'User Not Found',
+        });
+      }
+
+      user.first_name = userData.first_name || user.first_name;
+      user.last_name = userData.last_name || user.last_name;
+      user.email = userData.email || user.email;
+      user.phone = userData.phone || user.phone;
+      user.company = userData.company || user.company;
+
+      await user.save();
+
+      const responseData = {
+        first_name: user.first_name,
+        last_name: user.last_name,
+        company: user.company,
+        email: user.email,
+        phone_number: user.phone,
+      };
+
+      return res.status(StatusCodesConstants.SUCCESS).json({
+        status: true,
+        status_code: StatusCodesConstants.SUCCESS,
+        message: 'User data fetched successfully',
+        data : responseData,
+      });
+    }
+    catch (error) {
+      console.error(error);
+      return res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({
+        status: false,
+        status_code: StatusCodesConstants.INTERNAL_SERVER_ERROR,
+        message: MessageConstants.INTERNAL_SERVER_ERROR,
+      });
+    }
+  },
+
+  updatePhoto : async (req, res) =>{
+    try {
+      const session = req.user;
+      user_id = session.userId;
+      
+      const imageFiles = req.files['profile'];
+
+      if (!imageFiles || imageFiles.length === 0) {
+        throw new Error("Image file is missing");
+      }
+      const imageFilename = imageFiles[0].filename;
+      console.log('Image Filename:', imageFilename);
+
+      if(!user_id){
+        return res.status(StatusCodesConstants.BAD_REQUEST).json({
+          status: false,
+          status_code: StatusCodesConstants.BAD_REQUEST,
+          message: 'Please Login First',
+        })
+      }
+
+
+      // Fetch the full data of user
+      const user = await models.UserModel.User.findOne({ _id : user_id });
+      if (!user) {
+        return res.status(StatusCodesConstants.BAD_REQUEST).json({
+          status: false,
+          status_code: StatusCodesConstants.BAD_REQUEST,
+          message: 'User Not Found',
+        });
+      }
+
+      if (req.files && req.files['profile']) {
+        // Delete the previous image file before updating with the new one
+        if (user.profile) {
+          ImgServices.deleteImageFile(user.profile);
+        }
+        user.profile = req.files['profile'][0].filename;
+      }
+
+
+      await user.save();
+
+
+      const responseData = {
+        profile : user.profile,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        company: user.company,
+        email: user.email,
+        phone_number: user.phone,
+      };
+
+      return res.status(StatusCodesConstants.SUCCESS).json({
+        status: true,
+        status_code: StatusCodesConstants.SUCCESS,
+        message: 'User data fetched successfully',
+        data : responseData,
+      });
+    }
+    catch (error) {
+      console.error(error);
+      return res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({
+        status: false,
+        status_code: StatusCodesConstants.INTERNAL_SERVER_ERROR,
+        message: MessageConstants.INTERNAL_SERVER_ERROR,
+      });
+    }
+  }
 }
 

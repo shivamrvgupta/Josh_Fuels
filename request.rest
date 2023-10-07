@@ -5,7 +5,7 @@ POST http://localhost:3000/api/auth/customer/login
 Content-Type: application/json
 
 {
-    "phone" : "8850664191"
+    "phone" : "9870878040"
 }
 
 
@@ -16,8 +16,8 @@ POST http://localhost:3000/api/auth/customer/verify-otp
 Content-Type: application/json
 
 {
-    "phone" : "8850664191",
-    "otp" : "2166"
+    "phone" : "9870878040",
+    "otp" : "7349"
 }
 
 
@@ -34,11 +34,34 @@ Content-Type: application/json
     "accept_term": "true"
 }
 
+### Get Profile
+GET http://127.0.0.1:3000/api/auth/customer/getProfile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGZkYzNhZmZmOWQ2MjgyYWM3ZTU0MDkiLCJmaXJzdF9uYW1lIjoiQW5pbCIsImxhc3RfbmFtZSI6Ikd1cHRhIiwiZW1haWwiOiJhbmlsZ3VwdGFAZGlzcG9zdGFibGUuY29tIiwicGhvbmUiOiI5ODcwODc4MDQwIiwiaWF0IjoxNjk2NTkyMTgyLCJleHAiOjE2OTcxOTY5ODJ9.3j4YMPEa8k9ZC4EjrSUAypj9AAIKF304CooXeWI8EhA
+
+### Update Profile
+POST http://127.0.0.1:3000/api/auth/customer/updateProfile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGZkYzNhZmZmOWQ2MjgyYWM3ZTU0MDkiLCJmaXJzdF9uYW1lIjoiQW5pbCIsImxhc3RfbmFtZSI6Ikd1cHRhIiwiZW1haWwiOiJhbmlsZ3VwdGFAZGlzcG9zdGFibGUuY29tIiwicGhvbmUiOiI5ODcwODc4MDQwIiwiaWF0IjoxNjk2NTkyMTgyLCJleHAiOjE2OTcxOTY5ODJ9.3j4YMPEa8k9ZC4EjrSUAypj9AAIKF304CooXeWI8EhA
+
+{    
+    "first_name": "Anil"
+}
+
+### Update Profile Photo 
+POST http://127.0.0.1:3000/api/auth/customer/updatePhoto
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGZkYzNhZmZmOWQ2MjgyYWM3ZTU0MDkiLCJmaXJzdF9uYW1lIjoiQW5pbCIsImxhc3RfbmFtZSI6Ikd1cHRhIiwiZW1haWwiOiJhbmlsZ3VwdGFAZGlzcG9zdGFibGUuY29tIiwicGhvbmUiOiI5ODcwODc4MDQwIiwiaWF0IjoxNjk2NTkyMTgyLCJleHAiOjE2OTcxOTY5ODJ9.3j4YMPEa8k9ZC4EjrSUAypj9AAIKF304CooXeWI8EhA
+
+{    
+    "first_name": "Anil"
+}
+
 
 ### Add Address
 POST http://localhost:3000/api/auth/customer/add-address
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5NjMxNzhmNWJmMTI2Njc3YzI0MmEiLCJmaXJzdF9uYW1lIjoiU2hpdmFtIiwibGFzdF9uYW1lIjoiR3VwdGEiLCJlbWFpbCI6ImFkbWluQGpvc2hmdWVscy5jb20iLCJwaG9uZSI6Ijg4NTA2NjQxOTEiLCJpYXQiOjE2OTU4ODQ3MTYsImV4cCI6MTY5NjQ4OTUxNn0.0q69aDajlsCa1fvyurHIH_Wle5eUDFoONSMu_jfRbiM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTFmYjNlODQxZWRlNjgxYzE2Y2Q3NTkiLCJmaXJzdF9uYW1lIjoiVGVzIiwibGFzdF9uYW1lIjoiVEVzdCIsImVtYWlsIjoidGVzdEBqb3NoZnVlbHMuY29tIiwicGhvbmUiOiI5MjEwMTI5MDEyIiwiaWF0IjoxNjk2NTc2NDg5LCJleHAiOjE2OTcxODEyODl9.CUa2Wi7sJKRuTp7NZVJ6kCN9Z3WgCQsR9FK5GoDunbg
 
 {
     "address_type" : "Office", 
@@ -99,7 +122,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5N
 ### LogOut
 POST http://localhost:3000/api/auth/customer/logout
 Content-Type: application/json
-Authorization: Bearer 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTFmYjNlODQxZWRlNjgxYzE2Y2Q3NTkiLCJmaXJzdF9uYW1lIjoiVGVzIiwibGFzdF9uYW1lIjoiVEVzdCIsImVtYWlsIjoidGVzdEBqb3NoZnVlbHMuY29tIiwicGhvbmUiOiI5MjEwMTI5MDEyIiwiaWF0IjoxNjk2NTc2NDg5LCJleHAiOjE2OTcxODEyODl9.CUa2Wi7sJKRuTp7NZVJ6kCN9Z3WgCQsR9FK5GoDunbg
 
 ### Send OTP to email 
 POST http://localhost:3000/api/auth/customer/send-otp

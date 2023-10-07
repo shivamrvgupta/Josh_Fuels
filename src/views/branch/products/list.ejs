@@ -36,10 +36,10 @@
                                                         <td>
                                                             <div class="table-image">
                                                                 <% if( row.image ){ %>   
-                                                                    <img src="" class="img-fluid" onerror="this.src='/images/default.jpg';" alt="">
+                                                                    <img src="" class="img-fluid" onerror="this.src='/images/<%= row.image %>';" alt="">
                                                                 
                                                                 <% }else{ %>  
-                                                                    <img src="/public/images/product/1.png" class="img-fluid" alt="">
+                                                                    <img src="/images/default.jpg" class="img-fluid" alt="">
                                                                 <% }%>  
                                                             </div>
                                                         </td>

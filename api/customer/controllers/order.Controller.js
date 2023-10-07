@@ -75,6 +75,7 @@ module.exports = {
                             delivery_time: order.delivery_time,
                             payment_method: order.payment_method,
                             note: order.note,
+                            status: order.status,
                             grand_total: order.grand_total,
                         };
         
@@ -200,6 +201,7 @@ module.exports = {
                             delivery_time: order.delivery_time,
                             payment_method: order.payment_method,
                             note: order.note,
+                            status: order.status,
                             grand_total: order.grand_total,
                         };
         

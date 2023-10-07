@@ -27,6 +27,8 @@
                                                     <th>Phone</th>
                                                     <th>Email</th>
                                                     <th>Company</th>
+                                                    <th>Privilaged</th>
+                                                    <th>Discussed Price</th>
                                                     <th>Option</th>
                                                 </tr>
                                             </thead>
@@ -49,6 +51,14 @@
                                                     <td><%= row.email %></td>
 
                                                     <td><%= row.company %></td>
+                                                    <td>
+                                                        <div onclick="updateStatus('<%= row._id %>')">
+                                                            <div class="legend-indicator <%= row.status ? 'status-close' : 'status-danger' %>">
+                                                                <span id="statusText_<%= row._id %>"><%= row.status ? 'True' : 'False' %></span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td><%= row.fixed_price %></td>
 
                                                     <td>
                                                         <ul>
@@ -198,5 +208,29 @@
 
 
 
+                  <script>
+                    function updateStatus(customerId) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/admin/customer/update-prime",
+                            data: { userId: customerId },
+                            success: function (response) {
+                                // Update the status text
+                                const statusTextElement = $(`#statusText_${customerId}`);
+                                statusTextElement.text(response.status ? 'True' : 'False');
+                    
+                                // Update the class of the legend-indicator span for the clicked category only
+                                const clickedProductIndicator = $(`#statusText_${customerId}`).siblings('.legend-indicator');
+                                clickedProductIndicator.removeClass('bg-success bg-disabled');
+                                clickedProductIndicator.addClass(response.status ? 'bg-success' : 'bg-disabled');
+                                window.location.reload();
+                            },
+                            error: function (error) {
+                                console.error("Error updating database value");
+                            }
+                        });
+                    }
+                    
+                </script>
 
 <%- include('../../partials/end')%>

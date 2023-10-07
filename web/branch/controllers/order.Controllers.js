@@ -28,7 +28,7 @@ module.exports = {
             const user = req.user;
         
             if(!user){
-              return res.redirect('/admin/auth/login')
+              return res.redirect('/branch/auth/login')
             }
           const orders = await models.BranchModel.Order
           .find()
@@ -53,7 +53,7 @@ module.exports = {
             const user = req.user;
         
             if (!user) {
-              return res.redirect('/admin/auth/login');
+              return res.redirect('/branch/auth/login');
             }
             console.log("Fetching branch with ID:", customerId);
         
@@ -74,7 +74,7 @@ module.exports = {
         
             // Send the category details to the client for updating
             const error = "Customer Overview";
-            res.render('admin/customer/details', { customer, address,user, branchProduct, orders, error }); // Assuming you are using a template engine like EJS
+            res.render('branch/customer/details', { customer, address,user, branchProduct, orders, error }); // Assuming you are using a template engine like EJS
           } catch (err) {
             console.log("There is an issue while fetching the customer for updating.");
             console.log(err.message);
@@ -87,9 +87,9 @@ module.exports = {
         const user = req.user;
     
         if (!user) {
-          return res.redirect('/admin/auth/login');
+          return res.redirect('/branch/auth/login');
         }
-        res.render('admin/customer/add', {user,error:"Add New Customer" });
+        res.render('branch/customer/add', {user,error:"Add New Customer" });
       } catch (err) {
         console.log(err);
         res.status(500).send('Internal Server Error');
@@ -123,7 +123,7 @@ module.exports = {
     
         await customer.save();
         console.log("Customer added successfully");
-        res.redirect('/admin/customer/list');
+        res.redirect('/branch/customer/list');
     
       }catch(err){
         console.log(err);
@@ -164,7 +164,7 @@ module.exports = {
         const user = req.user;
     
         if (!user) {
-          return res.redirect('/admin/auth/login');
+          return res.redirect('/branch/auth/login');
         }
         console.log("Fetching customer with ID:", customerId);
     
@@ -177,7 +177,7 @@ module.exports = {
           throw new Error('Customer not found.');
         }
     
-        res.render('admin/customer/update', {address, customer, user, error: " Update Customer" }); // Assuming you are using a template engine like EJS
+        res.render('branch/customer/update', {address, customer, user, error: " Update Customer" }); // Assuming you are using a template engine like EJS
       } catch (err) {
         console.log("There is an issue while fetching the customer for updating.");
         console.log(err.message);
@@ -231,7 +231,7 @@ module.exports = {
         await address.save();
         console.log("Customer updated successfully");
     
-        res.redirect('/admin/customer/list');
+        res.redirect('/branch/customer/list');
       } catch (err) {
         console.log("There is an issue while updating the Customer.");
         console.log(err.message);

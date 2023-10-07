@@ -83,6 +83,18 @@ const jwt = require('jsonwebtoken')
         updated_date: {
             type:Date,
             default: Date.now
+        },
+        is_privilaged: {
+            type: Boolean,
+            default: false,
+        },
+        fixed_price : {
+            type: Number,
+            required: true,
+            default: 0.00,
+            set: function(value) {
+            return parseFloat(value).toFixed(2);
+            }
         }
     });
 

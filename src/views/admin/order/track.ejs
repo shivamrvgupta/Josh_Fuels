@@ -1,5 +1,79 @@
 <%- include('../../partials/main', { pageTitle: 'Order detail' }) %>
 <script src="https://kit.fontawesome.com/78155a1a48.js" crossorigin="anonymous"></script>
+<style>
+    .progtrckr li.fail:before{
+        background-color: #ff0000;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f00d";
+        color: #fff;
+        width: 30px;
+        height: 30px;
+        line-height: 2.2em;
+        border: none;
+        border-radius: 2.2em;
+    }
+    .progtrckr li.return:before{
+        background-color: #cbc82f;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f00d";
+        color: #fff;
+        width: 30px;
+        height: 30px;
+        line-height: 2.2em;
+        border: none;
+        border-radius: 2.2em;
+    }
+    .progtrckr li.schedule:before{
+        background-color: #9faca5;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f00d";
+        color: #fff;
+        width: 30px;
+        height: 30px;
+        line-height: 2.2em;
+        border: none;
+        border-radius: 2.2em;
+    }
+    .progtrckr li.out:before{
+        content: "\f472";
+    }
+    .progtrckr li.process:before{
+        content: "\f52f";
+    }
+    .progtrckr li.deliver:before{
+        content: "\f06b";
+    }
+</style>
 
             <!-- Order Tracking Seation starts-->
             <div class="page-body">
@@ -39,26 +113,96 @@
                                                 </div>
 
                                                 <ol class="progtrckr">
-                                                    <li class="progtrckr-done">
-                                                        <h5>Order Processing</h5>
-                                                        <h6>05:43 AM</h6>
-                                                    </li>
-                                                    <li class="progtrckr-done">
-                                                        <h5>Pre-Production</h5>
-                                                        <h6>01:21 PM</h6>
-                                                    </li>
-                                                    <li class="progtrckr-done">
-                                                        <h5>In Production</h5>
-                                                        <h6>Processing</h6>
-                                                    </li>
-                                                    <li class="progtrckr-todo">
-                                                        <h5>Shipped</h5>
-                                                        <h6>Pending</h6>
-                                                    </li>
-                                                    <li class="progtrckr-todo">
-                                                        <h5>Delivered</h5>
-                                                        <h6>Pending</h6>
-                                                    </li>
+                                                    <% if(order.status == "Pending") { %>
+                                                        <li class="progtrckr-todo">
+                                                            <h5>Confirmed</h5>
+                                                        </li>
+                                                        <li class="progtrckr-todo">
+                                                            <h5>Order Processing</h5>
+                                                        </li>
+                                                        <li class="progtrckr-todo">
+                                                            <h5>Out For Delivery</h5>
+                                                        </li>
+                                                        <li class="progtrckr-todo">
+                                                            <h5>Delivered</h5>
+                                                        </li>
+                                                    <% } %>                                                        
+                                                    <% if(order.status == "Confirmed") { %>
+                                                        <li class="progtrckr-done">
+                                                            <h5>Confirmed</h5>
+                                                        </li>
+                                                        <li class="progtrckr-todo">
+                                                            <h5>Order Processing</h5>
+                                                        </li>
+                                                        <li class="progtrckr-todo">
+                                                            <h5>Out For Delivery</h5>
+                                                        </li>
+                                                        <li class="progtrckr-todo">
+                                                            <h5>Delivered</h5>
+                                                        </li>
+                                                    <% } %>                                                        
+                                                    <% if(order.status == "Processing") { %>
+                                                        <li class="progtrckr-done">
+                                                            <h5>Confirmed</h5>
+                                                        </li>
+                                                        <li class="progtrckr-done process">
+                                                            <h5>Order Processing</h5>
+                                                        </li>
+                                                        <li class="progtrckr-todo">
+                                                            <h5>Out For Delivery</h5>
+                                                        </li>
+                                                        <li class="progtrckr-todo">
+                                                            <h5>Delivered</h5>
+                                                        </li>
+                                                    <% } %>                                                                                                             
+                                                    <% if(order.status == "Out for delivery") { %>
+                                                        <li class="progtrckr-done">
+                                                            <h5>Confirmed</h5>
+                                                        </li>
+                                                        <li class="progtrckr-done process">
+                                                            <h5>Order Processing</h5>
+                                                        </li>
+                                                        <li class="progtrckr-done out">
+                                                            <h5>Out For Delivery</h5>
+                                                        </li>
+                                                        <li class="progtrckr-todo">
+                                                            <h5>Delivered</h5>
+                                                        </li>
+                                                    <% } %>                                                        
+                                                    <% if(order.status == "Delivered") { %>
+                                                        <li class="progtrckr-done">
+                                                            <h5>Confirmed</h5>
+                                                        </li>
+                                                        <li class="progtrckr-done process">
+                                                            <h5>Order Processing</h5>
+                                                        </li>
+                                                        <li class="progtrckr-done out">
+                                                            <h5>Out For Delivery</h5>
+                                                        </li>
+                                                        <li class="progtrckr-done deliver">
+                                                            <h5>Delivered</h5>
+                                                        </li>
+                                                    <% } %> 
+                                                    <% if(order.status == "Failed") { %>
+                                                        <li class="progtrckr-done fail" style="border-top: 4px solid #ff0000;">
+                                                            <h5>Failed</h5>
+                                                        </li>
+                                                    <% } %>                                                            
+                                                    <% if(order.status == "Cancelled") { %>
+                                                        <li class="progtrckr-done fail" style="border-top: 4px solid #ff0000;">
+                                                            <h5>Cancelled</h5>
+                                                        </li>
+                                                    <% } %>                                                            
+                                                    <% if(order.status == "Returned") { %>
+                                                        <li class="progtrckr-done return" style="border-top: 4px solid #cbc82f;">
+                                                            <h5>Returned</h5>
+                                                        </li>
+                                                    <% } %>                                                            
+                                                    <% if(order.status == "Scheduled") { %>
+                                                        <li class="progtrckr-done schedule" style="border-top: 4px solid #9faca5;">
+                                                            <h5>Scheduled</h5>
+                                                        </li>
+                                                    <% } %>                                                            
                                                 </ol>
 
                                                 <div class="col-12 overflow-visible">

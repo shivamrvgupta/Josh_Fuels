@@ -23,6 +23,6 @@ router.post('/update/:customerId', MulterMiddleware.upload.fields([
 
 router.delete('/delete/:customerId', AuthMiddleware.authenticateToken, CustomerControllers.delete)
 
-
+router.post('/update-prime', AuthMiddleware.authenticateToken, CustomerControllers.updatePrivlage)
 
 module.exports = router;

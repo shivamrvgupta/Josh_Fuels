@@ -43,7 +43,7 @@ module.exports = {
 
       res.status(StatusCodesConstants.SUCCESS).json({
         status: true,
-        status_code: StatusCodesConstants.ACCESS_DENIED,
+        status_code: StatusCodesConstants.SUCCESS,
         message: MessageConstants.BRANCH_FETCHED_SUCCESSFULLY,
         data: branchesInCity,
       });
@@ -92,8 +92,31 @@ module.exports = {
       // Fetch products available in the branches of the user's city
       const productsData = await models.BranchModel.BranchProduct.find({ branch: branchIds[0] , is_selling : true});
 
+      if(user_city.is_prime == true){
+        const responseData = {
+          productsData : productsData,
+          customer_price : user_city.fixed_price
+        }
+        if(!productsData || productsData.length === 0){
+          return res.status(StatusCodesConstants.NOT_FOUND).json({
+            status: true,
+            status_code: StatusCodesConstants.NOT_FOUND,
+            message: MessageConstants.PRODUCT_NOT_PRESENT,
+            data: [],
+          });
+        }else{
+          return res.status(StatusCodesConstants.SUCCESS).json({
+            status: true,
+            status_code: StatusCodesConstants.SUCCESS,
+            message: MessageConstants.PRODUCT_FETCHED_SUCCESSFULLY,
+            data: responseData,
+          });
+        }
+      }
+
+
       if(!productsData || productsData.length === 0){
-        return res.status(StatusCodesConstants.SUCCESS).json({
+        return res.status(StatusCodesConstants.NOT_FOUND).json({
           status: true,
           status_code: StatusCodesConstants.NOT_FOUND,
           message: MessageConstants.PRODUCT_NOT_PRESENT,

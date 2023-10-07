@@ -136,7 +136,8 @@
                                                             <label
                                                                 class="col-form-label form-label-title">State
                                                             </label>
-                                                            <input class="form-control" type="text" name="state" placeholder="Enter State...." value="<%= address.state%>">                                                        </div>
+                                                            <input class="form-control" type="text" name="state" placeholder="Enter State...." value="<%= address.state%>">                                                        
+                                                        </div>
                                                         
                                                         <div class="col-lg-4 col-md-4">
                                                             <label
@@ -150,48 +151,25 @@
                                             </div>
                                         </div>
                                         
-                                        <!-- <div class="card">
+
+                                        <div class="card">
                                             <div class="card-body">
-                                                <div class="card-header-2">
-                                                    <h5>Identity</h5>
-                                                </div>
-                                               
-
-                                                 <div class="mb-4 row align-items-center">
-                                                    <label class="col-sm-3 col-form-label form-label-title">Identity Type</label>
-                                                    <div class="col-sm-9">
-                                                        <select class="js-example-basic-single w-100" name="identity_type">
-                                                            <option value="none">-- Select Identity Type  --</option> 
-                                                            <option value="Pan Card">PAN Card</option>
-                                                            <option value="aadhar Card">Aadhar Card</option>
-                                                            <option value="Passport Id">Passport</option>
-                                                            <option value="Passport Id">Driving Lisence</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
                                                 <div class="mb-4 row align-items-center">
-                                                        <label
-                                                            class="form-label-title col-lg-3 col-md-3 mb-0">Identity Number</label>
-                                                        <div class="col-md-9 col-lg-9">
-                                                            <input class="form-control" type="text" placeholder="Enter Identity Number" name="identity_number" >
-                                                        </div>
-                                                 </div>
-                                                 <div class="my-4 row align-items-center">
-                                                    <label class="col-sm-3 col-form-label form-label-title">Identity Image</label>
-                                                    <div class="custom-file">
-                                                        <input type="file" name="id_image" id="customFileEg1" class="form-control form-choose"
-                                                                accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*" 
-                                                                oninvalid="document.getElementById('en-link').click()">
-                                                        <div class="custom-file">
-                                                            <div class="text-center">
-                                                                <img style="height: 200px;border: 1px solid;border-radius: 10px;width: 50%;margin-top:2rem" id="viewer" src="/public/images/img2.jpg" alt="image" />
-                                                            </div>
-                                                        </div>
+                                                    <label
+                                                        class="form-label-title col-lg-3 col-md-3 mb-0">
+                                                        Discussed Price
+                                                    </label>
+                                                    <div class="col-md-9 col-lg-9">
+                                                        <input class="form-control" type="text" name="discussed_price" id="numberInput" oninput="validateInput(this)" placeholder="Enter Your Price...." value="<%= customer.fixed_price%>">                                                        
                                                     </div>
                                                 </div>
-
+                                                <div class="form-check ps-0 m-0 remember-box">
+                                                    <input class="checkbox_animated check-box" name="is_privilaged" type="checkbox"
+                                                        id="flexCheckDefault" value="<%= customer.is_privilaged %>">
+                                                    <label class="form-check-label" for="flexCheckDefault">Prime</label>
+                                                </div>  
                                             </div>
-                                        </div> -->
+                                        </div>
 
                                         <div class="card">
                                             <div class="card-body">
