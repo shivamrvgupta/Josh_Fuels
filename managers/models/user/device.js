@@ -9,7 +9,7 @@ const deviceSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    token:{
+    fcm_token:{
         type: String,
         required: true
     },

@@ -53,8 +53,8 @@
                                                     <td><%= row.company %></td>
                                                     <td>
                                                         <div onclick="updateStatus('<%= row._id %>')">
-                                                            <div class="legend-indicator <%= row.status ? 'status-close' : 'status-danger' %>">
-                                                                <span id="statusText_<%= row._id %>"><%= row.status ? 'True' : 'False' %></span>
+                                                            <div class="legend-indicator <%= row.is_privilaged ? 'status-close' : 'status-danger' %>">
+                                                                <span id="statusText_<%= row._id %>"><%= row.is_privilaged ? 'True' : 'False' %></span>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -217,12 +217,12 @@
                             success: function (response) {
                                 // Update the status text
                                 const statusTextElement = $(`#statusText_${customerId}`);
-                                statusTextElement.text(response.status ? 'True' : 'False');
+                                statusTextElement.text(response.is_privilaged ? 'True' : 'False');
                     
                                 // Update the class of the legend-indicator span for the clicked category only
                                 const clickedProductIndicator = $(`#statusText_${customerId}`).siblings('.legend-indicator');
                                 clickedProductIndicator.removeClass('bg-success bg-disabled');
-                                clickedProductIndicator.addClass(response.status ? 'bg-success' : 'bg-disabled');
+                                clickedProductIndicator.addClass(response.is_privilaged ? 'bg-success' : 'bg-disabled');
                                 window.location.reload();
                             },
                             error: function (error) {

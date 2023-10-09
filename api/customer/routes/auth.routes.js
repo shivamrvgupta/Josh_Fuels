@@ -9,10 +9,10 @@ router.get('/test', (req, res) => {
 
 router.get('/getProfile',AuthMiddleware.authenticateToken , AuthController.getProfile);
 router.post('/updateProfile',AuthMiddleware.authenticateToken , AuthController.updateProfile);
-
 router.post('/login', AuthController.login);
 router.post('/verify-otp', AuthController.verifyOTP);
 router.post('/register',AuthController.register);
+router.post('/send-email', AuthMiddleware.authenticateToken, AuthController.sendEmail);
 // router.post('/add-address',AuthMiddleware.authenticateToken ,AuthController.addAddress);
 router.post('/add-device',AuthMiddleware.authenticateToken ,AuthController.addDevice);
 router.get('/userdata',AuthMiddleware.authenticateToken ,AuthController.getUser);

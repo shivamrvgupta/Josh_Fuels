@@ -69,6 +69,8 @@ module.exports = {
       // Fetch user's city based on the sessions user_id
       const user_city = await models.UserModel.Address.findOne({ user_id: user_id });
 
+      const user = await models.UserModel.User.findOne({ _id: user_id})
+
       console.log(user_city.city);
 
       const branchesInCity = await models.BranchModel.Branch.find({ city: user_city.city });
@@ -92,10 +94,13 @@ module.exports = {
       // Fetch products available in the branches of the user's city
       const productsData = await models.BranchModel.BranchProduct.find({ branch: branchIds[0] , is_selling : true});
 
-      if(user_city.is_prime == true){
+      console.log(user)
+
+
+      if(user.is_privilaged == true){
         const responseData = {
           productsData : productsData,
-          customer_price : user_city.fixed_price
+          customer_price : user.fixed_price
         }
         if(!productsData || productsData.length === 0){
           return res.status(StatusCodesConstants.NOT_FOUND).json({

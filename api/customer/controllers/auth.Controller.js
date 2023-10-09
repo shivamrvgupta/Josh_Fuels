@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const fs = require('fs'); // Import the 'fs' module for file operations
 const bcrypt = require('bcrypt');
 const axios = require('axios'); // Import the axios library
 const { v4: uuidv4 } = require('uuid');
@@ -18,10 +19,10 @@ const {
 } = require('../../../managers/services');
 const { generateAccessToken, initializeRevokedTokens } = require('../middlewares/auth.middleware');
 const models = require('../../../managers/models');
-
+const { PushNotification } = require('../../../managers/notifications')
 // This would be your token blacklist storage
 const tokenBlacklist = new Set();
-
+const { Mailer } = require('../../../mailer')
 
 
 module.exports = {
@@ -163,10 +164,12 @@ module.exports = {
           // res.redirect('/register');
         }
         const responseData = {
+          profile: user.profile,
           first_name: user.first_name,
           last_name: user.last_name,
           email: user.email,
           phone_number: user.phone,
+          company: user.company,
         };
 
         const isAddressConfirmed = await models.UserModel.User.checkIfAddressConfirmed(verifyData.phone_number);
@@ -415,16 +418,47 @@ module.exports = {
   },
 
   // Email Verification
-  // sendotp:  async (req, res) => {
-  //   try {
-  //     const { email } = req.body;
-  //     await emailService.sendOTPVerificationEmail(email); // Use the function from the mailer module
-  
-  //     res.status(StatusCodesConstants.SUCCESS).json({ message: 'OTP email sent successfully' });
-  //   } catch (error) {
-  //     res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({ message: 'Something went wrong' });
-  //   }
-  // },
+  sendEmail:  async (req, res) => {
+    try {
+      const session = req.user;
+      const user_id = session.userId;
+
+      console.log("I got Clicked");
+      if (!user_id) {
+          return res.status(StatusCodesConstants.BAD_REQUEST).json({
+              status: false,
+              status_code: StatusCodesConstants.BAD_REQUEST,
+              message: 'Please Login First',
+          });
+      }
+
+      const recipientEmail = session.email;
+      const subject = 'Email Verification';
+      const token = "hello1234";
+      const templateFilePath = res.render('mail/email_verification', { session, token });
+
+      // Send the email and wait for it to complete
+      const emailResult = await Mailer.sendCustomMail(recipientEmail, subject, templateFilePath);
+
+      // Check the email sending result and then send the HTTP response
+      if (emailResult.success) {
+          res.status(StatusCodesConstants.SUCCESS).json({ message: 'OTP email sent successfully' });
+      } else {
+          res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({
+              status: false,
+              status_code: StatusCodesConstants.INTERNAL_SERVER_ERROR,
+              message: MessageConstants.INTERNAL_SERVER_ERROR,
+          });
+      }
+  } catch (error) {
+      console.error(error);
+      return res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({
+          status: false,
+          status_code: StatusCodesConstants.INTERNAL_SERVER_ERROR,
+          message: MessageConstants.INTERNAL_SERVER_ERROR,
+      });
+  }
+},
 
   logout:(req, res) => {
     const session = req.user;
@@ -479,6 +513,10 @@ module.exports = {
         email: user.email,
         phone_number: user.phone,
       };
+
+      const message = "Hello User"
+
+      PushNotification.sendPushNotification(user_id, message)
 
       return res.status(StatusCodesConstants.SUCCESS).json({
         status: true,

@@ -266,3 +266,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGM5N
     "total_price" : 12385,
     "grand_total" : 16446.88
 }   
+
+#### Send Notifications ####
+
+POST https://fcm.googleapis.com/fcm/send
+Content-Type: application/json
+Authorization: key=AAAASA45_pc:APA91bFlHTd59xAV53d76Opg68xhKViO8v5cXoyG5As_guIh0GSqFsAj12tHfc2VGPA7wPfAJfXfZ9XNjXLD88pH5RceGmdtDNIf9hbID_TTLKhNYj5ADJirFxmvH2ZrD9-WM8l9FYOV
+
+{
+    "to":"dYjnXt3_U0UKi1hJXlzPyT:APA91bGSFhhYC-8KpBS-EAASh8oa1YxJKPRoGZ0uJYX7klLBen76DUgjl0zyhD0CPKAJdyR0M5mn7AhXHx0EbEKLmXBcHjD0_qKh0MYgXy_xcYRlzB6X63PbRafn62BaTfCFRymiBObK",
+    "notification" : {
+        "body": "Firebase CLoud Messaging Body",
+        "title": "Hello",
+        "subtitle" : "subtitle"
+    }
+}

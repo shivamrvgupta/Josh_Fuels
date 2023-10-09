@@ -11,7 +11,7 @@ const cookieParser = require('cookie-parser');
 const Mailer = require('./mailer/mailer.js')
 const routesWeb = require('./web');
 const routesApi = require('./api');
-
+const notify = require('./managers/notifications/send')
 
 app.use(cookieParser());
 app.set('view engine', 'ejs'); // Set EJS as the default template engine
@@ -31,8 +31,6 @@ app.use('/images', express.static(path.join(__dirname, './src/uploads')));
 app.use('/api', routesApi);
 app.use(routesWeb);
 
-app.post('/sendmail', Mailer.sendMail)
-console.log("here")
 
 ports = [process.env.PORT, process.env.PORT1, process.env.PORT2]
 // Loop through the ports and start the server on each port
