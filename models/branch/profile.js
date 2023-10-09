@@ -64,6 +64,16 @@ const branchSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    deliverymen: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'DeliveryMan',
+        },
+      ],
+    vehicle:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Vehicle'
+    },  
     created_at: {
         type: Date,
         default: Date.now
@@ -74,8 +84,6 @@ const branchSchema = new mongoose.Schema({
     },
 }
 );
-
-
 
 const Branch = mongoose.model('Branch', branchSchema);
 

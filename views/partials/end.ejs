@@ -43,7 +43,7 @@ aria-labelledby="staticBackdropLabel" aria-hidden="true">
       $('a[data-bs-toggle="modal"]').on('click', function () {
         $('#logoutBtn').on('click', function () {
             // Make an AJAX request to the server to logout
-            $.get('/admin/auth/logout', function (data) {
+            $.put('/admin/auth/logout', function (data) {
               // If logout is successful, you can handle the response or redirect the user
               console.log(data); // Optional: Log the server response
               window.location.href = '/admin/auth/login'; // Redirect the user to the login page

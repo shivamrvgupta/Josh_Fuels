@@ -141,6 +141,6 @@ productSchema.pre('save', function (next) {
   next();
 });
 
-const Product = mongoose.model('branchProduct', productSchema);
+const Product = mongoose.model('branch Product', productSchema);
 
 module.exports = Product;

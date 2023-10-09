@@ -58,7 +58,7 @@ router.get("/all", authenticateToken, async (req,res) => {
   .populate('branch_id')
   .populate('address_id')
 
-  const customers = await Customer.find({ usertype: "Customer" });
+  const customers = await Customer.find({ usertype: "Customer"});
   const branch = await Branch.find();
   const ordersCount = orders.length;
 

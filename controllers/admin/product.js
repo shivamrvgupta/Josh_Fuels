@@ -102,7 +102,6 @@ router.get('/add', authenticateToken, async (req, res) => {
   }
 });
 
-
 router.get('/getSubcategories', authenticateToken, async (req, res) => {
   try {
       const categoryId = req.query.category_id;

@@ -23,8 +23,9 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6 col-xxl-3 col-lg-6">
-                            <div class="main-tiles border-5 border-0 card o-hidden">
+                       <div class="col-sm-6 col-xxl-3 col-lg-6">
+                        <a href="/admin/orders/all"> 
+                             <div class="main-tiles border-5 border-0 card o-hidden">
                                 <div class="custome-2-bg b-r-4 card-body">
                                     <div class="media static-top-widget">
                                         <div class="media-body p-0">
@@ -40,10 +41,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div></a>
 
                         <div class="col-sm-6 col-xxl-3 col-lg-6">
-                            <div class="main-tiles border-5 border-0  card o-hidden">
+                            <a href="/admin/product/lists">
+                                <div class="main-tiles border-5 border-0  card o-hidden">
                                 <div class="custome-3-bg b-r-4 card-body">
                                     <div class="media static-top-widget">
                                         <div class="media-body p-0">
@@ -60,10 +62,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div></a>
 
                         <div class="col-sm-6 col-xxl-3 col-lg-6">
-                            <div class="main-tiles border-5 border-0 card o-hidden">
+                            <a href="/admin/customer/list">
+                                 <div class="main-tiles border-5 border-0 card o-hidden">
                                 <div class="custome-4-bg b-r-4 card-body">
                                     <div class="media static-top-widget">
                                         <div class="media-body p-0">
@@ -80,7 +83,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div></a>
 
                         <div class="col-xl-6 d-flex ">
                             <div class="card o-hidden card-hover">
@@ -148,7 +151,7 @@
                         <!-- Addon end-->
 
                         <!-- Revenue chart start-->
-                        <div class="col-xl-12">
+                        <!-- <div class="col-xl-12">
                             <div class="card o-hidden card-hover">
                                 <div class="card-header border-0 pb-1">
                                     <div class="card-header-title">
@@ -159,7 +162,7 @@
                                     <div id="revenue-chart"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- Earning chart  end-->
 
 
@@ -194,7 +197,7 @@
                                                     <tr class="table-order">
                                                         <td>
                                                             <a href="javascript:void(0)">
-                                                                <img src="<% route %>/image/<%= item.image %>" style="width: 100px; height: 100px;"
+                                                                <img src="<% route %>/images/img2.jpg" style="width: 100px; height: 100px;"
                                                                     class="" alt="">
                                                             </a>
                                                         </td>
@@ -225,7 +228,7 @@
                         <!-- Best Selling Product End -->
 
                         <!-- Earning chart star-->
-                        <div class="col-xl-6">
+                        <!-- <div class="col-xl-6">
                             <div class="card o-hidden card-hover">
                                 <div class="card-header border-0 pb-1">
                                     <div class="card-header-title">
@@ -236,7 +239,7 @@
                                     <div id="bar-chart-earning"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- Earning chart end-->
 
 
@@ -251,7 +254,7 @@
             <!-- index body end -->
 
 
-            <script>
+            <!-- <script>
                 // Create an empty array to store revenue data
                 let revenueData = [];
                 
@@ -309,7 +312,7 @@
                 
                 // Update the chart at regular intervals (e.g., every second)
                 setInterval(updateChart, 1000);
-                </script>
+                </script> -->
                 
 
 <%- include('../partials/end')%>

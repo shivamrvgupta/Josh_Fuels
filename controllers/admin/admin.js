@@ -128,9 +128,11 @@ router.post('/auth/login', async (req, res) => {
       //  Set the token as a cookie or in the response body, depending on your preference
         if (remember) {
           res.cookie('jwt',  token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpOnly: true }); 
+          console.log(req.cookies);
         } else {
           res.cookie('jwt', token, { httpOnly: true });
         }
+
         res.return = token;
       return res.redirect('/admin/auth/dashboard');
   } catch (error) {
@@ -151,6 +153,8 @@ router.get('/auth/dashboard', authenticateToken , async (req, res) => {
   const allCustomers = users.length;
 
   const addOn = await AddOn.find();
+
+
 
   const orderDetail = await Order.aggregate([
     {
@@ -188,9 +192,9 @@ router.get('/auth/dashboard', authenticateToken , async (req, res) => {
       });
 
       // Access product quantities dynamically
-      for (const productId in productQuantities) {
-        console.log(`Total Quantity Sold for Product ${productId}: ${productQuantities[productId]}`);
-      }
+      // for (const productId in productQuantities) {
+      //   console.log(`Total Quantity Sold for Product ${productId}: ${productQuantities[productId]}`);
+      // }
       
 
       console.log("Total Revenue for Delivered Orders with Payment Status True: " + totalRevenue);
@@ -199,14 +203,18 @@ router.get('/auth/dashboard', authenticateToken , async (req, res) => {
     const productIds = orderDetail.map(item => item.totalRevenue);
     const quantities = orderDetail.map(item => item.totalQuantity);
 
-
   error = "You are successfully logged in"
   res.render('admin/dashboard', { options ,allOrders, allProducts, totalRevenue, totalQuantity, allCustomers , products, addOn ,user: user, error ,route : route.baseUrL,productQuantities});
 });  
 
+router.get('/auth/dashboard_services', authenticateToken , async (req,res)=> {
+  const user = req.user;
+  res.render('admin/dashboard_services', {title: "admin" , user, redirect : "branch" ,route : route.baseUrL, error: "Welcome to Login"})
+})
   
 function authenticateToken(req, res, next) {
   const token = req.cookies.jwt;
+  
   
   if (!token) {
     return res.redirect('/admin/auth/login'); 
@@ -222,16 +230,14 @@ function authenticateToken(req, res, next) {
 }
 
 // Handle the logout request
-router.get('/auth/logout', (req, res) => {
+router.get('/auth/logout',authenticateToken, (req, res) => {
   try {
     // Clear the user session
-    req.session.destroy((err) => {
-      if (err) {
-        console.error('Error destroying session:', err);
-      }
-      // Redirect the user to the login page after logging out
-      res.redirect('/admin/auth/login');
-    });
+    console.log(req.cookies);
+    
+    res.clearCookie('jwt');
+    
+    res.redirect('/admin/auth/login');
   } catch (error) {
     console.error('Logout error:', error);
     res.status(500).send('An error occurred during logout.');

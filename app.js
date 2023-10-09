@@ -51,12 +51,6 @@ const db = mongoose.connection;
 db.on('error', (error) => console.log(error));
 db.once('open', ()=> console.log('Connected to the database!'));
 
-// Models
-
-const User = require('./models/users/user.js')
-const Device = require('./models/users/device.js')
-const Address = require('./models/users/address.js')
-
 
 // Importing Routes
 
@@ -74,6 +68,7 @@ const update_profile = require('./api/update_profile.js')
 const address = require('./api/address.js')
 const customer = require('./controllers/admin/customer.js')
 const order = require('./controllers/branch/order.js')
+const vehicle = require('./controllers/branch/vehicle.js')
 
 //customer api route
 app.use('/customer/auth',customer_route)
@@ -117,6 +112,8 @@ app.use('/admin/customer', customer)
 //Orders Route
 app.use('/admin/orders', order)
 
+//vehicle route
+app.use('/admin/vehicle', vehicle)
 
 app.listen(process.env.PORT || 3000, function() {
   console.log("Server started on port 3000");

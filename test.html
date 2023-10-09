@@ -1,64 +1,7 @@
-<div class="col-xl-4">
-    <div class="card">
-        <!-- Header -->
-        <div class="card-header">
-            <h4 class="card-header-title">Customer</h4>
-        </div>
-        <!-- End Header -->
-
-        <!-- Body -->
-        <div class="card-body">
-            <div class="media align-items-center" href="javascript:">
-                <div class="media profile-media mr-3" style="width: 15% !important;height:40% !important">
-                    <img class="user-profile rounded-circle" src="<%= route %>/images/img2.jpg" style="width: 100%;" alt="Image Description">
-                </div>
-                <div class="media-body">
-                <span class="text-body text-hover-primary m-3"> <%= order.user_id.first_name %> <%= order.user_id.last_name %></span>
-
-                </div>
-                <div class="media-body text-right">
-                </div>
-            </div>
-            <hr>
-            <div class="media align-items-center" href="javascript:">
-                <div class="media profile-media mr-3" style="width: 15% !important;height:40% !important">
-                    <img class="user-profile rounded-circle" src="<%= route  %>/images/img2.jpg" style="width: 100%;" alt="Image Description">
-                </div>
-                <div class="media-body">
-                    <span class="text-body text-hover-primary m-3">1 Orders</span>
-
-                </div>
-                <div class="media-body text-right">
-                    
-                </div>
-            </div>
-
-            <hr>
-
-            <div class="d-flex justify-content-between align-items-center">
-                <h5>#Contact Info</h5>
-            </div>
-
-            <ul class="list-unstyled list-unstyled-py-2">
-                <li>
-                    <span>Email : - </span>
-                    <span><%= order.user_id.email %></span>
-                </li>
-                <li>
-                    <span>Phone Number : - </span>
-                    <span><%= order.user_id.phone %></span>
-                </li>
-                <li>
-                    <span>Address: -</span>
-                    <span><%= order.address_id.address_1%></span>
-                    <span><%= order.address_id.address_2 %></span>
-                    <span><%= order.address_id.city %></span>
-                    <span><%= order.address_id.state %></span>
-                    <span><%= order.address_id.pincode %></span>
-                </li>
-            </ul>
-            
-        </div>
-                <!-- End Body -->
-    </div>
-</div>
+<% if (deliveryman != '') { %>        
+    <% deliveryman.forEach((row, index) => { %> 
+    <option value="<%= row.id %>"> <%= row.fname %></option>
+<% }) %>      
+<% } else { %>
+    <option disabled>Nothing To Show</option>
+<% } %>

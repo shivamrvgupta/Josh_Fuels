@@ -59,6 +59,7 @@ app.use('/image', express.static(path.join(__dirname, 'uploads')));
 // Models
 const Customer = require('../../models/users/user.js');
 const Address = require('../../models/users/address.js')
+const Order = require('../../models/products/order.js');
 
 
 if (hostname === process.env.localhost1 || hostname === process.env.localhost ) {

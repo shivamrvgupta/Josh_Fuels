@@ -52,108 +52,74 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 app.use('/image', express.static(path.join(__dirname, 'uploads')));
 
+
 // Models
 const DeliveryMan = require('../../models/users/deliveryman.js');
 const Branch = require('../../models/branch/profile.js')
-
-// Function to update the branches served by a deliveryman
-async function updateBranchesServed(deliverymanId, branchIds) {
-  try {
-    // Update the deliveryman document with the new branches to serve
-    const updatedDeliveryman = await DeliveryMan.findByIdAndUpdate(
-      deliverymanId,
-      { branchesToServe: branchIds },
-      { new: true }
-    );
-
-    if (!updatedDeliveryman) {
-      throw new Error('Deliveryman not found');
-    }
-
-    console.log('Updated deliveryman:', updatedDeliveryman);
-
-    // Update the associated branches with the deliveryman's ID
-    const updateResult = await Branch.updateMany(
-      { _id: { $in: branchIds } },
-      { $addToSet: { deliverymen: updatedDeliveryman._id } }
-    );
-
-    console.log('Updated branches:', updateResult);
-  } catch (err) {
-    console.error('Error updating branches and deliveryman:', err);
-  }
-} 
-
-
+const Vehicle = require('../../models/branch/vehicle.js')
 
 // Importing Routes
-router.get('/add', authenticateToken, async (req, res)=> {
-    try{
-        const user = req.user;
-        const branch = await Branch.find({});
-        const deliveryman = await DeliveryMan.find({});
-        if (!user) {
-            return res.redirect('/admin/auth/login');
-          }
+router.get('/add',authenticateToken, async (req, res) => {
+  try{
+    const user = req.user;
+    if(!user){
+      return res.redirect('/admin/auth/login');
+    }
 
-        res.render("admin/deliveryman/add",{ Title: "Delivery Man Registeration",user, branch, deliveryman , route : route.baseUrL, error: "Register a Deliveryman" });
-    }catch(err){
+    const branch = await Branch.find({});
+    const deliveryman = await DeliveryMan.find({});
+
+    res.render('branch/vehicle/add', {Title: "Add Vehicle", user, branch, deliveryman, route: route.baseUrl, error: "Add Vehicle"});
+  }catch(err){
     console.log(err);
     res.status(500).send('Internal Server Error');
-    }
-
+  }
 });
 
-router.post('/add', upload.fields([
-    { name: 'id_image', maxCount: 1 },        // maxCount: 1 indicates only one image will be uploaded
-    { name: 'deliveryman_image', maxCount: 1 }, // maxCount: 1 indicates only one image will be uploaded
-  ]), authenticateToken, async (req, res) => {
-    try {
-            const { fname, lname, email, phone, branch, identity_type, identity_number, password } = req.body;
-            const id_image = req.files['id_image'] ? req.files['id_image'][0].filename : null;
-            const deliveryman_image = req.files['deliveryman_image'] ? req.files['deliveryman_image'][0].filename : null;
+router.get('/getDeliveryman', authenticateToken, async (req, res) => {
+  try {
+      const branchId = req.query.branch_id;
+      const deliveryman = await DeliveryMan.find({ parent_id: branchId });
+      res.json(deliveryman);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
-            if (!fname || !lname || !phone || !email || !password || !branch || !identity_type || !identity_number  || !id_image || !deliveryman_image) {
-                throw new Error('Required fields are missing.');
-              }
-
-            const DeliveryMandata = {
-                fname,
-                lname,
-                phone,
-                email,
-                password,
-                id_image,
-                branch,
-                identity_type,
-                identity_number,
-                deliveryman_image
-            };
-
-            const deliveryMan = new DeliveryMan(DeliveryMandata);
-            await deliveryMan.save();
-
-              // After saving the deliveryman, associate them with the selected branches
-               updateBranchesServed(deliveryMan._id, branch);
-
-
-            console.log("Deliveryman Added successfully");
-            res.redirect('/admin/deliveryman/list');
-    } catch (err) {
-        console.log(err);
-        res.status(500).send('Internal Server Error');
+router.post('/add', authenticateToken, async (req, res) => {
+  try {
+    const {vehicle_number, branch_id, deliveryman_id} = req.body;
+    console.log(req.name)
+    const user = req.user;
+    if(!user){
+      return res.redirect('/admin/auth/login');
     }
-    });
+    
+    const vehicle = new Vehicle({
+      vehicle_number,
+      branch_id,
+      deliveryman_id
+    })
+
+    await vehicle.save();
+    res.redirect('/admin/vehicle/list');
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 router.get('/list', authenticateToken, async (req, res) => {
     try {
-        const deliveryman = await DeliveryMan.find({});
-        const deliverymanCount = DeliveryMan.length;
+        const vehicle = await Vehicle.find({}).populate('branch_id').populate('deliveryman_id');
+        const vehicleCount = vehicle.length;
         const user = req.user;
         if (!user) {
             return res.redirect('/admin/auth/login');
         }
-        res.render('admin/deliveryman/list', { Title: "Delivery Man list", user, deliverymanCount, deliveryman , route : route.baseUrL, error: "List of DeliveryMans" })
+        res.render('branch/vehicle/list', { Title: "Vehicle list", user, vehicleCount, vehicle , route : route.baseUrL, error: "List of Vehicle" })
     } catch (err) {
         console.log(err);
         res.status(500).send('Internal Server Error');
@@ -161,35 +127,35 @@ router.get('/list', authenticateToken, async (req, res) => {
 });
 
 
-router.get('/update/:deliverymanId', authenticateToken, async (req, res) => {
+router.get('/update/:vehicleId', authenticateToken, async (req, res) => {
   try {
-    const deliverymanId = req.params.deliverymanId;
+    const vehicleId = req.params.vehicleId;
     const user = req.user;
     const branch = await Branch.find({});
 
     if (!user) {
       return res.redirect('/admin/auth/login');
     }
-    console.log("Fetching Delivery Man with ID:", deliverymanId);
+    console.log("Fetching Vehicle with ID:", vehicleId);
 
-    // Find the deliveryman in the database by ID
-    const deliveryman = await DeliveryMan.findById(deliverymanId);
+    // Find the Vehicle in the database by ID
+    const vehicle = await DeliveryMan.findById(vehicleId).populate('branch_id').populate('deliveryman_id');
 
-    if (!deliveryman) {
-      // Delivery Man not found in the database
-      throw new Error('Delivery Man not found.');
+    if (!vehicle) {
+      // Vehicle not found in the database
+      throw new Error('Vehicle not found.');
     }
 
     // Send the deliveryman details to the client for updating
-    res.render('admin/deliveryman/update', { Title: "Delivery Man Update",user, branch, deliveryman , route : route.baseUrL, error:"Update the deliveryMan" }); // Assuming you are using a template engine like EJS
+    res.render('branch/vehicle/update', { Title: "Vehicle Update",user, branch, vehicle , route : route.baseUrL, error:"Update the Vehicle" }); // Assuming you are using a template engine like EJS
   } catch (err) {
-    console.log("There is an issue while fetching the Delivery Man for updating.");
+    console.log("There is an issue while fetching the Vehicle for updating.");
     console.log(err.message);
     res.status(404).send(err.message);
   }
 });
 
-router.post('/update/:deliverymanId', upload.fields([
+router.post('/update/:vehicleId', upload.fields([
   { name: 'id_image', maxCount: 1 },        // maxCount: 1 indicates only one image will be uploaded
   { name: 'deliveryman_image', maxCount: 1 }, // maxCount: 1 indicates only one image will be uploaded
 ]), authenticateToken, async (req, res) => {
@@ -200,9 +166,7 @@ router.post('/update/:deliverymanId', upload.fields([
     const { fname, lname, email, phone, branch, identity_type, identity_number, password } = req.body;
 
     // Find the Delivery Man in the database by ID
-    const deliveryman = await DeliveryMan.findById(deliverymanId).populate('branch');
-
-    const Branch = await Branch.find({}); 
+    const deliveryman = await DeliveryMan.findById(deliverymanId);
 
     if (!deliveryman) {
       // Delivery Man not found in the database
@@ -249,7 +213,7 @@ router.post('/update/:deliverymanId', upload.fields([
 });
 
 // DELETE request to delete a Delivery Man by its ID
-router.delete('/delete/:deliverymanId', authenticateToken, async (req, res) => {
+router.delete('/delete/:vehicleId', authenticateToken, async (req, res) => {
   try {
     const deliverymanId = req.params.deliverymanId;
     console.log("Deleting Delivery Man with ID:", deliverymanId);

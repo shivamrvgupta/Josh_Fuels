@@ -80,7 +80,6 @@ router.post('/auth/login', async (req, res) => {
       email: user.email,
       usertype: user.usertype,
 
-
     };
     const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '6h' });
 
