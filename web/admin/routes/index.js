@@ -8,6 +8,7 @@ const BranchRoutes = require('./branch.routes');
 const DeliveryManRoutes = require('./deliveryman.routes');
 const CustomerRoutes = require('./customer.routes');
 const OrderRoutes = require('./order.routes');
+const VehicleRoutes = require('./vehicle.routes');
 
 router.use('/auth', authRoutes);
 router.use('/category', categoryRoutes);
@@ -18,6 +19,6 @@ router.use('/branch', BranchRoutes);
 router.use('/deliveryman', DeliveryManRoutes);
 router.use('/customer', CustomerRoutes);
 router.use('/orders', OrderRoutes);
-
+router.use('/vehicle', VehicleRoutes);
 
 module.exports = router;

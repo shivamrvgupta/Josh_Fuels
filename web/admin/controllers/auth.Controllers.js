@@ -162,6 +162,32 @@ module.exports = {
         console.error('Logout error:', error);
         res.status(500).send('An error occurred during logout.');
       }
+    },
+
+    pageNotFound : async (req, res) => {
+        const user = req.user;
+          
+        console.log(user)
+        if (!user) {
+          return res.redirect('/admin/auth/login');
+        }
+        
+        res.status(404).render('partials/404', {user}); // Render the pagenotfound.ejs view
+    },
+    
+    redirecter : async (req, res) => {
+        const user = req.user;
+          
+        console.log(user)
+        if (!user) {
+          return res.redirect('/admin/auth/login');
+        }
+
+        if(user.usertype == 'Admin'){
+          res.redirect('/admin/auth/dashboard');
+        }
+        
+        res.redirect('/branch/auth/dashboard');
     }
 
 }

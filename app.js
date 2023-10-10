@@ -12,6 +12,9 @@ const Mailer = require('./mailer/mailer.js')
 const routesWeb = require('./web');
 const routesApi = require('./api');
 const notify = require('./managers/notifications/send')
+const { AuthMiddleware } = require('./web/admin/middlewares');
+const { AuthController } = require('./web/admin/controllers');
+
 
 app.use(cookieParser());
 app.set('view engine', 'ejs'); // Set EJS as the default template engine
@@ -27,9 +30,12 @@ app.use(morgan(':method :url :status :user-agent - [:date[clf]] :response-time m
 app.use('/images', express.static(path.join(__dirname, './src/uploads')));
 
 
-  
+
 app.use('/api', routesApi);
 app.use(routesWeb);
+
+app.get('/', AuthMiddleware.authenticateToken, AuthController.redirecter);
+app.get('*', AuthMiddleware.authenticateToken, AuthController.pageNotFound);
 
 
 ports = [process.env.PORT, process.env.PORT1, process.env.PORT2]

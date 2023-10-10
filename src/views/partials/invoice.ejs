@@ -133,7 +133,7 @@
                                                 <th>Invoice Date:</th>
                                                 <th>Invoice No:</th>
                                                 <th>Branch Name:</th>
-                                                <th>Branch City:</th>
+                                                <th>Delivery Man:</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -141,7 +141,13 @@
                                                 <td><%= order.created_date.toLocaleDateString('en-UK', options)%></td>
                                                 <td><%= order.order_id %></td>
                                                 <td><%= order.branch_id.name %></td>
-                                                <td><%= order.branch_id.city %></td>
+                                                <td>
+                                                    <% if(order.is_delivery_man_assigned){ %>
+                                                        <%= order.delivery_id.fname %> <%= order.delivery_id.lname %> 
+                                                    <% } else { %>
+                                                        <%= order.delivery_man %>
+                                                    <% } %>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>

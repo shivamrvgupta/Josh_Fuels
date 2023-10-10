@@ -33,8 +33,8 @@ const mongoose = require('mongoose');
             maxLength: 200
         },
         branch:{
-            type: String,
-            required: true,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Branch',
         },
         identity_type:{
             type: String,

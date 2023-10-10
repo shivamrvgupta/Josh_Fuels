@@ -82,12 +82,16 @@ module.exports = {
   // User Dashboard API
     getdashboard : async (req, res) => {
       const user = req.user;
-
+      const userId = user.userId;
+      
       if(!user){
         res.redirect('branch/auth/login')
       }
 
-      const orderInfo = await models.BranchModel.Order.find({branch_id: user.userID});
+      console.log(user.userId)
+
+      const orderInfo = await models.BranchModel.Order.find({branch_id: userId});
+      console.log(orderInfo)
       const allOrders = orderInfo.length;
 
       const products = await models.BranchModel.BranchProduct.find();
@@ -102,83 +106,26 @@ module.exports = {
         {
           $match: {
             status: "Delivered",
-            payment_status: true,
-          },
+            payment_status: true
+          }
         },
         {
-          $unwind: "$product_items",
-        },
-        {
-          $lookup: {
-            from: "BranchProduct", // Replace with your actual collection name
-            localField: "product_items.product_id",
-            foreignField: "_id",
-            as: "productData",
-          },
-        },
-        {
-          $addFields: {
-            productName: {
-              $ifNull: [{ $arrayElemAt: ["$productData.name", 0] }, "$product_items.name"],
-            },
-          },
+          $unwind: "$product_items" // Unwind the product_items array
         },
         {
           $group: {
             _id: "$product_items.product_id",
-            totalQuantity: {
-              $sum: "$product_items.quantity",
-            },
-            productName: {
-              $first: "$productName",
-            },
-          },
-        },
+            totalRevenue: { $sum: "$grand_total" },
+            totalQuantity: { $sum: "$product_items.quantity" }
+          }
+        }
       ]);
       
-      // Now you can print the product names
-      orderDetail.forEach((item) => {
-        console.log("Product Name:", item.productName);
-      });
-    
-      
-      // const testLookup = await models.BranchModel.Order.aggregate([
-      //   {
-      //     $lookup: {
-      //       from: "BranchProduct", // Replace with the actual collection name
-      //       localField: "product_items.product_id", // Match with the product ID in Order
-      //       foreignField: "_id", // Match with the _id field in BranchProduct
-      //       as: "productData"
-      //     }   
-      //   }
-      // ]);
-      // console.log("Test Lookup ----- ",testLookup);
             // Now you can access product quantities dynamically
             const totalRevenue = orderDetail.length > 0 ? orderDetail[0].totalRevenue : 0;
             const totalQuantity = orderDetail.length > 0 ? orderDetail[0].totalQuantity : 0;
       
-            const productQuantities = {};
-
-
-            // Populate the productQuantities object
-            orderDetail.forEach((productDetail) => {
-              const productId = productDetail._id;
-              const totalQuantitySold = productDetail.totalQuantity;
-              
-              // Assign variables dynamically based on product IDs
-              productQuantities[productId] = totalQuantitySold;
-            });
-
-            console.log(orderDetail)
-          // Access product quantities dynamically
-          for (const productId in productQuantities) {
-            console.log(`Total Quantity Sold for Product ${productId}: ${productQuantities[productId]}`);
-          }
-          
-
-          console.log("Total Revenue for Delivered Orders with Payment Status True: " + totalRevenue);
-
-    
+            console.log("Total Revenue for Delivered Orders with Payment Status True: " + totalRevenue);
 
       error = "You are successfully logged in"
       res.render('branch/dashboard', { options, allOrders, allProducts, orderDetail,totalRevenue, totalQuantity, allCustomers , products, addOn ,user: user, error})

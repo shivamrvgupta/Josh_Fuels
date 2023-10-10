@@ -13,7 +13,7 @@
                                     <div class="title-header option-title">
                                         <h5>All Orders ( <%= ordersCount  %> )</h5>
                                         <form class="d-inline-flex">
-                                            <a href="/admin/order/add" class="align-items-center btn btn-theme d-flex">
+                                            <a href="/branch/order/add" class="align-items-center btn btn-theme d-flex">
                                                 <i data-feather="plus"></i>Add New Order
                                             </a>
                                         </form>
@@ -45,12 +45,12 @@
 
                                                     <td>    
                                                         <div class="user-name">
-                                                            <span><a href="/admin/orders/detail/<%= row._id%>"><%= row.order_id %></a>
+                                                            <span><a href="/branch/order/detail/<%= row._id%>"><%= row.order_id %></a>
                                                         </div>
                                                     </td>
 
                                                     <td><%= row.created_date.toLocaleDateString('en-UK',options) %></td>
-                                                    <td><a href="/admin/customer/detail/<%= row.user_id.id%>"><%= row.user_id.first_name %></a></td>
+                                                    <td><a href="/branch/customer/detail/<%= row.user_id.id%>"><%= row.user_id.first_name %></a></td>
 
                                                     <td><%= row.branch_id.name %></td>
                                                     <td>
@@ -65,19 +65,19 @@
                                                     <td>
                                                         <ul>
                                                             <li>
-                                                                <a href="/admin/orders/details/<%= row.id%>">
+                                                                <a href="/branch/order/details/<%= row.id%>">
                                                                     <i class="ri-eye-line"></i>
                                                                 </a>
                                                             </li>
 
                                                             <li>
-                                                                <a href="/admin/order/update/<%= row.id%>">
+                                                                <a href="/branch/order/update/<%= row.id%>">
                                                                     <i class="ri-pencil-line"></i>
                                                                 </a>
                                                             </li>
 
                                                             <li>
-                                                                <a href="/admin/order/delete/<%= row.id%>" data-bs-toggle="modal"
+                                                                <a href="/branch/order/delete/<%= row.id%>" data-bs-toggle="modal"
                                                                     data-bs-target="#exampleModalToggle">
                                                                     <i class="ri-delete-bin-line"></i>
                                                                 </a>
@@ -199,7 +199,7 @@
                         // Make an AJAX request to the server to delete the customer
                         $.ajax({
                           method: 'DELETE',
-                          url: `/admin/customer/delete/${customerId}`,
+                          url: `/branch/customer/delete/${customerId}`,
                           success: function (data) {
                             // If the deletion is successful, you can handle the response or reload the page
                             console.log(data); // Optional: Log the server response

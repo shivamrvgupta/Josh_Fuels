@@ -16,7 +16,8 @@ const models = require('../../../managers/models');
 
 // This would be your token blacklist storage
 const tokenBlacklist = new Set();
-
+const options = { day: '2-digit', month: 'short', year: 'numeric' };
+const options2 = { timeZone: 'UTC', };
 
 
 
@@ -24,249 +25,369 @@ module.exports = {
 
   // Get Product List
     list : async (req, res) => {
-        try{
-            const user = req.user;
-        
-            if(!user){
-              return res.redirect('/branch/auth/login')
-            }
-          const orders = await models.BranchModel.Order
-          .find()
-          .populate('user_id')
-          .populate('product_id')
-        
-          const customer = await models.UserModel.User.find()
-          const ordersCount = orders.length;
-          res.render("branch/order/all", {user, ordersCount, customer, orders, error: "List of Orders"});
-          }catch(err){
-            console.log(err);
-            res.status(500).send('Internal Server Error');
-        }
-    },
-
-
-    // Customer Details
-
-    getCustomer : async (req, res) => {
-        try {
-            const customerId = req.params.customerId;
-            const user = req.user;
-        
-            if (!user) {
-              return res.redirect('/branch/auth/login');
-            }
-            console.log("Fetching branch with ID:", customerId);
-        
-            // Find the customer in the database by ID
-            const customer = await models.UserModel.User.findById(customerId);
-            const address = await models.UserModel.Address.findOne({user_id: customerId})
-            const orders = await models.BranchModel.Order.find({user_id : customerId})
-                .populate('product_id')           // Populate the 'cart' field
-
-            const branchProduct = await models.BranchModel.BranchProduct.find();
-        
-
-
-            if (!customer) {
-              // customer not found in the database
-              throw new Error('Customer not found.');
-            }
-        
-            // Send the category details to the client for updating
-            const error = "Customer Overview";
-            res.render('branch/customer/details', { customer, address,user, branchProduct, orders, error }); // Assuming you are using a template engine like EJS
-          } catch (err) {
-            console.log("There is an issue while fetching the customer for updating.");
-            console.log(err.message);
-            res.status(404).send(err.message);
-          }
-    },
-
-    getAdd : async (req, res) => {
-      try {
-        const user = req.user;
-    
-        if (!user) {
-          return res.redirect('/branch/auth/login');
-        }
-        res.render('branch/customer/add', {user,error:"Add New Customer" });
-      } catch (err) {
-        console.log(err);
-        res.status(500).send('Internal Server Error');
-      }
-    },
-
-  // Add Category List
-    postAdd: async (req, res) => {
       try{
-        const { first_name,last_name, email, phone, company, accept_term} = req.body;
-        const imageFilename = req.files['customer_image'] ? req.files['customer_image'][0].filename : null;
-    
-        const acceptTerm = accept_term === "true";
+        const user = req.user;
 
-        if (!first_name || !last_name || !email || !phone || !company) {
-          throw new Error('Required fields are missing.');
+        if(!user){
+          return res.redirect('/branch/auth/login')
         }
+      const orders = await models.BranchModel.Order
+      .find({branch_id:user.userId})
+      .populate('user_id')
+      .populate('branch_id') 
+      .populate('address_id')
     
-        const customer = new models.UserModel.User({
-          first_name,
-          last_name,
-          email,
-          phone,
-          company,
-          usertype: "Customer",
-          profile: imageFilename,
-          is_active : true,
-          accept_term : acceptTerm
-        })
+      const customers = await models.UserModel.User.find({ usertype: "Customer" });
+      const branches = await models.BranchModel.Branch.find();
+      const ordersCount = orders.length;
     
-    
-        await customer.save();
-        console.log("Customer added successfully");
-        res.redirect('/branch/customer/list');
-    
+      res.render("branch/order/all", {user, branches, ordersCount, customers, orders, options, error: "List of Orders"});
       }catch(err){
         console.log(err);
         res.status(500).send('Internal Server Error');
       }
     },
 
-
-  // Update Status
-    updateStatus : async (req, res) => {
-        try {
-            const customerId = req.body.customerId;
-            console.log(customerId)
-            // Find the branch in the database by ID
-            const customer = await models.UserModel.User.findById(customerId,{usertype : "Customer"});
-        
-            if (!customer) {
-                // Branch not found in the database
-                return res.status(404).send('customer not found');
-            }
-        
-            // Toggle the status (true to false or false to true) and save the updated branch
-            customer.is_active = !customer.is_active;
-            await customer.save();
-            
-            console.log('Database value updated successfully');
-            res.json({ is_active: customer.is_active }); // Respond with the updated status
-        } catch (err) {
-          console.error('Error updating database value: ', err);
-            res.status(500).send('Error updating database value');
-        }
-    },
-
-  // Edit Category
-    getUpdate :  async (req, res) => {
+    getCount : async ( req, res ) =>{
       try {
-        const customerId = req.params.customerId;
         const user = req.user;
-    
+
+        if(!user){
+          return res.redirect('/branch/auth/login')
+        }
+
+        const orderInfo = await models.BranchModel.Order.find({branch_id : user.userId});
+        const allCount = orderInfo.length;
+
+        const pending = orderInfo.filter(order => order.status === "Pending");
+        const pendingCount = pending.length;
+
+        const confirmed = orderInfo.filter(order => order.status === "Confirmed");
+        const confirmCount = confirmed.length;
+
+        const processing = orderInfo.filter(order => order.status === "Processing");
+        const processCount = processing.length;
+
+        const outForDelivery = orderInfo.filter(order => order.status === "Out for delivery");
+        const deliveryCount = outForDelivery.length;
+
+        const delivered = orderInfo.filter(order => order.status === "Delivered");
+        const deliveredCount = delivered.length;
+
+        const failed = orderInfo.filter(order => order.status === "Failed");
+        const failedCount = failed.length;
+
+        const cancelled = orderInfo.filter(order => order.status === "Cancelled");
+        const cancelledCount = cancelled.length;
+        
+        const returned = orderInfo.filter(order => order.status === "Returned");
+        const returnCount = returned.length;
+
+        const scheduled = orderInfo.filter(order => order.status === "Scheduled");
+        const schedludedCount = scheduled.length;
+
+        const payload = {
+          all:allCount,
+          pending:pendingCount,
+          confirmed:confirmCount,
+          processing:processCount,
+          out:deliveryCount,
+          delivered:deliveredCount,
+          returned:returnCount,
+          failed:failedCount,
+          cancelled:cancelledCount,
+          scheduled:schedludedCount,
+        };
+
+        res.json(payload);
+      } catch (error) {
+          console.error(error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      }
+  },
+
+    getDetails : async (req, res) => {
+      try {
+        const user = req.user;
         if (!user) {
           return res.redirect('/branch/auth/login');
         }
-        console.log("Fetching customer with ID:", customerId);
-    
-        // Find the customer in the database by ID
-        const customer = await models.UserModel.User.findById(customerId);
-        const address = await models.UserModel.Address.findOne({user_id: customerId});
-        console.log(address);
-        if (!customer) {
-          // customer not found in the database
-          throw new Error('Customer not found.');
+        const orderId = req.params.id;
+        const order = await models.BranchModel.Order.findById(orderId).populate('product_items').populate('branch_id').populate('address_id').populate('user_id').populate('product_items.product_id').populate('delivery_id');
+        const deliveryman = await models.UserModel.DeliveryMan.find({branch:user.userId});
+        if(order.status == "Out for delivery"){
+          const custom_css = "Out_For_Delivery";
+
+          const error =  `Order ${order.order_id} Details`
+          res.render('branch/order/detail', { user,order, custom_css, options , error, deliveryman});
         }
-    
-        res.render('branch/customer/update', {address, customer, user, error: " Update Customer" }); // Assuming you are using a template engine like EJS
+        const custom_css = order.status;
+        const error =  `Order ${order.order_id} Details`
+        res.render('branch/order/detail', { user,order, custom_css, options , error, deliveryman});
       } catch (err) {
-        console.log("There is an issue while fetching the customer for updating.");
-        console.log(err.message);
-        res.status(404).send(err.message);
+        console.log(err);
+        res.status(500).send('Internal Server Error');
       }
     },
 
-  // Update Category
-    postUpdate :  async (req, res) => {
+    listByStatus: async (req, res) => {
       try {
-        const customerId = req.params.customerId;
-        console.log("Updating customer with ID:", customerId);
-    
-        const { first_name, last_name, phone, email, company, address1, address2 , area, pincode, city, state, country} = req.body;
-    
-        // Find the customer in the database by ID
-        const customer = await models.UserModel.User.findById(customerId);
-        const address = await models.UserModel.Address.findOne({user_id: customerId});
-        console.log(address);
-        if (!customer) {
-          // customer not found in the database
-          if(!address){
-            throw new Error("Address not found")
-          }
-          throw new Error('Customer not found.');
+        const user = req.user;
+        if (!user) {
+          return res.redirect('/branch/auth/login');
         }
     
-        // Check if 'image' field is found in the request
-        if (req.files && req.files['customer_image']) {
-          if(customer.profile){
-            ImgServices.deleteImageFile(customer.profile);
-          }
-          customer.profile = req.files['customer_image'][0].filename;
+        const { statuses } = req.params; // Extract the status from the URL parameters
+
+        let status = statuses;
+
+
+        if (statuses === "Out for delivery") {
+          status = "out_for_delivery";
+        } 
+        
+        console.log(status)
+
+        // Define a mapping of status values to user-friendly error messages
+        const statusMessages = {
+          pending: "List of Pending Orders",
+          confirmed: "List of Confirm Orders",
+          processing: "List of Processing Orders",
+          out_for_delivery: "List of Out For Delivery",
+          delivered: "List of Delivered Orders",
+          returned: "List of Return Orders",
+          failed: "List of Failed Orders",
+          cancelled: "List of Cancelled Orders",
+          scheduled: "List of Scheduled Orders",
+        };
+    
+        // Validate if the provided status is in the mapping
+        if (!statusMessages[status]) {
+          return res.status(400).send('Invalid status');
         }
     
-        customer.first_name = first_name;
-        customer.last_name = last_name
-        customer.phone = phone;
-        customer.email = email;
-        customer.company = company;
-        address.address_1 = address1;
-        address.address_2 = address2;
-        address.area = area;
-        address.pincode = pincode;
-        address.city = city;
-        address.state = state;
-        address.country = country;
+        // Fetch orders based on the provided status
+        const orders = await models.BranchModel.Order
+          .find({ 
+            branch_id:user.userId,
+            status: status.charAt(0).toUpperCase() + status.slice(1) 
+          }) // Capitalize the status
+          .populate('user_id')
+          .populate('branch_id')
+          .populate('address_id')
+          .populate('address_id');
     
-        // Save the updated customer to the database
-        await customer.save();
-        await address.save();
-        console.log("Customer updated successfully");
+        const branches = await models.BranchModel.Branch.find();  
+
+        const customers = await models.UserModel.User.find({ usertype: "Customer" });
+        const ordersCount = orders.length;
     
-        res.redirect('/branch/customer/list');
+        // Render the view with filtered orders and the appropriate error message
+        res.render("branch/order/all", {
+          user,
+          ordersCount,
+          customers,
+          orders,
+          options,
+          branches,
+          error: statusMessages[status], // Use the error message from the mapping
+        });
       } catch (err) {
-        console.log("There is an issue while updating the Customer.");
-        console.log(err.message);
-        res.status(400).send(err.message);
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+      }
+    },
+    
+    updateDeliveryStatus: async (req, res) => {
+      try {
+        // Extract data from the request
+        const orderId = req.body.orderId;
+        const newStatus = req.body.selectedStatus;
+
+        console.log("body ---",req.body)
+        console.log("Status ---",newStatus)
+        // Define flags for is_delivered and is_cancelled
+        let isDelivered = false;
+        let isCancelled = false;
+    
+        // Update flags based on newStatus
+        if (newStatus === 'Delivered') {
+          isDelivered = true;
+        } else if (newStatus === 'Cancelled') {
+          isCancelled = true;
+        }
+    
+        const updatedOrder = await models.BranchModel.Order.findOne({
+          order_id:orderId,
+          branch_id:user.user_id
+        });
+
+        console.log(updatedOrder);
+        // Update the order using async/await
+        updatedOrder.status = newStatus;
+        updatedOrder.is_delivered = isDelivered;
+        updatedOrder.is_cancelled = isCancelled;
+    
+        await updatedOrder.save();
+
+        if (!updatedOrder) {
+          return res.status(404).json({ message: 'Order not found' });
+        }
+    
+        // Send a response with the updated order
+        return res.json({ message: 'Status updated successfully', updatedOrder });
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+    },
+    
+    updatePaymentStatus: async (req, res) => {
+      try {
+        // Extract data from the request
+        const orderId = req.body.orderId;
+        const newStatus = req.body.selectedPaymentStatus;
+
+        console.log("body ---",req.body)
+        console.log("Status ---",newStatus)
+        // Define flags for is_delivered and is_cancelled
+        let payment_status = false;
+    
+        // Update flags based on newStatus
+        if (newStatus === 'True') {
+          payment_status = true;
+        } else if (newStatus === 'False') {
+          payment_status = false;
+        }
+    
+        const updatedOrder = await models.BranchModel.Order.findOne({
+          order_id:orderId,
+          branch_id:user.user_id
+        });
+
+        console.log(updatedOrder);
+        // Update the order using async/await
+        updatedOrder.payment_status = payment_status;
+    
+        await updatedOrder.save();
+
+        if (!updatedOrder) {
+          return res.status(404).json({ message: 'Order not found' });
+        }
+    
+        // Send a response with the updated order
+        return res.json({ message: 'Payment Status updated successfully', updatedOrder });
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
       }
     },
 
-  // Delete Category
-  delete : async (req, res) => {
-    try {
-      const customerId = req.params.customerId;
-      console.log("Deleting branch with ID:", customerId);
-    
-      // Find and delete the product from the database
-      const deletedCustomer = await models.UserModel.User.findOneAndDelete({ _id: customerId });
-  
-      if (!deletedCustomer) {
-        // product not found in the database
-        throw new Error(`${deletedCustomer} not found.`);
-      }
-  
-      if (deletedCustomer.image) {
-        ImgServices.deleteImageFile(deletedCustomer.profile);
-        console.log("Deleted Image File", deletedCustomer.profile );
-      }
+    assginDeliveryMan: async (req, res) => {
+      try {
+        // Extract data from the request
+        const orderId = req.body.orderId;
+        const assignDelivery = req.body.selectedDeliveryMan;
 
-      console.log(`${deletedCustomer.name} deleted successfully`);
-  
-      res.status(200).json({ message: `${deletedCustomer.name} deleted successfully` });
-    } catch (err) {
-      console.log(`There is an issue while deleting`);
-      console.log(err.message);
-      res.status(400).send(err.message);
-    }
-  }
+        console.log("body ---",req.body)
+        console.log("Status ---",assignDelivery)
+        // Define flags for is_delivered and is_cancelled
+
+        const updatedOrder = await models.BranchModel.Order.findOne({
+          order_id:orderId,
+          branch_id:user.user_id
+        });
+
+        // Update the order using async/await
+        updatedOrder.delivery_id = assignDelivery;
+        updatedOrder.delivery_man = "Assigned";
+        updatedOrder.is_delivery_man_assigned = true;
+    
+        await updatedOrder.save();
+        console.log(updatedOrder);
+
+        if (!updatedOrder) {
+          return res.status(404).json({ message: 'Order not found' });
+        }
+    
+        // Send a response with the updated order
+        return res.json({ message: 'Payment Status updated successfully', updatedOrder });
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+    },
+
+    getInvoice : async (req,res) => {
+      try {
+        const user = req.user;
+        if (!user) {
+          return res.redirect('/branch/auth/login');
+        }
+        const orderId = req.params.id;
+        const order = await models.BranchModel.Order.findById(orderId).populate('product_items').populate('branch_id').populate('address_id').populate('user_id').populate('product_items.product_id').populate('delivery_id');
+        const deliveryman = await models.UserModel.DeliveryMan.find({branch:user.userId});
+        if(order.status == "Out for delivery"){
+          const custom_css = "Out_For_Delivery";
+
+          const error =  `Order ${order.order_id} Details`
+          res.render('partials/invoice', { user,order, custom_css, options , error, deliveryman});
+        }
+        const custom_css = order.status;
+        const error =  `Order ${order.order_id} Details`
+        res.render('partials/invoice', { user,order, custom_css, options , error, deliveryman});
+      } catch (err) {
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+      }
+    },
+
+    trackOrder :  async (req,res) => {
+      try {
+        const orderId = req.params.id;
+        const order = await models.BranchModel.Order.findById(orderId).populate('product_items').populate('branch_id').populate('address_id').populate('user_id').populate('product_items.product_id').populate('delivery_man');;
+        console.log(order)
+        const deliveryman = await models.UserModel.DeliveryMan.find({
+          branch:user.userId
+        });
+        const user = req.user;
+        if (!user) {
+          return res.redirect('/branch/auth/login');
+        }
+
+        const custom_css = order.status;
+        const error =  `Order ${order.order_id} Details`
+
+        res.render('branch/order/track', { user, order, custom_css, options, options2 , error, deliveryman});
+      } catch (err) {
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+      }
+    },
+    
+    getStatus :  async (req,res) => {
+      try {
+        const orderId = req.params.id;
+        const order = await models.BranchModel.Order.findById(orderId).populate('product_items').populate('branch_id').populate('address_id').populate('user_id').populate('product_items.product_id').populate('delivery_man');;
+        console.log(order)
+        const deliveryman = await models.UserModel.DeliveryMan.find({
+          branch:user.userId
+        });
+        const user = req.user;
+        if (!user) {
+          return res.redirect('/branch/auth/login');
+        }
+
+        const custom_css = order.status;
+        const error =  `Order ${order.order_id} Details`
+
+        res.render('branch/order/track', { user, order, custom_css, options, options2 , error, deliveryman});
+      } catch (err) {
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+      }
+    },
+    
 }
 
 

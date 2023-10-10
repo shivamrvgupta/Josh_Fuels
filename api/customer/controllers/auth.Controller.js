@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs'); // Import the 'fs' module for file operations
 const bcrypt = require('bcrypt');
+const { promisify } = require('util');  
 const axios = require('axios'); // Import the axios library
 const { v4: uuidv4 } = require('uuid');
+const path = require("path"); 
 const {
   MessageConstants,
   StatusCodesConstants,
@@ -418,47 +420,60 @@ module.exports = {
   },
 
   // Email Verification
-  sendEmail:  async (req, res) => {
+  sendEmail: async (req, res) => {
     try {
       const session = req.user;
-      const user_id = session.userId;
-
-      console.log("I got Clicked");
-      if (!user_id) {
-          return res.status(StatusCodesConstants.BAD_REQUEST).json({
-              status: false,
-              status_code: StatusCodesConstants.BAD_REQUEST,
-              message: 'Please Login First',
-          });
+  
+      console.log("Request to send email clicked");
+      
+      if (!session || !session.userId) {
+        return res.status(StatusCodesConstants.BAD_REQUEST).json({
+          status: false,
+          status_code: StatusCodesConstants.BAD_REQUEST,
+          message: 'Please Login First',
+        });
       }
-
+  
       const recipientEmail = session.email;
       const subject = 'Email Verification';
       const token = "hello1234";
-      const templateFilePath = res.render('mail/email_verification', { session, token });
+      const recipientName = session.first_name +  session.last_name; 
+      const templateFilePath = path.join(__dirname, Mailer.verifyEmail);
 
+
+      console.log(recipientName);
+
+    // Read the email template file
+      const emailTemplateContent = await promisify(fs.readFile)(templateFilePath, 'utf8');
+
+      // Replace placeholders in the email template with actual values
+      const replacedEmailTemplate = emailTemplateContent
+        .replace('{name}', recipientName)
+        .replace('{token}', token);
+  
+  
       // Send the email and wait for it to complete
-      const emailResult = await Mailer.sendCustomMail(recipientEmail, subject, templateFilePath);
-
+      const emailResult = await Mailer.sendCustomMail(recipientEmail, subject, replacedEmailTemplate);
+  
       // Check the email sending result and then send the HTTP response
       if (emailResult.success) {
-          res.status(StatusCodesConstants.SUCCESS).json({ message: 'OTP email sent successfully' });
+        res.status(StatusCodesConstants.SUCCESS).json({ message: 'OTP email sent successfully' });
       } else {
-          res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({
-              status: false,
-              status_code: StatusCodesConstants.INTERNAL_SERVER_ERROR,
-              message: MessageConstants.INTERNAL_SERVER_ERROR,
-          });
-      }
-  } catch (error) {
-      console.error(error);
-      return res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({
+        res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({
           status: false,
           status_code: StatusCodesConstants.INTERNAL_SERVER_ERROR,
-          message: MessageConstants.INTERNAL_SERVER_ERROR,
+          message: 'Failed to send email',
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({
+        status: false,
+        status_code: StatusCodesConstants.INTERNAL_SERVER_ERROR,
+        message: 'Internal server error',
       });
-  }
-},
+    }
+  },
 
   logout:(req, res) => {
     const session = req.user;
@@ -535,18 +550,18 @@ module.exports = {
     }
   },
 
-  updateProfile : async (req, res) => {
+  updateProfile: async (req, res) => {
     try {
       const session = req.user;
       user_id = session.userId;
-      if(!user_id){
+      if (!user_id) {
         return res.status(StatusCodesConstants.BAD_REQUEST).json({
           status: false,
           status_code: StatusCodesConstants.BAD_REQUEST,
           message: 'Please Login First',
         })
       }
-
+  
       const userData = {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
@@ -554,9 +569,9 @@ module.exports = {
         phone_number: req.body.phone,
         company: req.body.company,
       };
-
+  
       // Fetch the full data of user
-      const user = await models.UserModel.User.findOne({ _id : user_id });
+      const user = await models.UserModel.User.findOne({ _id: user_id });
       if (!user) {
         return res.status(StatusCodesConstants.BAD_REQUEST).json({
           status: false,
@@ -564,15 +579,22 @@ module.exports = {
           message: 'User Not Found',
         });
       }
-
+  
       user.first_name = userData.first_name || user.first_name;
       user.last_name = userData.last_name || user.last_name;
       user.email = userData.email || user.email;
       user.phone = userData.phone || user.phone;
       user.company = userData.company || user.company;
-
+  
       await user.save();
-
+  
+      // Update the session with the new user data
+      session.first_name = user.first_name;
+      session.last_name = user.last_name;
+      session.email = user.email;
+      session.phone_number = user.phone;
+      session.company = user.company;
+  
       const responseData = {
         first_name: user.first_name,
         last_name: user.last_name,
@@ -580,15 +602,14 @@ module.exports = {
         email: user.email,
         phone_number: user.phone,
       };
-
+  
       return res.status(StatusCodesConstants.SUCCESS).json({
         status: true,
         status_code: StatusCodesConstants.SUCCESS,
-        message: 'User data fetched successfully',
-        data : responseData,
+        message: 'User data updated successfully',
+        data: responseData,
       });
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
       return res.status(StatusCodesConstants.INTERNAL_SERVER_ERROR).json({
         status: false,

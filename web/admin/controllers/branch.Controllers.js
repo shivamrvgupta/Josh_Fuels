@@ -189,7 +189,7 @@ module.exports = {
         
             // Send the category details to the client for updating
             const error = " Update Branch";
-            res.render('admin/branch/update', { branch, user,route: route.baseUrL, error }); // Assuming you are using a template engine like EJS
+            res.render('admin/branch/update', { branch, user, error }); // Assuming you are using a template engine like EJS
           } catch (err) {
             console.log("There is an issue while fetching the branch for updating.");
             console.log(err.message);
